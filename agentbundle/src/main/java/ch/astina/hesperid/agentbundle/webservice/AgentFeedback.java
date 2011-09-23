@@ -22,10 +22,10 @@ import javax.jws.WebResult;
 import javax.jws.WebService;
 import javax.jws.soap.SOAPBinding;
 
-import ch.astina.project.molo.global.GlobalConstants;
-import ch.astina.project.molo.model.base.Asset;
-import ch.astina.project.molo.model.base.Observer;
-import ch.astina.project.molo.model.base.ObserverParameter;
+import ch.astina.hesperid.global.GlobalConstants;
+import ch.astina.hesperid.model.base.Asset;
+import ch.astina.hesperid.model.base.Observer;
+import ch.astina.hesperid.model.base.ObserverParameter;
 
 
 /**

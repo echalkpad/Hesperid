@@ -16,9 +16,9 @@
 package ch.astina.hesperid.agentbundle.scheduler;
 
 import ch.astina.hesperid.agentbundle.webservice.AgentFeedback;
-import ch.astina.project.molo.groovy.ParameterGatherer;
-import ch.astina.project.molo.model.base.Observer;
-import ch.astina.project.molo.model.base.ObserverParameter;
+import ch.astina.hesperid.groovy.ParameterGatherer;
+import ch.astina.hesperid.model.base.Observer;
+import ch.astina.hesperid.model.base.ObserverParameter;
 import org.apache.log4j.Logger;
 
 /**
