@@ -1,0 +1,63 @@
+////////////////////////////////////////////////////////////////////////////////////////////////////
+// Copyright 2011 Astina AG, Zurich
+//
+// Licensed under the Apache License, Version 2.0 (the "License");
+// you may not use this file except in compliance with the License.
+// You may obtain a copy of the License at
+//
+//     http://www.apache.org/licenses/LICENSE-2.0
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+////////////////////////////////////////////////////////////////////////////////////////////////////
+package ch.astina.hesperid.web.services.jobs.impl;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import ch.astina.hesperid.dao.FailureDAO;
+import ch.astina.hesperid.model.base.Failure;
+import ch.astina.hesperid.web.services.failures.FailureService;
+import ch.astina.hesperid.web.services.jobs.FailureCheckerJob;
+
+/**
+ * @author $Author: kstarosta $
+ * @version $Revision: 123 $, $Date: 2011-09-23 11:53:17 +0200 (Fr, 23 Sep 2011) $
+ */
+public class FailureCheckerJobImpl implements FailureCheckerJob
+{
+    private FailureService failureService;
+    private FailureDAO failureDAO;
+    private static final Logger logger = LoggerFactory.getLogger(FailureCheckerJobImpl.class);
+
+    public FailureCheckerJobImpl(FailureService failureService, FailureDAO failureDAO)
+    {
+        this.failureService = failureService;
+        this.failureDAO = failureDAO;
+    }
+
+    @Override
+    public void checkFailures()
+    {
+        List<Failure> failures = failureDAO.getUnresolvedFailures();
+
+        logger.info("Checking " + failures.size() + " unresolved failures for escalation");
+
+        for (Failure failure : failures) {
+
+            logger.info("Checking failure: " + failure);
+
+            if (failureService.needsEscalation(failure)) {
+                logger.info("Escalating failure: " + failure);
+                failureService.escalate(failure);
+            } else {
+                logger.info("No escalation needed: " + failure);
+            }
+        }
+    }
+}

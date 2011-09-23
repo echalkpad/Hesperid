@@ -1,0 +1,96 @@
+<html>
+	<head>
+		<title>$failure.message</title>
+	</head>
+	<body>
+	
+		<h1>Monitoring Alert</h1>
+	
+		<p>$failure.message</p>
+	
+		<h2>Details</h2>
+	
+		<table>
+			<tr>
+				<th>Asset</th>
+				<td>$failure.asset.assetName #if( $failure.asset.host )[$failure.asset.host]#end</td>
+			</tr>
+			<tr>
+				<th>Observer</th>
+				<td>$failure.observer.name</td>
+			</tr>
+			<tr>
+				<th>Parameter</th>
+				<td>$failure.observer.observerStrategy.resultParameterName</td>
+			</tr>
+			<tr>
+				<th>Value</th>
+				<td>
+					#if( $failure.observerParameter && $failure.observerParameter.value )
+						$failure.observerParameter.value
+					#else
+						&lt;null&gt;
+					#end
+				</td>
+			</tr>
+			<tr>
+				<th>Expected</th>
+				<td>
+					#if( $failure.observer.expectedValue )
+						$failure.observer.expectedValue<br />
+					#end
+					#if( $failure.observer.expectedValueMax )
+						&lt;= $failure.observer.expectedValueMax<br />
+					#end
+					#if( $failure.observer.expectedValueMin )
+						&gt;= $failure.observer.expectedValueMin<br />
+					#end
+				</td>
+			</tr>
+			<tr>
+				<th>Error</th>
+				<td>
+					#if( $failure.observerParameter )
+                                            #if( $failure.observerParameter.error )
+						$failure.observerParameter.error
+                                            #else
+                                                    &lt;null&gt;
+                                            #end
+					#else
+						&lt;null&gt;
+					#end
+				</td>
+			</tr>
+			<tr>
+				<th>Detected</th>
+				<td>$failure.detected</td>
+			</tr>
+			#if( $failure.resolved )
+				<tr>
+					<th>Resolved</th>
+					<td>$failure.resolved</td>
+				</tr>
+			#end
+		</table>
+		
+		<h2>Escalation</h2>
+		
+		#if( $failure.escalationLevel )
+		
+			<table>
+				<tr>
+					<th>Escalated</th>
+					<td>$failure.escalated</td>
+				</tr>
+				<tr>
+					<th>Contact</th>
+					<td>$failure.escalationLevel.contact.formattedName &lt;${failure.escalationLevel.contact.mail}&gt;</td>
+				</tr>
+			</table>
+		
+		#else 
+			<p>No escalation scheme configured.</p>
+		#end
+		
+	</body>
+</html>

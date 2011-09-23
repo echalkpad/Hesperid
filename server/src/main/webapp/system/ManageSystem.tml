@@ -1,0 +1,52 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+
+	<t:if test="system.id">
+		<h1>Manage System: ${system.name}</h1>
+		<p:else>
+			<h1>Add System</h1>
+		</p:else>
+	</t:if>
+	
+	<div class="layout-grid-col-holder">
+		
+		<div class="layout-grid-col">
+	
+		    <t:form class="box-holder">
+		    
+		    	<div class="box-head">
+		    		<h2>System</h2>
+		    	</div>
+		    	
+		    	<div class="box-content">
+		    		
+		    		<fieldset>
+		    		
+						<div class="form-item">
+							<t:label t:for="name">Name</t:label>
+							<t:textfield t:id="name" t:value="system.name" />
+						</div>
+					
+						<div class="form-item">
+							<t:label t:for="description">Description</t:label>
+							<t:textarea t:id="description" t:value="system.description" />
+						</div>
+						
+					</fieldset>
+		    	
+		    	</div>
+		        
+		        <div class="box-foot form-foot">
+		        	<button type="submit">Save</button>
+		        	<t:if test="system.id">
+		        		<t:pagelink page="system/view" context="system" class="button button-cancel">Cancel</t:pagelink>
+		        		<p:else>
+		        			<t:pagelink page="system" class="button button-cancel">Cancel</t:pagelink>
+		        		</p:else>
+		        	</t:if>
+		        </div>
+		    	
+			</t:form>
+		</div>
+	</div>
+
+</t:layout>

@@ -1,0 +1,32 @@
+
+.failures .status-detected {
+	color: #c00;
+	background: #fff6f6;
+}
+.failures .status-detected a {
+	color: #c00;
+}
+
+.failures td.message a {
+	font-weight: bold;
+	display: block;
+}
+
+.failures .failureStatus span {
+	display: block;
+	text-indent: -9999px;
+	width: 21px;
+	height: 21px;
+	background: url(../images/asset-status.gif) no-repeat 0 -21px;
+}
+
+.failures .status-resolved .failureStatus span {
+	background-position: 0 0;
+}
+
+.failures .icon-acknowledge {
+	background-image: url(../images/icons/16x16/acknowledge.png);
+}
+.failures .icon-resolve {
+	background-image: url(../images/icons/16x16/resolve.png);
+}

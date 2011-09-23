@@ -1,0 +1,25 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+
+	<div class="actions">
+    	<t:pagelink page="location/manage" class="add">Add Location</t:pagelink>
+    </div>
+    
+    <h1>Locations</h1>
+    
+	<t:grid source="locations" row="location" add="actions"
+		exclude="zip,street,locationCode,country,city">
+		
+		<p:actionsHeader></p:actionsHeader>
+		
+        <p:nameCell>
+            <t:pagelink page="location/view" context="location">${location.name}</t:pagelink>
+        </p:nameCell>
+        
+        <p:actionsCell>
+        	<t:pagelink page="location/manage" context="location" class="icon icon-edit">Edit</t:pagelink>
+            <t:actionlink t:id="delete" context="location" class="icon icon-delete"
+            	onclick="return confirm('Are you sure?');">Delete</t:actionlink>
+        </p:actionsCell>
+        
+    </t:grid>
+</t:layout>

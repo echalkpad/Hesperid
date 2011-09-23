@@ -1,0 +1,25 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+    
+    <div class="actions">
+    	<t:pagelink page="system/manage" class="add">Add System</t:pagelink>
+    </div>
+    
+    <h1>Systems</h1>
+    
+    <div class="box-holder">
+    
+    	<div class="box-head">
+    		<h2>All Systems</h2>
+    	</div>
+    
+    	<t:grid t:source="systems" exclude="id">
+    		<p:empty>
+				<div class="t-data-grid-empty">
+					none
+				</div>
+    		</p:empty>
+    	</t:grid>
+    
+    </div>
+    
+</t:layout>

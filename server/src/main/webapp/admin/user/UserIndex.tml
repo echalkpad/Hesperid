@@ -1,0 +1,29 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+	
+	<div class="actions">
+		<t:pagelink page="admin/user/manage" class="add">Add User</t:pagelink>
+	</div>
+	
+	<h1>Users</h1>
+	
+	<div class="layout-grid-col-holder">
+	
+		<div class="layout-grid-col2">
+	
+			<t:grid t:source="users" t:row="user" add="actions">
+				
+				<p:actionsHeader></p:actionsHeader>
+				
+				<p:actionsCell>
+					<t:pagelink page="admin/user/manage" context="user" class="icon icon-edit">Edit</t:pagelink>
+					<t:actionlink t:id="deleteUser" context="user" class="icon icon-delete"
+						onclick="return confirm('Are you sure?');">Delete</t:actionlink>
+				</p:actionsCell>
+				
+			</t:grid>
+		
+		</div>
+	
+	</div>
+	
+</t:layout>

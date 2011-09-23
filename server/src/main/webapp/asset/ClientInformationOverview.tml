@@ -1,0 +1,19 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <div id="breadcrumbs">You are here: <t:pagelink page="asset">Assets</t:pagelink> » <t:pagelink page="asset/assetoverview" context="clientInformation.asset.id">Asset ${clientInformation.asset.assetName} (${clientInformation.asset.assetIdentifier})</t:pagelink> » Client Parameter ${clientInformation.clientInformationGatheringStrategy.name}</div>
+    <h1>${clientInformation.asset.assetName} (${clientInformation.asset.assetIdentifier})</h1>
+    <h2>${clientInformation.clientInformationGatheringStrategy.name}</h2>
+    <t:pagelink page="clientinformation/manageclientinformation" context="[clientInformation.asset.id,clientInformation.id]">edit</t:pagelink><br /><br />
+    <t:if test="clientInformation.failed">
+        <img src="${asset:context:images/warning_icon_big.png}" /> This client information has errors (<t:actionlink t:id="resolve">resolve</t:actionlink>)
+    </t:if>
+    <t:if test="numbertype">
+        <t:if test="graphUrl">
+            <img src="${graphUrl}" />
+        </t:if>
+    </t:if>
+    <t:grid source="lastClientParameters" row="clientParameter">
+        <t:parameter name="updatedCell">
+                ${formattedUpdated}
+        </t:parameter>
+    </t:grid>
+</t:layout>

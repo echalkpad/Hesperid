@@ -1,0 +1,107 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+<div id="breadcrumbs">You are here: <t:pagelink page="asset">Assets</t:pagelink> » <t:pagelink page="asset/assetoverview" context="asset.id">Asset ${asset.assetName} (${asset.assetIdentifier})</t:pagelink> » <t:pagelink page="externalserviceinformation" context="asset.id">External Service Information Overview</t:pagelink> » Manage External Service Information</div>
+<h1>${asset.assetName} (${asset.assetIdentifier})</h1>
+<t:if test="success">
+    <div class="feedback-success">
+        external service information saved <br />
+        <t:pagelink page="externalserviceinformation/externalserviceinformationindex" context="asset.id">Back to external service information for ${asset.assetName}</t:pagelink><br />
+        <t:pagelink page="asset/manageasset" context="asset.id">Back to asset</t:pagelink>
+    </div>
+</t:if>
+    <t:form t:id="externalServiceInformationForm">
+            <t:errors />
+            <t:if test="externalServiceInformation.id" negate="true">
+                <div class="form-item-holder">
+                        <div class="label">
+                                <t:label for="externalServiceObserverStrategy">External Service Observer Strategy</t:label>
+                        </div>
+                        <div class="form-item">
+                                <select t:id="externalServiceObserverStrategy" t:type="select" t:model="externalServiceObserverStrategies"
+                                 t:value="externalServiceInformation.externalServiceObserverStrategy" t:encoder="externalServiceObserverStrategies" t:validate="required" />
+                        </div>
+                </div>
+                Please select first the strategy you want to use before adding parameters
+                <t:parameter name="else">
+                    <div class="form-item-holder">
+                        <div class="label">
+                            External Service Observer Strategy
+                        </div>
+                        <div class="form-item">
+                            ${externalServiceInformation.externalServiceObserverStrategy.name}
+                        </div>
+                    </div>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="currentParameters">Current Parameters</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <t:textarea t:id="currentParameters" t:value="externalServiceInformation.currentParameters" />
+                            </div>
+                    </div>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="checkingInterval">Checking Interval</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <t:textfield t:id="checkingInterval" t:value="externalServiceInformation.checkingInterval" />
+                            </div>
+                    </div>
+                    
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="expectedValue1">${expectedValue1Label}</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <t:textfield t:id="expectedValue1" t:value="externalServiceInformation.expectedValue1" />
+                            </div>
+                    </div>
+                    <t:if test="numberType">
+                        <div class="form-item-holder">
+                                <div class="label">
+                                         <t:label for="expectedValue2">Max expected value</t:label>
+                                </div>
+                                <div class="form-item">
+                                        <t:textfield t:id="expectedValue2" t:value="externalServiceInformation.expectedValue2" />
+                                </div>
+                        </div>
+                    </t:if>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="monitor">Monitor this parameter</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <t:checkbox t:id="monitor" t:value="externalServiceInformation.monitor" />
+                            </div>
+                    </div>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="notifyContact">Notify Contact</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <select t:id="notifyContact" t:type="select" t:model="contacts"
+                                     t:value="externalServiceInformation.notifyContact" t:encoder="contacts" />
+                            </div>
+                    </div>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="showOnAssetOverview">Show on Asset overview</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <t:checkbox t:id="showOnAssetOverview" t:value="externalServiceInformation.showOnAssetOverview" />
+                            </div>
+                    </div>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="overviewPageName">Name on Asset overview page</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <t:textfield t:id="overviewPageName" t:value="externalServiceInformation.overviewPageName" />
+                            </div>
+                    </div>
+                </t:parameter>
+            </t:if>
+            <div class="form-item-holder">
+                    <button type="submit">Save external Service Information</button>
+            </div>
+    </t:form>
+</t:layout>

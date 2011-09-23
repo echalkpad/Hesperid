@@ -1,0 +1,99 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+
+	<div class="observers">
+
+		<div class="box-holder">
+		
+			<div class="box-head">
+				<h2>${title}</h2>
+				
+				<!-- 
+				<t:form>
+					<label>
+						Strategy
+						<t:select model="observerStrategies" t:value="filterObserverStrategy" onchange="this.parentNode.parentNode.submit();" />
+					</label>
+					<label>
+						<t:checkbox t:value="filterFailed" onclick="this.parentNode.parentNode.submit();"/>
+						Failed only
+					</label>
+					<label>
+						<t:checkbox t:value="filterMonitored" onclick="this.parentNode.parentNode.submit();"/>
+						Monitored only
+					</label>
+				</t:form>
+				 -->
+			</div>
+			
+			<t:zone t:id="observersZone">
+			
+				<t:grid source="observers" row="observer" rowClass="rowclass" inPlace="true"
+					exclude="id,parameters,checkInterval,expectedValue,expectedValueMin,expectedValueMax,monitor,failed,showOnAssetOverview"
+					add="status,latestValue,actions" reorder="status,name,latestValue,lastCheck,actions">
+				
+					<p:statusHeader></p:statusHeader>
+					<p:nameHeader>Service / Parameter</p:nameHeader>
+					<p:latestValueHeader>Value</p:latestValueHeader>
+					<p:actionsHeader></p:actionsHeader>
+					
+					<p:statusCell>
+						<t:pagelink page="asset/observer/view" context="observer" class="${observerStatus}">
+							${observerStatus}
+						</t:pagelink>
+					</p:statusCell>
+					
+					<p:nameCell>
+						<t:pagelink page="asset/observer/view" context="observer">
+							${observer.name}
+						</t:pagelink>
+						<t:if test="observer.failed">
+							<div class="failure" t:type="loop" t:source="unresolvedFailures" t:value="failure">
+								${failure.message}
+								<t:if test="failure.statusAcknowledged">
+									<t:actionlink t:id="resolveFailure" context="failure" class="resolve"
+										title="Resolve">Resolve</t:actionlink>
+									<p:else>
+										<t:actionlink t:id="acknowledgeFailure" context="failure" 
+											class="acknowledge" title="Acknowledge">Acknowledge</t:actionlink>
+									</p:else>
+								</t:if>
+							</div>
+						</t:if>
+					</p:nameCell>
+					
+					<p:latestValueCell>
+						${latestValue}
+					</p:latestValueCell>
+					
+					<p:lastCheckCell>
+						${lastCheck}
+					</p:lastCheckCell>
+					
+					<p:monitorCell>
+						<span class="monitor-${observer.monitor}">${observer.monitor}</span>
+					</p:monitorCell>
+					
+					<p:actionsCell>
+						<t:pagelink page="asset/observer/manage" context="observer" class="icon icon-edit" title="Edit">Edit</t:pagelink>
+						<t:actionlink t:id="delete" context="observer" class="icon icon-delete"
+							t:mixins="confirm">Delete</t:actionlink>
+					</p:actionsCell>
+					
+					<p:empty>
+						<div class="t-data-grid-empty">
+							<t:if test="noAgentInstalled">
+								No Agent installed
+								<p:else>none</p:else>
+							</t:if>
+						</div>
+					</p:empty>
+				
+				</t:grid>
+				
+			</t:zone>
+			
+		</div>
+	
+	</div>
+
+</t:container>

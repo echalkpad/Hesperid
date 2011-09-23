@@ -1,0 +1,12 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <div id="breadcrumbs">You are here: Roles</div>
+    <t:pagelink page="mesrole/managemesrole">create new mes role</t:pagelink>
+    <t:grid source="allMesRoles" row="mesRole" add="edit,delete">
+        <t:parameter name="editCell">
+            <t:pagelink page="mesrole/managemesrole" context="mesRole.id">edit</t:pagelink>
+        </t:parameter>
+        <t:parameter name="deleteCell">
+            <t:actionlink t:id="delete" context="mesRole.id" onclick="return confirm('Are you sure?');">delete</t:actionlink>
+        </t:parameter>
+    </t:grid>
+</t:layout>

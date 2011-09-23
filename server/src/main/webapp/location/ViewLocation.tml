@@ -1,0 +1,30 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    
+    <div class="actions">
+		<t:pagelink page="location" class="back">Back</t:pagelink>
+		<t:pagelink page="location/manage" context="location" class="edit">Edit</t:pagelink>
+    </div>
+    
+    <h1>Location: ${location.name}</h1>
+	
+	<div class="layout-grid-col-holder">
+	
+		<div class="layout-grid-col">
+		
+			<div class="location-overview">
+    		
+	    		<t:beandisplay object="location" exclude="id"
+	    			reorder="name,locationCode,street,zip,city,country">
+	    		</t:beandisplay>
+	    		
+	    	</div>
+    		
+    	</div>
+	
+		<div class="layout-grid-col2">
+    		<t:assetlist location="location" />
+    	</div>
+    
+    </div>
+    
+</t:layout>

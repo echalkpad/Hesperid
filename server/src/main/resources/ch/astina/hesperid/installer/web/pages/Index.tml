@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+	xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	</head>
+	<body>
+		<div id="container">
+
+			<div id="header">
+				<h1>
+					<t:pagelink page="index">Mandio Installer / Updater</t:pagelink>
+				</h1>
+			</div>
+
+			<div id="main">
+				<div class="content">
+                                    <t:if test="installStep1">
+                                        <t:form t:id="directoryForm">
+                                        <t:errors />
+                                        <div class="form-item-holder">
+                                            <div class="label">
+                                                Hesperid Home directory
+                                            </div>
+                                            <div class="form-item">
+                                                <t:textfield t:id="homedirectory" t:validate="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-item-holder">
+                                                <button type="submit">next</button>
+                                        </div>
+                                        </t:form>
+                                    </t:if>
+
+                                    <t:if test="installStep2">
+                                        <t:form t:id="databaseForm">
+                                        <t:errors />
+                                        <div class="form-item-holder">
+                                            <div class="label">
+                                                Datebase User
+                                            </div>
+                                            <div class="form-item">
+                                                <t:textfield t:id="databaseUser" t:validate="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-item-holder">
+                                            <div class="label">
+                                                Datebase Server
+                                            </div>
+                                            <div class="form-item">
+                                                <t:textfield t:id="databaseServer" t:validate="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-item-holder">
+                                            <div class="label">
+                                                Datebase Port
+                                            </div>
+                                            <div class="form-item">
+                                                <t:textfield t:id="databasePort" t:validate="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-item-holder">
+                                            <div class="label">
+                                                Datebase Password
+                                            </div>
+                                            <div class="form-item">
+                                                <t:passwordField t:id="databasePassword" t:validate="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-item-holder">
+                                            <div class="label">
+                                                Datebase Name
+                                            </div>
+                                            <div class="form-item">
+                                                <t:textfield t:id="databaseName" t:validate="required" />
+                                            </div>
+                                        </div>
+                                        <div class="form-item-holder">
+                                                <button type="submit">Finish</button>
+                                        </div>
+                                        </t:form>
+                                    </t:if>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

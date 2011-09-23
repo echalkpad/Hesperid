@@ -1,0 +1,97 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+<div id="breadcrumbs">You are here: <t:pagelink page="asset">Assets</t:pagelink> » <t:pagelink page="asset/assetoverview" context="asset.id">Asset ${asset.assetName} (${asset.assetIdentifier})</t:pagelink> » <t:pagelink page="clientinformation" context="asset.id">Client Information Overview</t:pagelink> » Manage Client Information</div>
+<h1>${asset.assetName} (${asset.assetIdentifier})</h1>
+<t:if test="success">
+    <div class="feedback-success">
+        asset information saved <br />
+        <t:pagelink page="clientinformation/clientinformationindex" context="asset.id">Back to asset information for ${asset.assetName}</t:pagelink><br />
+        <t:pagelink page="asset/manageasset" context="asset.id">Back to asset</t:pagelink>
+    </div>
+</t:if>
+    <t:form t:id="clientInformationForm">
+            <t:if test="clientInformation.id" negate="true">
+                <div class="form-item-holder">
+                        <div class="label">
+                                <t:label for="clientInformationGatheringStrategy">Client information gathering strategy</t:label>
+                        </div>
+                        <div class="form-item">
+                                <select t:id="clientInformationGatheringStrategy" t:type="select" t:model="clientInformationGatheringStrategies"
+                                 t:value="clientInformation.clientInformationGatheringStrategy" t:encoder="clientInformationGatheringStrategies" t:validate="required" />
+                        </div>
+                </div>
+                Please select first the strategy you want to use before adding parameters
+                <t:parameter name="else">
+                    <div class="form-item-holder">
+                            <div class="label">
+                                    Client information gathering strategy
+                            </div>
+                            <div class="form-item">
+                                    ${clientInformation.clientInformationGatheringStrategy.name}
+                            </div>
+                    </div>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="checkingInterval">Checking Interval</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <t:textfield t:id="checkingInterval" t:value="clientInformation.checkingInterval" />
+                            </div>
+                    </div>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="expectedValue1">${expectedValue1Label}</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <t:textfield t:id="expectedValue1" t:value="clientInformation.expectedValue1" />
+                            </div>
+                    </div>
+                    <t:if test="numberType">
+                        <div class="form-item-holder">
+                                <div class="label">
+                                         <t:label for="expectedValue2">Max expected value</t:label>
+                                </div>
+                                <div class="form-item">
+                                        <t:textfield t:id="expectedValue2" t:value="clientInformation.expectedValue2" />
+                                </div>
+                        </div>
+                    </t:if>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="monitor">Monitor this parameter</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <t:checkbox t:id="monitor" t:value="clientInformation.monitor" />
+                            </div>
+                    </div>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="notifyContact">Notify Contact</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <select t:id="notifyContact" t:type="select" t:model="contacts"
+                                     t:value="clientInformation.notifyContact" t:encoder="contacts" />
+                            </div>
+                    </div>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="showOnAssetOverview">Show on Asset overview</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <t:checkbox t:id="showOnAssetOverview" t:value="clientInformation.showOnAssetOverview" />
+                            </div>
+                    </div>
+                    <div class="form-item-holder">
+                            <div class="label">
+                                     <t:label for="overviewPageName">Name on Asset overview page</t:label>
+                            </div>
+                            <div class="form-item">
+                                    <t:textfield t:id="overviewPageName" t:value="clientInformation.overviewPageName" />
+                            </div>
+                    </div>
+                </t:parameter>
+            </t:if>
+            <div class="form-item-holder">
+                    <button type="submit">Save Client Information</button>
+            </div>
+    </t:form>
+</t:layout>

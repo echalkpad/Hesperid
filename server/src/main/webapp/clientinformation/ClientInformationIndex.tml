@@ -1,0 +1,24 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <div id="breadcrumbs">You are here: <t:pagelink page="asset">Assets</t:pagelink> » <t:pagelink page="asset/assetoverview" context="asset.id">Asset ${asset.assetName} (${asset.assetIdentifier})</t:pagelink> » Client Information Overview</div>
+    <h1>${asset.assetName}</h1>
+    <t:pagelink page="clientinformation/manageclientinformation" context="asset.id">create new client information</t:pagelink>
+    <t:grid source="allClientInformationsForAsset" row="clientInformation" add="edit,delete,strategy,resolve" reorder="strategy" exclude="checkingInterval,expectedValue1,expectedValue2,monitor,showOnAssetOverview,id">
+        <t:parameter name="strategyCell">
+            ${clientInformation.clientInformationGatheringStrategy.name}
+        </t:parameter>
+        <t:parameter name="editCell">
+            <t:pagelink page="clientinformation/manageclientinformation" context="[asset.id,clientInformation.id]">edit</t:pagelink>
+        </t:parameter>
+        <t:parameter name="deleteCell">
+            <t:actionlink t:id="delete" context="clientInformation.id" onclick="return confirm('Are you sure?');">delete</t:actionlink>
+        </t:parameter>
+        <t:parameter name="resolveCell">
+            <t:if test="clientInformation.failed">
+            <t:actionlink t:id="resolve" context="clientInformation.id">resolve error</t:actionlink>
+                <t:parameter name="else">
+                    -
+                </t:parameter>
+            </t:if>
+        </t:parameter>
+    </t:grid>
+</t:layout>

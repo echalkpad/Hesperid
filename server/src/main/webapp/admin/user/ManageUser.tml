@@ -1,0 +1,62 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+	
+	<t:if test="user.id">	
+		<h1>Edit User: ${user.username}</h1>
+		<p:else>
+			<h1>Add User</h1>
+		</p:else>
+	</t:if>
+	
+	<div class="layout-grid-col-holder">
+		
+		<div class="layout-grid-col">
+	
+		    <t:form class="box-holder">
+		    
+		    	<div class="box-head">
+		    		<h2>User</h2>
+		    	</div>
+		    	
+		    	<div class="box-content">
+		    		
+		    		<fieldset>
+		    		
+						<div class="form-item">
+							<t:label t:for="username">Username</t:label>
+							<t:textfield t:id="username" t:value="user.username" />
+						</div>
+					
+						<div class="form-item">
+							<t:label t:for="password">Password</t:label>
+							<t:textfield t:id="password" t:value="password" />
+						</div>
+					
+						<div class="form-item">
+							<t:label t:for="enabled">Enabled</t:label>
+							<t:checkbox t:id="enabled" t:value="user.enabled" />
+						</div>
+						
+					</fieldset>
+		    	
+		    	</div>
+		        
+		        <div class="box-foot form-foot">
+		        	
+		        	<button type="submit">Save</button>
+		        	
+		        	<t:if test="user.id">
+		        		<t:pagelink page="admin/user/view" context="user" class="button button-cancel">Cancel</t:pagelink>
+		        		<p:else>
+		        			<t:pagelink page="admin/user" class="button button-cancel">Cancel</t:pagelink>
+		        		</p:else>
+		        		
+		        		<t:errors />
+		        		
+		        	</t:if>
+		        </div>
+		    	
+			</t:form>
+		</div>
+	</div>
+	
+</t:layout>

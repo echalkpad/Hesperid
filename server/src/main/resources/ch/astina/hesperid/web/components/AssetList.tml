@@ -1,0 +1,82 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+
+	<div class="assets">
+
+		<div class="box-holder">
+		
+			<div class="box-head">
+			
+				<h2>Assets</h2>
+				
+				<t:form>
+					
+					<t:unless test="location">
+						<label>
+							Location
+							<t:select model="locations" t:value="filterLocation" onchange="this.parentNode.parentNode.submit();" />
+						</label>
+					</t:unless>
+					
+					<label>
+						Escalation Scheme
+						<t:select model="escalationSchemes" t:value="filterEscalationScheme" onchange="this.parentNode.parentNode.submit();" />
+					</label>
+					
+					<label>
+						<t:checkbox t:value="filterManaged" onclick="this.parentNode.parentNode.submit();"/>
+						Managed only
+					</label>
+					
+				</t:form>
+				
+			</div>
+	
+			<t:grid source="assets" row="asset" rowClass="rowclass" inPlace="true"
+				exclude="id,assetIdentifier,carePack,description,purchasing,lastUpdatedObserver,managed,errorOccured,agentInstalled"
+				add="status,location" reorder="status,assetName,host,location,roomNumber,lastTickReceived">
+			
+				<p:statusHeader></p:statusHeader>
+				
+				<p:statusCell>
+					<t:pagelink page="asset/overview" context="asset" class="${assetStatus}">
+						${assetStatus}
+					</t:pagelink>
+				</p:statusCell>
+				
+				<p:assetNameCell>
+					<t:pagelink page="asset/overview" context="asset">
+						${asset.assetName}
+					</t:pagelink>
+				</p:assetNameCell>
+				
+				<p:locationCell>
+					<t:if test="asset.location">
+		    			<t:pagelink page="location/view" context="asset.location">
+		    				${asset.location.name}
+		    			</t:pagelink>
+		    		</t:if>
+				</p:locationCell>
+				
+				<p:lastTickReceivedCell>
+					${lastTickReceived}
+				</p:lastTickReceivedCell>
+				
+				<p:observersCell>
+					<t:loop source="asset.observers" value="observer">
+						<t:pagelink page="asset/observer/view" context="observer">
+							${observer.name}${observersComma}
+						</t:pagelink>
+					</t:loop>
+				</p:observersCell>
+				
+				<p:empty>
+					<div class="t-data-grid-empty">none</div>
+				</p:empty>
+			
+			</t:grid>
+			
+		</div>
+	
+	</div>
+
+</t:container>

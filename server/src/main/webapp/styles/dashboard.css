@@ -1,0 +1,98 @@
+@CHARSET "UTF-8";
+
+/**
+ * Dashboard
+ */
+.dashboard-holder {
+	overflow: hidden;
+	margin: 0 0 40px 0;
+	width: 760px;
+}
+.dashboard-item {
+	float: left;
+	margin: 0 10px 10px 0;
+	padding: 10px;
+	background: #EAEAEA;
+	border: 1px solid #C0C0C0;
+	width: 160px;
+	height: 80px;
+	text-decoration: none;
+	line-height: 1em;
+}
+.dashboard-item span {
+	color: #A1A1A1;
+	margin: 0;
+	font-size: 0.8em;
+	display: block;
+}
+.dashboard-item span.title {
+	font-size: 1.2em;
+	color: #4A4A4A;
+	line-height: 2.2em;
+}
+.content .dashboard-item:hover {
+	text-decoration: none;
+}
+.dashboard-item:hover span {
+	color: #4A4A4A;
+}
+.stats span.title {
+	background: url(../images/icons/32x32/barchart.png) left no-repeat;
+	padding-left: 40px;
+	margin-bottom: 10px;
+}
+.tasks span.title {
+	background: url(../images/icons/32x32/checklist.png) left no-repeat;
+	padding-left: 40px;
+	margin-bottom: 10px;
+}
+.settings span.title {
+	background: url(../images/icons/32x32/setting.png) left no-repeat;
+	padding-left: 40px;
+	margin-bottom: 10px;
+}
+.security span.title {
+	background: url(../images/icons/32x32/security.png) left no-repeat;
+	padding-left: 40px;
+	margin-bottom: 10px;
+}
+.users span.title {
+	background: url(../images/icons/32x32/usergroup.png) left no-repeat;
+	padding-left: 40px;
+	margin-bottom: 10px;
+}
+.alerts span.title {
+	background: url(../images/icons/32x32/alert.png) left no-repeat;
+	padding-left: 40px;
+	margin-bottom: 10px;
+}
+
+/**
+ * Activity Stream
+ */
+.content ul.activity-stream {
+	list-style: none;
+	margin: 0 0 10px 0;
+}
+.activity-stream li {
+	padding: 5px 0;
+}
+.activity-stream .date {
+	color: #8F8F8F;
+	/*border-bottom: 1px solid #cfcfcf;*/
+	padding: 5px 0 0 0;
+	margin: 0 0 5px 0;
+}
+.activity-stream .activity {
+	margin: 0 0 0 24px;
+	list-style: square;
+}
+.activity-stream .added {
+	list-style-image: url(../images/icons/16x16/file-add.png);
+}
+.activity-stream .deleted {
+	list-style-image: url(../images/icons/16x16/file-delete.png);
+}
+.activity-stream .commented {
+	list-style-image: url(../images/icons/16x16/comment.png);
+}

@@ -1,0 +1,8 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <div id="breadcrumbs">You are here: <t:pagelink page="admin">Admin</t:pagelink> » Agent Software</div>
+    <t:grid source="allagentbundles" row="agentbundle" add="edit">
+        <t:parameter name="editCell">
+            <t:pagelink page="admin/agentbundle/manageagentbundle" context="agentbundle">edit</t:pagelink>
+        </t:parameter>
+    </t:grid>
+</t:layout>

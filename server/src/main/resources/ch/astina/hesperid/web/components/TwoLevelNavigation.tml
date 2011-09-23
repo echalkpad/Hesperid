@@ -1,0 +1,36 @@
+<div id="${id}" class="multi-level" xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+	<ul>
+		<t:loop source="firstlevelpages" value="page">
+        	<t:if test="page.acceptedRoles">
+                <t:security.IfRole ifAnyGranted="prop:page.acceptedRoles">
+					<li class="${cssClass}">
+						<t:pagelink page="prop:page.name">${page.title}</t:pagelink>				
+					</li>
+                </t:security.IfRole>
+                <t:parameter name="else">
+					<li class="${cssClass}">
+						<t:pagelink page="prop:page.name">${page.title}</t:pagelink>
+					</li>
+                </t:parameter>
+			</t:if>
+		</t:loop>
+	</ul>
+	<t:if test="activeFirstLevelPage?.childPages">
+		<ul class="level-two">
+			<t:loop source="activeFirstLevelPage.childPages" value="page">
+				<t:if test="page.acceptedRoles">
+					<t:security.IfRole ifAnyGranted="prop:page.acceptedRoles">
+						<li class="${cssClass}">
+							<t:pagelink page="prop:page.name">${page.title}</t:pagelink>				
+						</li>
+					</t:security.IfRole>
+					<t:parameter name="else">
+						<li class="${cssClass}">
+							<t:pagelink page="prop:page.name">${page.title}</t:pagelink>
+						</li>
+					</t:parameter>
+				</t:if>
+			</t:loop>
+		</ul>
+	</t:if>
+</div>

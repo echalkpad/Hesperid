@@ -1,0 +1,21 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+	
+	<h1>Dashboard</h1>
+	
+	<div class="layout-grid-col-holder">
+	
+		<div class="layout-grid-col2">
+	
+			<t:zone t:id="dashboard">
+	
+				<t:failurelist />
+				
+				<t:assetlist />
+				
+			</t:zone>
+		
+		</div>
+	
+	</div>
+	
+</t:layout>

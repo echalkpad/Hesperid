@@ -1,0 +1,80 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+<div id="breadcrumbs">You are here: <t:pagelink page="contact">Contacts</t:pagelink> » Manage Contact</div>
+<t:if test="success">
+    <div class="feedback-success">
+        Contact saved <br />
+        <t:pagelink page="contact/contactindex">Back to contact overview</t:pagelink>
+    </div>
+</t:if>
+    <t:form t:id="contactForm">
+            <div class="form-item-holder">
+                    <div class="label">
+                             <t:label for="firstName">First Name</t:label>
+                    </div>
+                    <div class="form-item">
+                            <t:textfield t:id="firstName" validate="required" t:value="contact.firstName" />
+                    </div>
+            </div>
+            <div class="form-item-holder">
+                    <div class="label">
+                             <t:label for="lastName">Last Name</t:label>
+                    </div>
+                    <div class="form-item">
+                            <t:textfield t:id="lastName" validate="required" t:value="contact.lastName" />
+                    </div>
+            </div>
+            <div class="form-item-holder">
+                    <div class="label">
+                             <t:label for="mesRole">MES Role</t:label>
+                    </div>
+                    <div class="form-item">
+                            <select t:id="mesRole" t:type="select" t:model="mesRoles"
+                             t:value="contact.mesRole" t:encoder="mesRoles" />
+                    </div>
+            </div>
+            <div class="form-item-holder">
+                    <div class="label">
+                             <t:label for="manufacturingLocation">Manufacturing Location</t:label>
+                    </div>
+                    <div class="form-item">
+                            <select t:id="manufacturingLocation" t:type="select" t:model="manufacturingLocations"
+                             t:value="contact.manufacturingLocation" t:encoder="manufacturingLocations" />
+                    </div>
+            </div>
+            <div class="form-item-holder">
+                    <div class="label">
+                             <t:label for="mail">Mail</t:label>
+                    </div>
+                    <div class="form-item">
+                            <t:textfield t:id="mail" t:value="contact.mail" />
+                    </div>
+            </div>
+            <div class="form-item-holder">
+                    <div class="label">
+                             <t:label for="phone">Phone</t:label>
+                    </div>
+                    <div class="form-item">
+                            <t:textfield t:id="phone" t:value="contact.phone" />
+                    </div>
+            </div>
+            <div class="form-item-holder">
+                    <div class="label">
+                             <t:label for="mobile">Mobile</t:label>
+                    </div>
+                    <div class="form-item">
+                            <t:textfield t:id="mobile" t:value="contact.mobile" />
+                    </div>
+            </div>
+            <div class="form-item-holder">
+                    <div class="label">
+                             <t:label for="pager">Pager</t:label>
+                    </div>
+                    <div class="form-item">
+                            <t:textfield t:id="pager" t:value="contact.pager" />
+                    </div>
+            </div>
+            <div class="form-item-holder">
+                    <button type="submit">Save Contact</button>
+            </div>
+    </t:form>
+</t:layout>

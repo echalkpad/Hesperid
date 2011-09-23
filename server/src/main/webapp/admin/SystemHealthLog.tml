@@ -1,0 +1,22 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+
+	<div class="actions">
+    	<t:actionlink t:id="delete" class="delete" onclick="return confirm('Are you sure?');">Clear</t:actionlink>
+    </div>
+    
+    <t:grid source="allSystemHealthEntries" exclude="id,log" reorder="logDate,title" row="systemhealth" class="system-health">
+
+		<p:logDateCell>
+			${logDate}
+		</p:logDateCell>
+		
+		<p:titleCell>
+			${systemhealth.title}
+			<span>
+				${systemhealth.log}
+			</span>
+		</p:titleCell>
+
+    </t:grid>
+    
+</t:layout>

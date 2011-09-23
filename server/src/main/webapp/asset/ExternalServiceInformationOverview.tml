@@ -1,0 +1,19 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <div id="breadcrumbs">You are here: <t:pagelink page="asset">Assets</t:pagelink> » <t:pagelink page="asset/assetoverview" context="externalServiceInformation.asset.id">Asset ${externalServiceInformation.asset.assetName} (${externalServiceInformation.asset.assetIdentifier})</t:pagelink> » External Service Parameter ${externalServiceInformation.externalServiceObserverStrategy.name}</div>
+    <h1>${externalServiceInformation.asset.assetName} (${externalServiceInformation.asset.assetIdentifier})</h1>
+    <h2>${externalServiceInformation.externalServiceObserverStrategy.name}</h2>
+    <t:pagelink page="externalserviceinformation/manageexternalserviceinformation" context="[externalServiceInformation.asset.id,externalServiceInformation.id]">edit</t:pagelink><br /><br />
+    <t:if test="externalServiceInformation.failed">
+        <img src="${asset:context:images/warning_icon_big.png}" /> This external service informations has errors (<t:actionlink t:id="resolve">resolve</t:actionlink>)
+    </t:if>
+    <t:if test="numbertype">
+        <t:if test="graphUrl">
+            <img src="${graphUrl}" />
+        </t:if>
+    </t:if>
+    <t:grid source="lastExternalServiceParameters" row="externalServiceParameter">
+        <t:parameter name="updatedCell">
+                ${formattedUpdated}
+        </t:parameter>
+    </t:grid>
+</t:layout>

@@ -1,0 +1,35 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+	<div id="content">
+	
+		<form xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
+		      action="${loginCheckUrl}" method="post">
+		    
+		    <t:if test="failed">
+				<p>${message:error_message}</p>
+		    </t:if>
+		    
+		    <div class="form-item-holder">
+		    	<div class="label">
+		    		<label class="username" for="j_username">${message:username}</label>
+		    	</div>
+		    	<div class="form-item">
+		    		<input id="username" class="username" name="j_username" type="text"/>
+		    	</div>
+		    </div>
+		    
+		    <div class="form-item-holder">
+		    	<div class="label">
+		    		<label class="password" for="j_password">${message:password}</label>
+		    	</div>
+		    	<div class="form-item">
+		    		<input id="password" class="password" name="j_password" type="password"/>
+		    	</div>
+		    </div>
+		    
+		    <div class="form-button-holder">
+		    	<button id="submit" type="submit">${message:login}</button>
+		    </div>
+		    
+		</form>
+	</div>
+</t:layout>

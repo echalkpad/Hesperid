@@ -1,0 +1,16 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+
+	<div class="actions">
+		<t:pagelink page="system" class="back">Back</t:pagelink>
+		<t:pagelink page="system/manage" context="system" class="edit">Edit</t:pagelink>
+	</div>
+    
+    <h1>${system.name}</h1>
+
+    <t:beandisplay object="system" exclude="id" />
+    
+    <h2>Assets in System</h2>
+    
+    <img src="${assetGraphInSystem}" />
+    
+</t:layout>

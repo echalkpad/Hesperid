@@ -1,0 +1,38 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+<div id="breadcrumbs">You are here: <t:pagelink page="admin">Admin</t:pagelink> » <t:pagelink page="admin/agentbundle">Agent Software</t:pagelink> » Manage</div>
+<t:if test="success">
+    <div class="feedback-success">
+        Agent bundle saved <br />
+        <t:pagelink page="admin/agentbundle/agentbundleindex">Back to agent bundle overview</t:pagelink>
+    </div>
+</t:if>
+    <t:form t:id="agentBundleForm">
+            <div class="form-item-holder">
+                    <div class="label">
+                             <t:label for="name">Name</t:label>
+                    </div>
+                    <div class="form-item">
+                            <t:textfield t:id="name" validate="required" t:value="agentBundle.name" />
+                    </div>
+            </div>
+            <div class="form-item-holder">
+                    <div class="label">
+                             <t:label for="description">Description</t:label>
+                    </div>
+                    <div class="form-item">
+                            <t:textarea t:id="description" t:value="agentBundle.description" />
+                    </div>
+            </div>
+            <div class="form-item-holder">
+                    <div class="label">
+                             <t:label for="bundle">Bundle</t:label>
+                    </div>
+                    <div class="form-item">
+                            <t:upload t:id="bundle" t:value="software" />
+                    </div>
+            </div>
+            <div class="form-item-holder">
+                    <button type="submit">Save Agent Bundle</button>
+            </div>
+    </t:form>
+</t:layout>

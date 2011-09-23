@@ -1,0 +1,237 @@
+@CHARSET "UTF-8";
+ 
+body {
+	font-size: 0.8em;
+	font-family: Arial, Helvetica, Verdana, sans-serif;
+	line-height: 1.5em;
+	color: #444;
+	position: relative;
+	padding: 0;
+	margin: 0;
+}
+
+/**
+ * Browser Hacks & Fixes
+ */
+.clearfix:after {
+	content: ".";
+	display: block;
+	clear: both;
+	visibility: hidden;
+	line-height: 0;
+	height: 0;
+}
+
+.clearfix {
+	display: inline-block;
+}
+
+html[xmlns] .clearfix {
+	display: block;
+}
+
+* html .clearfix {
+	height: 1%;
+}
+ 
+/**
+ * General Styles
+ */
+h1, h2, h3, h4, h5, h6, ul, p, hr {
+	padding: 0;
+	margin: 0 0 10px 0;
+}
+h1 {
+	font-size: 1.6em;
+}
+h2 {
+	font-size: 1.4em;
+}
+h3 {
+	font-size: 1.3em;
+}
+h4 {
+	font-size: 1.2em;
+}
+h5 {
+	font-size: 1.1em;
+}
+h6 {
+	font-size: 1em;
+}
+a {
+	text-decoration: underline;
+	color: #484848;
+}
+hr {
+	border: 0;
+	color: #cfcfcf;
+	background: #cfcfcf;
+	height: 1px;
+}
+ul {
+	margin: 0 0 10px 10px;
+	list-style: square;
+}
+ 
+/**
+ * Header Area
+ */
+#header {
+	background: url(../images/bg-header.png) #007fbc no-repeat left top;
+	padding: 10px 20px 10px 30px;
+	color: white;
+	height: 30px;
+}
+#header h1 {
+	font-weight: normal;
+	font-size: 2em;
+	margin: 5px 0 0;
+}
+#header h1 a:hover {
+	text-decoration: none;
+}
+#header #service {
+	position: absolute;
+	top: 0.7em;
+	right: 1em;
+	font-size: 0.9em;
+	text-align: right;
+}
+#header a {
+	color: white;
+	text-decoration: none;
+}
+#header a.active, #header a:hover {
+	text-decoration: underline;
+}
+ 
+/**
+ * Main Menu
+ */
+#menu {
+	overflow: hidden;
+	height: 100%;
+	background: url(../images/bg-header.png) #007fbc no-repeat left -50px;
+}
+#menu ul {
+	overflow: hidden;
+	list-style: none;
+	margin: 7px 0 0 30px;
+}
+#menu ul li {
+	float: left;
+}
+#menu ul li a {
+	display: block;
+	padding: 7px 20px 3px 20px;
+	margin: 0 10px 0 0;
+	font-size: 14px;
+	text-decoration: none;
+	color: white;
+	background: #0070be;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+}
+#menu ul li a:hover {
+}
+#menu ul li.active a {
+	color: #004183;
+	background: white;
+}
+ 
+/**
+ * Multi Tier Menu
+ */
+#menu.multi-level {
+}
+#menu.multi-level .level-two {
+	margin: 0;
+	padding: 5px 0 0 50px;
+	background: #002e5c;
+}
+#menu.multi-level .level-two a {
+	color: white;
+	font-size: 13px;
+}
+#menu.multi-level .level-two li.active a {
+	color: #004183;
+	background: white;
+}
+#menu.multi-level .level-two a:hover {
+}
+ 
+/**
+ * Main Area
+ */
+#main {
+}
+
+/* Layout Grid */
+.layout-grid-col-holder {
+	overflow: hidden;
+}
+.layout-grid-col {
+	width: 33%;
+	float: left;
+}
+.layout-grid-col2 {
+	width: 66%;
+	float: left;
+}
+.layout-grid-col3 {
+	width: 100%;
+}
+
+/**
+ * Content Area
+ */
+.content {
+	padding: 30px 50px;
+}
+ 
+/**
+ * Feedbacks
+ */
+.feedback {
+	padding: 10px 10px 10px 36px;
+	margin: 0 0 20px 0;
+	color: #455158;
+	background: #f1fafe url(../images/icons/24x24/tagcloud.png) no-repeat 5px center;
+	border: 1px solid #8ca5b3;
+	cursor: default;
+}
+.feedback .feedback-title {
+	font-weight: bold;
+}
+.feedback-success {
+	color: #33461d;
+	background: #c9e080 url(../images/icons/24x24/check-green.png) no-repeat 5px center;
+	border-color: #5d8034;
+}
+.feedback-warning {
+	color: #6e4323;
+	background: #ffde97 url(../images/icons/24x24/alert.png) no-repeat 5px center;
+	border-color: #e38f25;
+}
+.feedback-error {
+	color: #641b13;
+	background: #f3775e url(../images/icons/24x24/restrict.png) no-repeat 5px center;
+	border-color: #b53123;
+}
+.feedback-info {
+	color: #164263;
+	background: #75bcf0 url(../images/icons/24x24/info-blue.png) no-repeat 5px center;
+	border-color: #2d86c7;
+}
+
+/**
+ * Dev Info
+ */
+#version {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	font-size: 0.8em;
+	color: #666;
+}

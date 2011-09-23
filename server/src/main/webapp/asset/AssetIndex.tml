@@ -1,0 +1,11 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+	
+	<div class="actions">
+    	<t:pagelink page="asset/manageasset" class="add">Add Asset</t:pagelink>
+    </div>
+    
+    <h1>Assets Overview</h1>
+    
+    <t:assetlist assets="assets" />
+    
+</t:layout>

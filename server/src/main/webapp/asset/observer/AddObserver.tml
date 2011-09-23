@@ -1,0 +1,22 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    
+    <h1>Add Observer: ${asset.assetName}</h1>
+    
+    <t:form>
+    
+    	<div class="form-item-holder">
+    		<div class="label">
+    			<t:label for="observerStrategy">Observer Strategy</t:label>
+    		</div>
+    		<div class="form-item">
+    			<t:select t:id="observerStrategy" t:model="observerStrategies" t:validate="required" />
+    		</div>
+    	</div>
+    	
+    	<div class="form-button-holder">
+    		<button type="submit">Next</button>
+    	</div>
+    
+    </t:form>
+    
+</t:layout>

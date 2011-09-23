@@ -1,0 +1,87 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+
+	<div class="failures">
+	
+		<div class="box-holder">
+		
+			<div class="box-head">
+				
+				<h2>Failures</h2>
+				
+				<t:form>
+					<label>
+						<t:checkbox t:id="filterUnresolved" />
+						Only unresolved
+					</label>
+					<label>
+						<t:checkbox t:id="filterMine" />
+						Concerning me
+					</label>
+					<button type="submit">Show</button>
+				</t:form> 
+			</div>
+			
+			<t:grid t:source="failures" t:row="failure" add="asset,icons,escalationLevel,observerParameter" rowClass="rowclass"
+				exclude="id,acknowledged,resolved,statusDetected,statusAcknowledged,statusResolved"
+				reorder="failureStatus,asset,message,observerParameter,escalationLevel,detected,escalated,icons" inPlace="true">
+				
+				<p:failureStatusHeader></p:failureStatusHeader>
+				<p:observerParameterHeader>Value</p:observerParameterHeader>
+				<p:iconsHeader></p:iconsHeader>
+				
+				<p:failureStatusCell>
+					<span>${failure.failureStatus}</span>
+				</p:failureStatusCell>
+				
+				<p:assetCell>
+					<t:pagelink page="asset/overview" context="failure.asset">${failure.asset.assetName}</t:pagelink>
+				</p:assetCell>
+				
+				<p:messageCell>
+					<t:pagelink page="asset/observer/view" context="failure.observer">${failure.observer.name}</t:pagelink>
+					<span>${failure.message}</span>
+				</p:messageCell>
+				
+				<p:observerParameterCell>
+					${failure.observerParameter?.value}				
+				</p:observerParameterCell>
+				
+				<p:escalationLevelCell>
+					<t:if test="failure.escalationLevel">
+						${failure.escalationLevel.contact.formattedName}
+						(${failure.escalationLevel.contact.mail})
+					</t:if>
+				</p:escalationLevelCell>
+				
+				<p:detectedCell>
+					${detectedDate}
+				</p:detectedCell>
+				
+				<p:escalatedCell>
+					${escalatedDate}
+				</p:escalatedCell>
+				
+				<p:iconsCell>
+					<t:if test="failure.statusDetected">
+						<t:actionlink t:id="acknowledge" context="failure" title="Acknowledge"
+							class="icon icon-acknowledge">Acknowledge</t:actionlink>
+					</t:if>
+					<t:if test="failure.statusAcknowledged">
+						<t:actionlink t:id="resolve" context="failure" title="Resolve"
+							class="icon icon-resolve">Resolve</t:actionlink>
+					</t:if>
+				</p:iconsCell>
+				
+				<p:empty>
+					<div class="t-data-grid-empty">
+						none
+					</div>
+				</p:empty>
+				
+			</t:grid>
+			
+		</div>
+	
+	</div>
+
+</t:container>

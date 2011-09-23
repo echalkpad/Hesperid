@@ -1,0 +1,76 @@
+.observers .table-holder {
+}
+.observers table {
+	width: 100%;
+}
+.observers .name {
+	font-weight: bold;
+}
+.observers .status-failed {
+	color: #c00;
+	background: #fff6f6;
+}
+.observers .status-failed a {
+	color: #c00;
+}
+.observers .status-online-failure:hover, .observers .status-offline-failure:hover {
+	/*background: #f7ebeb;*/
+}
+.observers .status {
+	width: 21px;
+}
+.observers .status a {
+	display: block;
+	text-indent: -9999px;
+	width: 21px;
+	height: 21px;
+	background: url(../images/asset-status.gif) no-repeat 0 21px;
+}
+.observers .status .ok {
+	background-position: 0 0;
+}
+.observers .status .failed {
+	background-position: 0 -21px;
+}
+.observers .latestValue {
+	width: 80px;
+}
+.observers td.lastCheck {
+	white-space: nowrap;
+	width: 100px;
+	font-size: 80%;
+}
+.observers .monitor .monitor-false {
+	display: none;
+}
+.observers .monitor .monitor-true {
+	display: block;
+	width: 16px;
+	height: 16px;
+	text-indent: -9999px;
+	background: url(../images/check-blue.png) no-repeat;
+}
+.observers td.latestValue {
+	white-space: nowrap;
+	font-size: 80%;
+}
+.observers .actions {
+	width: 60px;
+}
+.observers .failure {
+	font-size: 80%;
+	font-weight: normal;
+}
+.observers .failure a {
+	background: no-repeat left;
+	padding-left: 16px; 
+	display: inline-block;
+	margin-left: 5px;
+	text-indent: -9999px;
+}
+.observers .failure .acknowledge {
+	background-image: url(../images/icons/12x12/acknowledge.png);
+}
+.observers .failure .resolve {
+	background-image: url(../images/icons/12x12/resolve.png);
+}

@@ -1,0 +1,61 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+	
+	<div class="actions">
+		<t:pagelink page="asset/overview" context="observer.asset" class="back">Back</t:pagelink>
+	</div>
+    
+	<h1>Observer: ${observer.name} (${observer.asset.assetName})</h1>
+	
+	<div class="layout-grid-col-holder">
+	
+		<div class="layout-grid-col2">
+	
+			<t:failurelist observer="observer" />
+			
+			<t:observerchart observer="observer" />
+			
+			<div class="parameter-values">
+			
+				<div class="box-holder">
+				
+					<div class="box-head">
+						<h2>Parameter Values</h2>
+					</div>
+		    
+					<t:grid t:source="observerParameterGridDataSource" t:row="observerParameter"
+						exclude="id" reorder="updated,value" rowsPerPage="10" inPlace="true">
+						<p:updatedHeader>Date</p:updatedHeader>
+						<p:updatedCell>
+							${observerParameterDate}
+						</p:updatedCell>
+						
+					</t:grid>
+					
+				</div>
+			</div>
+			
+		</div>
+	
+		<div class="layout-grid-col">
+    
+		    <div class="observer-overview">
+
+				<div class="actions">
+					<t:pagelink page="asset/observer/manage" context="observer" class="edit">Edit</t:pagelink>
+				</div>
+		    
+		    	<h2>Settings</h2>
+		    
+			    <t:beandisplay object="observer" exclude="id,name,failed,showOnAssetOverview">
+			    	<p:lastCheck>
+			    		${lastCheck}
+			    	</p:lastCheck>
+			    </t:beandisplay>
+		    
+		    </div>
+			
+		</div>
+		
+	</div>
+    
+</t:layout>

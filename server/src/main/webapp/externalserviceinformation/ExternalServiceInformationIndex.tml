@@ -1,0 +1,27 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <div id="breadcrumbs">You are here: <t:pagelink page="asset">Assets</t:pagelink> » <t:pagelink page="asset/assetoverview" context="asset.id">Asset ${asset.assetName} (${asset.assetIdentifier})</t:pagelink> » External Service Information Overview</div>
+    <h1>${asset.assetName}</h1>
+    <t:pagelink page="externalserviceinformation/manageexternalserviceinformation" context="asset.id">create new external service information</t:pagelink>
+    <t:grid source="allExternalServiceInformationsForAsset" row="externalServiceInformation"
+            add="edit,delete,resolve,externalServiceObserverStrategy"
+            exclude="id,expectedValue1,expectedValue2,showOnAssetOverview,overviewPageName,currentParameters"
+            reorder="externalServiceObserverStrategy,checkingInterval,failed,monitor">
+        <t:parameter name="externalServiceObserverStrategyCell">
+            ${externalServiceInformation.externalServiceObserverStrategy.name}
+        </t:parameter>
+        <t:parameter name="editCell">
+            <t:pagelink page="externalserviceinformation/manageexternalserviceinformation" context="[asset.id,externalServiceInformation.id]">edit</t:pagelink>
+        </t:parameter>
+        <t:parameter name="deleteCell">
+            <t:actionlink t:id="delete" context="externalServiceInformation.id" onclick="return confirm('Are you sure?');">delete</t:actionlink>
+        </t:parameter>
+        <t:parameter name="resolveCell">
+            <t:if test="externalServiceInformation.failed">
+            <t:actionlink t:id="resolve" context="externalServiceInformation.id">resolve error</t:actionlink>
+                <t:parameter name="else">
+                    -
+                </t:parameter>
+            </t:if>
+        </t:parameter>
+    </t:grid>
+</t:layout>

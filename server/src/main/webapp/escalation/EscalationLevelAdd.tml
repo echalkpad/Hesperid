@@ -1,0 +1,70 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+	
+	<h1>Add Escalation Level</h1>
+	
+	<t:form>
+	
+		<t:errors />
+	
+		<div class="form-item-holder">
+			<div class="label">
+				<t:label for="level">Level</t:label>
+			</div>
+			<div class="form-item">
+				<t:textfield t:id="level" t:value="escalationLevel.level" t:validate="required" />
+			</div>
+		</div>
+	
+		<div class="form-item-holder">
+			<div class="label">
+				<t:label for="timeout">Timeout</t:label>
+			</div>
+			<div class="form-item">
+				<t:textfield t:id="timeout" t:value="escalationLevel.timeout" t:validate="required" />
+				<span>Seconds</span>
+			</div>
+		</div>
+	
+		<div class="form-item-holder">
+			<div class="label">
+				<t:label for="username">User</t:label>
+			</div>
+			<div class="form-item">
+				<t:select t:id="username" t:model="users" t:value="user" />
+			</div>
+		</div>
+	
+		<div class="form-item-holder">
+			<div class="label">
+				<t:label for="firstname">First Name</t:label>
+			</div>
+			<div class="form-item">
+				<t:textfield t:id="firstname" t:value="escalationLevel.contact?.firstName" />
+			</div>
+		</div>
+	
+		<div class="form-item-holder">
+			<div class="label">
+				<t:label for="lastname">Last Name</t:label>
+			</div>
+			<div class="form-item">
+				<t:textfield t:id="lastname" t:value="escalationLevel.contact?.lastName" />
+			</div>
+		</div>
+	
+		<div class="form-item-holder">
+			<div class="label">
+				<t:label for="mail">Email Address</t:label>
+			</div>
+			<div class="form-item">
+				<t:textfield t:id="mail" t:value="escalationLevel.contact?.mail" t:validate="email" />
+			</div>
+		</div>
+		
+		<div class="form-button-holder">
+			<button type="submit">Save</button>
+		</div>
+		
+	</t:form>
+	
+</t:layout>

@@ -1,0 +1,11 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+	
+	<h1>Escalation Schemes</h1>
+		
+	<t:grid source="escalationSchemes" row="escalationScheme" add="view">
+		<p:viewCell>
+			<t:pagelink page="escalation/view" context="escalationScheme">Details</t:pagelink>
+		</p:viewCell>
+	</t:grid>
+	
+</t:layout>

@@ -1,0 +1,50 @@
+.assets .table-holder {
+	/*width: 940px;*/
+}
+.assets table {
+	width: 100%;
+}
+.assets .assetName {
+	font-weight: bold;
+}
+.assets .status-online-failure, .assets .status-offline-failure {
+	color: #c00;
+	background: #fff6f6;
+}
+.assets .status-online-failure a, .assets .status-offline-failure a {
+	color: #c00;
+}
+.assets .status-online-failure:hover, .assets .status-offline-failure:hover {
+	/*background: #f7ebeb;*/
+}
+.assets .status-offline-ok {
+	color: #999999;
+}
+.assets .status-offline-ok a {
+	color: #999999;
+}
+.assets .status-offline-ok:hover {
+	/*background: #f3f3f3;*/
+}
+.assets .status {
+	width: 21px;
+}
+.assets .status a {
+	display: block;
+	text-indent: -9999px;
+	width: 21px;
+	height: 21px;
+	background: url(../images/asset-status.gif) no-repeat 0 0;
+}
+.assets .status .online-failure {
+	background-position: 0 -21px;
+}
+.assets .status .offline-failure {
+	background-position: 0 -42px;
+}
+.assets .status .offline-ok {
+	background-position: 0 -63px;
+}
+.assets td.observers {
+	font-size: 80%;
+}

@@ -1,0 +1,71 @@
+<t:container xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+
+	<div class="box-holder">
+	
+		<div class="box-head">
+	
+			<h2>Chart</h2>
+		
+			<t:form>
+				<label>
+					Chart
+					<t:select t:model="availableCharts" t:value="chart" t:validate="required" />
+				</label>
+				<label>
+					<t:checkbox t:value="displayMinMax" />
+					Display Expected Min/Max
+				</label>
+				<button type="submit">Show</button>
+			</t:form>
+			
+		</div>
+
+		<script type="text/javascript" src="https://www.google.com/jsapi"></script>
+	    <script type="text/javascript">
+	
+			google.load("visualization", "1", {
+				packages : [ "corechart", "annotatedtimeline" ]
+			});
+			
+			function drawChart()
+			{
+				var data = new google.visualization.DataTable();
+				data.addColumn('datetime', 'Date');
+				<t:if test="expectedValueMin">
+					data.addColumn('number', 'Expected Min');
+				</t:if>
+				<t:if test="expectedValueMax">
+					data.addColumn('number', 'Expected Max');
+				</t:if>
+				data.addColumn('number', '${observer.observerStrategy.resultParameterName}');
+				data.addRows([
+				<t:loop t:source="observerParameters" t:value="observerParameter">
+					[${newJsDate}, <t:if test="expectedValueMin">${observer.expectedValueMin}, </t:if><t:if test="expectedValueMax">${observer.expectedValueMax}, </t:if>${parameterValue} ],
+				</t:loop>]);
+		
+				<t:if test="lineChart">
+					var chart = new google.visualization.LineChart(document
+							.getElementById('${prop:chartId}'));
+					chart.draw(data, {
+							width : 800,
+							height : 400,
+							title : '${observer.name}',
+							curveType : 'function',
+							colors : ${colors}
+					});
+				</t:if>
+				
+				<t:if test="annotatedTimeLine">
+					var chart = new google.visualization.AnnotatedTimeLine(document
+							.getElementById('${prop:chartId}'));
+					chart.draw(data, { displayAnnotations: true, colors : ${colors} });
+				</t:if>
+			}
+			google.setOnLoadCallback(drawChart);
+	    </script>
+	
+		<div class="observer-chart" id="${prop:chartId}"></div>
+		
+	</div>
+
+</t:container>
