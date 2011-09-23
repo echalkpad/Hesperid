@@ -23,7 +23,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.astina.hesperid.agentbundle.webservice.AgentFeedback;
-import ch.astina.project.molo.model.base.Observer;
+import ch.astina.hesperid.model.base.Observer;
 
 /**
  * @author $Author: kstarosta $

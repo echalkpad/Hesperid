@@ -21,7 +21,7 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-            <groupId>ch.astina.project.molo</groupId>
+            <groupId>ch.astina.hesperid</groupId>
             <artifactId>base</artifactId>
             <version>${project.version}</version>
         </dependency>

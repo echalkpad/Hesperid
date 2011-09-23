@@ -29,9 +29,9 @@ import ch.astina.hesperid.agentbundle.scheduler.MicroclientStopListener;
 import ch.astina.hesperid.agentbundle.scheduler.ParameterGathererExecutionJob;
 import ch.astina.hesperid.agentbundle.webservice.AgentFeedback;
 import ch.astina.hesperid.agentbundle.webservice.AgentFeedbackService;
-import ch.astina.project.molo.global.GlobalConstants;
-import ch.astina.project.molo.model.base.Asset;
-import ch.astina.project.molo.model.base.Observer;
+import ch.astina.hesperid.global.GlobalConstants;
+import ch.astina.hesperid.model.base.Asset;
+import ch.astina.hesperid.model.base.Observer;
 
 import javax.xml.ws.BindingProvider;
 import org.apache.log4j.Logger;

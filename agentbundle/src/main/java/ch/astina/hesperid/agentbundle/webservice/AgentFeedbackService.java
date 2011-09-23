@@ -23,7 +23,7 @@ import javax.xml.ws.WebEndpoint;
 import javax.xml.ws.WebServiceClient;
 import javax.xml.ws.WebServiceFeature;
 
-import ch.astina.project.molo.global.GlobalConstants;
+import ch.astina.hesperid.global.GlobalConstants;
 
 /**
  * @author $Author: kstarosta $
