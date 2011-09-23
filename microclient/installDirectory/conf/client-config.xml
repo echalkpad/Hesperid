@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<client-config>
+    <hostBaseURL>http://localhost:8080/hesperid</hostBaseURL>
+    <assetIdentifier>a-machine</assetIdentifier>
+    <updateCheckIntervalMillis>30000</updateCheckIntervalMillis>
+    <httpSocketTimeout>60000</httpSocketTimeout>
+    <clientInstallDir>/opt/infraasset/agent</clientInstallDir>
+    <ipEchoURL></ipEchoURL>
+</client-config>

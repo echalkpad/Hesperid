@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="iso-8859-1" standalone="yes" ?>
+
+<installation version="1.0">
+    <conditions>
+        <condition type="variable" id="is32Bit">
+            <name>SYSTEM_sun_arch_data_model</name>
+            <value>32</value>
+        </condition>
+        <condition type="variable" id="is64Bit">
+            <name>SYSTEM_sun_arch_data_model</name>
+            <value>64</value>
+        </condition>
+        <condition type="and" id="isLinux32Bit">
+            <condition type="ref" refid="izpack.linuxinstall"/>
+            <condition type="ref" refid="is32Bit" />
+        </condition>
+        <condition type="and" id="isLinux64Bit">
+            <condition type="ref" refid="izpack.linuxinstall"/>
+            <condition type="ref" refid="is64Bit" />
+        </condition>
+        <condition type="and" id="isOSX32Bit">
+            <condition type="ref" refid="izpack.macinstall"/>
+            <condition type="ref" refid="is32Bit" />
+        </condition>
+        <condition type="and" id="isOSX64Bit">
+            <condition type="ref" refid="izpack.macinstall"/>
+            <condition type="ref" refid="is64Bit" />
+        </condition>
+    </conditions>
+
+    <dynamicvariables>
+        <variable name="WRAPPER_DIR" value="linux-x86-32" condition="isLinux32Bit" />
+        <variable name="WRAPPER_DIR" value="linux-x86-64" condition="isLinux64Bit" />
+        <variable name="WRAPPER_DIR" value="macosx-universal-32" condition="isOSX32Bit" />
+        <variable name="WRAPPER_DIR" value="macosx-universal-64" condition="isOSX64Bit" />
+    </dynamicvariables>
+
+    <!--
+        The info section.
+        The meaning of the tags should be natural ...
+    -->
+    <info>
+        <appname>@name@</appname>
+        <appversion>@version@ (b@build@r@revision@)</appversion>
+        <url>http://www.julmax.de</url>
+    </info>
+
+    <!--
+        The gui preferences indication.
+        Sets the installer window to 640x480. It will not be able to change the size.
+    -->
+    <guiprefs width="640" height="480" resizable="no"/>
+
+    <!--
+        The locale section.
+        Asks here to include the English and French langpacks.
+    -->
+    <locale>
+        <langpack iso3="eng"/>
+        <langpack iso3="deu"/>
+    </locale>
+
+    <!--
+        The resources section.
+        The ids must be these ones if you want to use the LicencePanel and/or the InfoPanel.
+    -->
+    <resources>
+        <res id="TargetPanel.dir.windows" src="WindowsTargetPath.txt"/>
+        <res id="TargetPanel.dir.unix" src="UnixTargetPath.txt"/>
+        <res id="TargetPanel.dir.macosx" src="OSXTargetPath.txt"/>
+        <res id="ProcessPanel.Spec.xml" src="ProcessPanel.xml"/>
+    </resources>
+
+    <!--
+        The panels section.
+        We indicate here which panels we want to use. The order will be respected.
+    -->
+    <panels>
+        <panel classname="HelloPanel"/>
+        <panel classname="DefaultTargetPanel"/>
+        <panel classname="PacksPanel"/>
+        <panel classname="InstallPanel"/>
+        <panel classname="ProcessPanel"/>
+        <panel classname="FinishPanel"/>
+    </panels>
+
+    <!--
+        The packs section.
+        We specify here our packs.
+    -->
+    <packs>
+        <pack name="Base" required="yes">
+            <description>The base files</description>
+            <file src="bin" targetdir="$INSTALL_PATH"/>
+            <file src="conf" targetdir="$INSTALL_PATH"/>
+            <file src="lib" targetdir="$INSTALL_PATH"/>
+            <file src="logs" targetdir="$INSTALL_PATH"/>
+        </pack>
+    </packs>
+</installation>

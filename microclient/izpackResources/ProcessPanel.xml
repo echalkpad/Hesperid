@@ -1,0 +1,51 @@
+<processing>
+    <job name="Install Windows Service">
+        <os family="windows"/>
+        <executefile name="$INSTALL_PATH\bin\windows-x86-32\install_infraassetagent-service.bat"/>
+        <executefile name="$INSTALL_PATH\bin\windows-x86-32\start_infraassetagent-service.bat"/>
+    </job>
+    <job name="Install Unix Daemon" conditionid="izpack.linuxinstall">
+        <executefile name="chmod">
+            <arg>+x</arg>
+            <arg>$INSTALL_PATH/bin/$WRAPPER_DIR/hesperidmicroclient.sh</arg>
+        </executefile>
+        <executefile name="chmod">
+            <arg>+x</arg>
+            <arg>$INSTALL_PATH/bin/$WRAPPER_DIR/wrapper-$WRAPPER_DIR</arg>
+        </executefile>
+        <executefile name="rm">
+            <arg>-f</arg>
+            <arg>/etc/init.d/hesperidmicroclient</arg>
+        </executefile>
+        <executefile name="ln">
+            <arg>-s</arg>
+            <arg>$INSTALL_PATH/bin/$WRAPPER_DIR/hesperidmicroclient.sh</arg>
+            <arg>/etc/init.d/hesperidmicroclient</arg>
+        </executefile>
+        <executefile name="update-rc.d">
+            <arg>infraassetagent</arg>
+            <arg>defaults</arg>
+        </executefile>
+        <executefile name="/etc/init.d/infraassetagent">
+            <arg>start</arg>
+        </executefile>
+    </job>
+    <job name="Install Unix Daemon" conditionid="izpack.macinstall">
+        <executefile name="chmod">
+            <arg>+x</arg>
+            <arg>$INSTALL_PATH/bin/$WRAPPER_DIR/hesperidmicroclient.sh</arg>
+        </executefile>
+        <executefile name="chmod">
+            <arg>+x</arg>
+            <arg>$INSTALL_PATH/bin/$WRAPPER_DIR/wrapper-$WRAPPER_DIR</arg>
+        </executefile>
+        <executefile name="rm">
+            <arg>-f</arg>
+            <arg>/Library/LaunchDaemons/ch.astina.hesperid.microclient.plist</arg>
+        </executefile>
+        <executefile name="cp">
+            <arg>$INSTALL_PATH/bin/$WRAPPER_DIR/ch.astina.hesperid.microclient.plist</arg>
+            <arg>/Library/LaunchDaemons/ch.astina.hesperid.microclient.plist</arg>
+        </executefile>
+    </job>
+</processing>

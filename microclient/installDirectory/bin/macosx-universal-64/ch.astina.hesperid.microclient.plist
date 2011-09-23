@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>KeepAlive</key>
+	<true/>
+	<key>Label</key>
+	<string>ch.astina.hesperid.microclient</string>
+	<key>ProgramArguments</key>
+	<array>
+		<string>/opt/hesperid/agent/bin/macosx-universal-64/hesperidmicroclient.sh</string>
+		<string>start</string>
+	</array>
+	<key>QueueDirectories</key>
+	<array/>
+	<key>RunAtLoad</key>
+	<true/>
+	<key>WatchPaths</key>
+	<array/>
+</dict>
+</plist>
