@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="http://infraasset.ksfx.de/infraasset/soap?wsdl" uri="wsdl/infraasset.ksfx.de/infraasset/soap.wsdl"/>
+    <system systemId="http://infraasset.ksfx.de:80/infraasset/soap?wsdl" uri="wsdl/infraasset.ksfx.de_80/infraasset/soap.wsdl"/>
+    <system systemId="http://infraasset.ksfx.de:80/infraasset/soap?xsd=1" uri="wsdl/infraasset.ksfx.de_80/infraasset/soap.xsd_1.xsd"/>
+</catalog>
