@@ -31,6 +31,8 @@ public class IndexTest
     public void test1() throws Exception
     {
         Document doc = PageTesterFactory.getInstance().renderPage("Index");
+        
+        System.out.println("OUTOUT " + doc.getElementById("header").find("h1").find("a").getChildMarkup());
 
         Assert.assertEquals(doc.getElementById("header").find("h1").find("a").getChildMarkup(), "HESPERID");
     }

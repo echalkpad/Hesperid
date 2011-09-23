@@ -35,16 +35,12 @@ import ch.astina.hesperid.dao.MesRoleDAO;
 import ch.astina.hesperid.dao.SystemDAO;
 import ch.astina.hesperid.dao.ObserverDAO;
 import ch.astina.hesperid.dao.ReportDAO;
-import ch.astina.hesperid.dao.RoleDAO;
 import ch.astina.hesperid.dao.SystemHealthDAO;
-import ch.astina.hesperid.dao.UserDAO;
 import ch.astina.hesperid.dao.hibernate.AgentBundleDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.AssetDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.ContactDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.EscalationDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.FailureDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.HibernateRoleDAO;
-import ch.astina.hesperid.dao.hibernate.HibernateUserDAO;
 import ch.astina.hesperid.dao.hibernate.MailServerDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.LocationDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.MesRoleDAOHibernate;
@@ -62,11 +58,7 @@ import ch.astina.hesperid.web.services.jobs.ExternalObserverJob;
 import ch.astina.hesperid.web.services.jobs.ObserverStatusCheckerJob;
 import ch.astina.hesperid.web.services.jobs.impl.ExternalObserverJobImpl;
 import ch.astina.hesperid.web.services.jobs.impl.ObserverStatusCheckerJobImpl;
-import ch.astina.hesperid.web.services.springsecurity.LogoutService;
-import ch.astina.hesperid.web.services.springsecurity.internal.LogoutServiceImpl;
 import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
-import ch.astina.hesperid.web.services.users.UserService;
-import ch.astina.hesperid.web.services.users.impl.UserServiceImpl;
 import ch.astina.hesperid.web.services.version.Version;
 import ch.astina.hesperid.web.services.version.impl.VersionImpl;
 import java.io.IOException;
@@ -110,6 +102,7 @@ public class TestAppModule
         binder.bind(Version.class, VersionImpl.class);
     }
 
+    //Mock a Servlet request...
     public static void contributeRequestHandler(OrderedConfiguration<RequestFilter> config, final RequestGlobals requestGlobals)
     {
         RequestFilter filter = new RequestFilter()
