@@ -85,10 +85,10 @@ import org.apache.tapestry5.hibernate.HibernateConfigurer;
  */
 @SubModule({SitemapModule.class, SecurityModule.class})
 public class AppModule
-{
+{   
     public static void bind(ServiceBinder binder)
     {
-        binder.bind(DbMigration.class, DbMigrationImpl.class).eagerLoad();
+        binder.bind(DbMigration.class, DbMigrationImpl.class);
         binder.bind(SystemEnvironment.class, SystemEnvironmentImpl.class);
         binder.bind(Version.class, VersionImpl.class);
         binder.bind(MailServerDAO.class, MailServerDAOHibernate.class);

@@ -17,6 +17,7 @@ package ch.astina.hesperid.web.services.scheduler;
 
 import java.util.List;
 
+import java.util.logging.Level;
 import org.apache.tapestry5.ioc.services.PerthreadManager;
 import org.quartz.JobDetail;
 import org.quartz.Scheduler;
@@ -62,26 +63,33 @@ public class SchedulerService
             FailureCheckerJob failureCheckerJob, ObserverDAO observerDAO,
             AssetDAO assetDAO, DbMigration dbMigration)
     {
-        this.perthreadManager = perthreadManager;
-        this.externalObserverJob = externalServiceMonitoringJob;
-        this.serviceStatusCheckerJob = serviceStatusCheckerJob;
-        this.failureCheckerJob = failureCheckerJob;
-        this.observerDAO = observerDAO;
-        this.assetDAO = assetDAO;
+            this.perthreadManager = perthreadManager;
+            this.externalObserverJob = externalServiceMonitoringJob;
+            this.serviceStatusCheckerJob = serviceStatusCheckerJob;
+            this.failureCheckerJob = failureCheckerJob;
+            this.observerDAO = observerDAO;
+            this.assetDAO = assetDAO;
+            this.dbMigration = dbMigration;
+            
+            try {
+                dbMigration.updateAllChangelogs();
+            } catch (Exception e) {
+                logger.error("Error while db fummel",e);
+            }
+            
+            logger.error("DB Migration " + dbMigration);
+            schedulerFactory = new org.quartz.impl.StdSchedulerFactory();
+            try {
+                scheduler = schedulerFactory.getScheduler();
+                scheduler.start();
 
-        schedulerFactory = new org.quartz.impl.StdSchedulerFactory();
+                startExternalObservers();
+                startObserverStatusChecker();
+                startFailureChecker();
 
-        try {
-            scheduler = schedulerFactory.getScheduler();
-            scheduler.start();
-
-            startExternalObservers();
-            startObserverStatusChecker();
-            startFailureChecker();
-
-        } catch (Exception e) {
-            logger.error("Error while starting scheduler service", e);
-        }
+            } catch (Exception e) {
+                logger.error("Error while starting scheduler service", e);
+            }
     }
 
     public void restartExternalObservers(Asset asset)

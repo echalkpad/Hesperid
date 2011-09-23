@@ -15,10 +15,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services;
 
-import ch.astina.hesperid.web.services.SystemHealthService;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.apache.tapestry5.SymbolConstants;
 import org.apache.tapestry5.hibernate.HibernateConfigurer;
 import org.apache.tapestry5.ioc.Configuration;
@@ -26,8 +22,6 @@ import org.apache.tapestry5.ioc.MappedConfiguration;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
 import org.apache.tapestry5.ioc.ServiceBinder;
 import org.apache.tapestry5.ioc.annotations.InjectService;
-import org.apache.tapestry5.services.ApplicationGlobals;
-import org.slf4j.Logger;
 
 import ch.astina.hesperid.configuration.HibernateSimpleConfigurer;
 import ch.astina.hesperid.dao.AgentBundleDAO;
@@ -64,19 +58,13 @@ import ch.astina.hesperid.web.services.jobs.ExternalObserverJob;
 import ch.astina.hesperid.web.services.jobs.ObserverStatusCheckerJob;
 import ch.astina.hesperid.web.services.jobs.impl.ExternalObserverJobImpl;
 import ch.astina.hesperid.web.services.jobs.impl.ObserverStatusCheckerJobImpl;
-import ch.astina.hesperid.web.services.sitemap.PageProvider;
-import ch.astina.hesperid.web.services.sitemap.Sitemap;
-import ch.astina.hesperid.web.services.sitemap.impl.SitemapImpl;
 import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
 import ch.astina.hesperid.web.services.version.Version;
 import ch.astina.hesperid.web.services.version.impl.VersionImpl;
 import java.io.IOException;
-import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.SubModule;
-import org.apache.tapestry5.ioc.annotations.Value;
 import org.apache.tapestry5.services.Request;
 import org.apache.tapestry5.services.RequestFilter;
 import org.apache.tapestry5.services.RequestGlobals;

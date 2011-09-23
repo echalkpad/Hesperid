@@ -40,9 +40,9 @@ public class DbMigrationImpl implements DbMigration
     {
         this.session = session;
         this.logger = logger;
-        updateAllChangelogs();
     }
 
+    @Override
     public void updateAllChangelogs() throws Exception
     {
         logger.info("Updating changelogs");
