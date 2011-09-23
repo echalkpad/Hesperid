@@ -35,12 +35,16 @@ import ch.astina.hesperid.dao.MesRoleDAO;
 import ch.astina.hesperid.dao.SystemDAO;
 import ch.astina.hesperid.dao.ObserverDAO;
 import ch.astina.hesperid.dao.ReportDAO;
+import ch.astina.hesperid.dao.RoleDAO;
 import ch.astina.hesperid.dao.SystemHealthDAO;
+import ch.astina.hesperid.dao.UserDAO;
 import ch.astina.hesperid.dao.hibernate.AgentBundleDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.AssetDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.ContactDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.EscalationDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.FailureDAOHibernate;
+import ch.astina.hesperid.dao.hibernate.HibernateRoleDAO;
+import ch.astina.hesperid.dao.hibernate.HibernateUserDAO;
 import ch.astina.hesperid.dao.hibernate.MailServerDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.LocationDAOHibernate;
 import ch.astina.hesperid.dao.hibernate.MesRoleDAOHibernate;
@@ -52,13 +56,17 @@ import ch.astina.hesperid.web.services.dbmigration.DbMigration;
 import ch.astina.hesperid.web.services.dbmigration.impl.DbMigrationImpl;
 import ch.astina.hesperid.web.services.failures.FailureService;
 import ch.astina.hesperid.web.services.failures.impl.FailureServiceImpl;
-import ch.astina.hesperid.web.services.impl.MockSystemEnvironmentImpl;
+import ch.astina.hesperid.web.services.systemenvironment.impl.MockSystemEnvironmentImpl;
 import ch.astina.hesperid.web.services.impl.SystemHealthServiceImpl;
 import ch.astina.hesperid.web.services.jobs.ExternalObserverJob;
 import ch.astina.hesperid.web.services.jobs.ObserverStatusCheckerJob;
 import ch.astina.hesperid.web.services.jobs.impl.ExternalObserverJobImpl;
 import ch.astina.hesperid.web.services.jobs.impl.ObserverStatusCheckerJobImpl;
+import ch.astina.hesperid.web.services.springsecurity.LogoutService;
+import ch.astina.hesperid.web.services.springsecurity.internal.LogoutServiceImpl;
 import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
+import ch.astina.hesperid.web.services.users.UserService;
+import ch.astina.hesperid.web.services.users.impl.UserServiceImpl;
 import ch.astina.hesperid.web.services.version.Version;
 import ch.astina.hesperid.web.services.version.impl.VersionImpl;
 import java.io.IOException;
@@ -76,7 +84,7 @@ import org.mockito.Mockito;
  * @author $Author: kstarosta $
  * @version $Revision: 123 $, $Date: 2011-09-23 11:53:17 +0200 (Fr, 23 Sep 2011) $
  */
-@SubModule({SitemapModule.class, SecurityModule.class})
+@SubModule({TestSecurityModule.class, SitemapModule.class})
 public class TestAppModule
 {
     public static void bind(ServiceBinder binder)

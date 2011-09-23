@@ -13,25 +13,34 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-package ch.astina.hesperid.web.pages;
+package ch.astina.hesperid.web.services.systemenvironment.impl;
 
-import org.apache.tapestry5.dom.Document;
-import org.testng.Assert;
-import org.testng.annotations.Test;
+import java.io.File;
 
-import ch.astina.hesperid.web.PageTesterFactory;
+
+import ch.astina.hesperid.web.services.systemenvironment.impl.SystemEnvironmentImpl;
 
 /**
  * @author $Author: kstarosta $
- * @version $Revision: 109 $, $Date: 2011-09-21 16:11:17 +0200 (Mi, 21 Sep 2011) $
+ * @version $Revision: 123 $, $Date: 2011-09-23 11:53:17 +0200 (Fr, 23 Sep 2011) $
  */
-public class IndexTest
+public class MockSystemEnvironmentImpl extends SystemEnvironmentImpl
 {
-    @Test
-    public void test1() throws Exception
+    public MockSystemEnvironmentImpl()
     {
-        Document doc = PageTesterFactory.getInstance().renderPage("Index");
+        super();
+    }
 
-        Assert.assertEquals(doc.getElementById("header").find("h1").find("a").getChildMarkup(), "HESPERID");
+    @Override
+    public String getApplicationHomeDirectoryPath()
+    {
+        String tmpdir = System.getProperty("java.io.tmpdir") + "/hesperid";
+        File file = new File(tmpdir);
+
+        if (!file.exists()) {
+            file.mkdirs();
+        }
+
+        return tmpdir;
     }
 }

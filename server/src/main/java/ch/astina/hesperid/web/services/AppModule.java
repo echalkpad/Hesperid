@@ -85,7 +85,7 @@ import org.apache.tapestry5.hibernate.HibernateConfigurer;
  */
 @SubModule({SitemapModule.class, SecurityModule.class})
 public class AppModule
-{   
+{
     public static void bind(ServiceBinder binder)
     {
         binder.bind(DbMigration.class, DbMigrationImpl.class);
