@@ -1,3 +1,4 @@
+
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
     <div class="actions">
         <t:pagelink page="contact/manage" class="add">Add Contact</t:pagelink>
@@ -5,11 +6,23 @@
     
     <h1>Contacts</h1>
     
-    <t:grid source="allcontacts" row="contact" add="actions">
-        <t:parameter name="actionsHeader"></t:parameter>
-        <t:parameter name="actionsCell">
-            <t:pagelink page="contact/managecontact" context="contact.id" class="icon icon-edit">edit</t:pagelink>
-            <t:actionlink t:id="delete" context="contact.id" onclick="return confirm('Are you sure?');" class="icon icon-delete">delete</t:actionlink>
-        </t:parameter>
-    </t:grid>
+    <div class="box-holder">
+    
+        <div class="box-head">
+            <h2>All Contacts</h2>
+        </div>
+    
+        <t:grid source="allcontacts" row="contact" add="actions">
+            <t:parameter name="actionsHeader"></t:parameter>
+            <t:parameter name="actionsCell">
+                <t:pagelink page="contact/managecontact" context="contact.id" class="icon icon-edit">edit</t:pagelink>
+                <t:actionlink t:id="delete" context="contact.id" onclick="return confirm('Are you sure?');" class="icon icon-delete">delete</t:actionlink>
+            </t:parameter>
+            <t:parameter name="empty">
+                <div class="t-data-grid-empty">
+                    none
+                </div>
+            </t:parameter>
+        </t:grid>
+    </div>
 </t:layout>

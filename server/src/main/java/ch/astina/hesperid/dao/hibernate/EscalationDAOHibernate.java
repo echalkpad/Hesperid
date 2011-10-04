@@ -52,6 +52,8 @@ public class EscalationDAOHibernate implements EscalationDAO
     @Override
     public void delete(EscalationScheme escalationScheme)
     {
+        session.createSQLQuery("UPDATE asset SET escalation_scheme = NULL WHERE escalation_scheme = :escalationSchemeId").setLong("escalationSchemeId", escalationScheme.getId()).executeUpdate();
+        
         session.delete(escalationScheme);
     }
 

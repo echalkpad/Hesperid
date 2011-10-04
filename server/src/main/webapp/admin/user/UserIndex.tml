@@ -10,7 +10,7 @@
 	
 		<div class="layout-grid-col2">
 	
-			<t:grid t:source="users" t:row="user" add="actions" exclude="formattedName">
+			<t:grid t:source="users" t:row="user" add="actions" exclude="formattedName,id">
 				
 				<p:actionsHeader></p:actionsHeader>
 				

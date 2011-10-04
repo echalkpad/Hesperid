@@ -1,3 +1,4 @@
+
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 
     <div class="actions">
@@ -6,21 +7,34 @@
     
     <h1>Locations</h1>
     
-    <t:grid source="locations" row="location" add="actions"
+    <div class="box-holder">
+    
+        <div class="box-head">
+            <h2>All Locations</h2>
+        </div>
+    
+        <t:grid source="locations" row="location" add="actions"
 		exclude="zip,street,locationCode,country,city">
 		
-        <p:actionsHeader></p:actionsHeader>
+            <p:actionsHeader></p:actionsHeader>
 		
-        <p:nameCell>
-            <t:pagelink page="location/view" context="location">${location.name}</t:pagelink>
-        </p:nameCell>
+            <p:nameCell>
+                <t:pagelink page="location/view" context="location">${location.name}</t:pagelink>
+            </p:nameCell>
         
-        <p:actionsCell>
-            <t:pagelink page="location/manage" context="location" class="icon icon-edit">Edit</t:pagelink>
-            <t:actionlink t:id="delete" context="location" class="icon icon-delete"
+            <p:actionsCell>
+                <t:pagelink page="location/manage" context="location" class="icon icon-edit">Edit</t:pagelink>
+                <t:actionlink t:id="delete" context="location" class="icon icon-delete"
             	onclick="return confirm('Are you sure?');">Delete
-            </t:actionlink>
-        </p:actionsCell>
+                </t:actionlink>
+            </p:actionsCell>
+            
+            <p:empty>
+                <div class="t-data-grid-empty">
+                    none
+                </div>
+            </p:empty>
         
-    </t:grid>
+        </t:grid>
+    </div>
 </t:layout>

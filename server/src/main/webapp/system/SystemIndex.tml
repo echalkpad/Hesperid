@@ -25,7 +25,7 @@
             </p:nameCell>
             <p:empty>
                 <div class="t-data-grid-empty">
-                                    none
+                    none
                 </div>
             </p:empty>
         </t:grid>

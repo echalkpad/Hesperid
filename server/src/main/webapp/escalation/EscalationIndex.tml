@@ -1,18 +1,33 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 	
-        <div class="actions">
-            <t:pagelink page="escalation/manageescalationscheme" class="add">Add Escalation Scheme</t:pagelink>
-        </div>
+    <div class="actions">
+        <t:pagelink page="escalation/manageescalationscheme" class="add">Add Escalation Scheme</t:pagelink>
+    </div>
         
-	<h1>Escalation Schemes</h1>
+    <h1>Escalation Schemes</h1>
+        
+    <div class="box-holder">
+    
+        <div class="box-head">
+            <h2>All Escalation Schemes</h2>
+        </div>
 		
-	<t:grid source="escalationSchemes" row="escalationScheme" add="view,edit">
-		<p:viewCell>
-			<t:pagelink page="escalation/view" context="escalationScheme">Details</t:pagelink>
-		</p:viewCell>
-		<p:editCell>
-			<t:pagelink page="escalation/manageescalationscheme" context="escalationScheme" class="icon icon-edit">Edit</t:pagelink>
-		</p:editCell>
-	</t:grid>
+        <t:grid source="escalationSchemes" row="escalationScheme" add="actions" exclude="id">
+            <p:nameCell>
+                <t:pagelink page="escalation/view" context="escalationScheme">${escalationScheme.name}</t:pagelink>
+            </p:nameCell>
+            <p:actionsHeader></p:actionsHeader>
+            <p:actionsCell>
+                <t:pagelink page="escalation/manageescalationscheme" context="escalationScheme" class="icon icon-edit">Edit</t:pagelink>
+                <t:actionlink t:id="delete" context="escalationScheme" class="icon icon-delete" onclick="return confirm('Are you sure?');">Delete</t:actionlink>
+            </p:actionsCell>
+            <p:empty>
+                <div class="t-data-grid-empty">
+                    none
+                </div>
+            </p:empty>
+        </t:grid>
+        
+    </div>
 	
 </t:layout>

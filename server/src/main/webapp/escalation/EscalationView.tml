@@ -1,19 +1,31 @@
+
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 	
-	<div class="actions">
-		<t:pagelink page="escalation/leveladd" context="escalationScheme" class="add">Add Escalation Level</t:pagelink>
-	</div>
+    <div class="actions">
+        <t:pagelink page="escalation/leveladd" context="escalationScheme" class="add">Add Escalation Level</t:pagelink>
+    </div>
 	
-	<h1>Escalation Scheme: ${escalationScheme.name}</h1>
+    <h1>Escalation Scheme: ${escalationScheme.name}</h1>
+        
+    <div class="box-holder">
+    
+        <div class="box-head">
+            <h2>${escalationScheme.name}</h2>
+        </div>
 	
-	<t:grid source="escalationScheme.escalationLevels" row="escalationLevel" exclude="id"
+        <t:grid source="escalationScheme.escalationLevels" row="escalationLevel" exclude="id"
 		add="actions" reorder="level,timeout,username,actions">
-		<p:usernameHeader>User</p:usernameHeader>
-		<p:actionsCell>
-			<t:pagelink page="escalation/leveledit" context="escalationLevel" class="icon icon-edit">Edit</t:pagelink>
-			<t:actionlink t:id="deleteEscalationLevel" context="escalationLevel" 
-				class="icon icon-delete" onclick="return confirm('Are you sure?');">Delete</t:actionlink>
-		</p:actionsCell>
-	</t:grid>
+            <p:usernameHeader>User</p:usernameHeader>
+            <p:actionsHeader>
+            </p:actionsHeader>
+            <p:actionsCell>
+                <t:pagelink page="escalation/leveledit" context="escalationLevel" class="icon icon-edit">Edit</t:pagelink>
+                <t:actionlink t:id="deleteEscalationLevel" context="escalationLevel" 
+				class="icon icon-delete" onclick="return confirm('Are you sure?');">Delete
+                </t:actionlink>
+            </p:actionsCell>
+        </t:grid>
+        
+    </div>
 	
 </t:layout>

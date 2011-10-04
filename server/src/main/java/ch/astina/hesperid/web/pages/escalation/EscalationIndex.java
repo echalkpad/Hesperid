@@ -23,6 +23,7 @@ import org.springframework.security.annotation.Secured;
 
 import ch.astina.hesperid.dao.EscalationDAO;
 import ch.astina.hesperid.model.base.EscalationScheme;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 
 /**
  * @author $Author: kstarosta $
@@ -33,6 +34,7 @@ public class EscalationIndex
 {
     @Inject
     private EscalationDAO escalationDAO;
+    
     @SuppressWarnings("unused")
     @Property
     private EscalationScheme escalationScheme;
@@ -40,5 +42,11 @@ public class EscalationIndex
     public List<EscalationScheme> getEscalationSchemes()
     {
         return escalationDAO.getEscalationSchemes();
+    }
+    
+    @CommitAfter
+    public void onActionFromDelete(EscalationScheme es)
+    {
+        escalationDAO.delete(es);
     }
 }
