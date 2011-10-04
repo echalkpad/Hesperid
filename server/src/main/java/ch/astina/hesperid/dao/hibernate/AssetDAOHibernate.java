@@ -97,13 +97,8 @@ public class AssetDAOHibernate implements AssetDAO
 
     public void deleteAsset(Asset asset)
     {
-        String sql = "DELETE FROM connection_credential WHERE asset = ?";
+        String sql = "DELETE FROM observer WHERE asset = ?";
         Query query = session.createSQLQuery(sql);
-        query.setLong(0, asset.getId());
-        query.executeUpdate();
-
-        sql = "DELETE FROM observer WHERE asset = ?";
-        query = session.createSQLQuery(sql);
         query.setLong(0, asset.getId());
         query.executeUpdate();
 
