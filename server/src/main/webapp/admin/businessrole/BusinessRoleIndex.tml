@@ -1,0 +1,17 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <div class="actions">
+        <t:pagelink page="admin/businessrole/managebusinessrole" class="add">Add Business Role</t:pagelink>
+    </div>
+    
+    <h1>Business Roles</h1>
+    
+    <t:grid source="allMesRoles" row="mesRole" exclude="id" add="actions">
+        <t:parameter name="actionsHeader">
+        </t:parameter>
+        <t:parameter name="actionsCell">
+            <t:pagelink page="admin/businessrole/managebusinessrole" context="mesRole.id" class="icon icon-edit">edit</t:pagelink>
+            <t:actionlink t:id="delete" context="mesRole.id" onclick="return confirm('Are you sure?');" class="icon icon-delete">delete</t:actionlink>
+        </t:parameter>
+    </t:grid>
+    
+</t:layout>

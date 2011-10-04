@@ -1,78 +1,142 @@
+
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 
-	<div class="actions">
-		<t:pagelink page="asset" class="back">Back</t:pagelink>
-		<t:pagelink page="asset/observer/add" context="asset" class="add">Add Observer</t:pagelink>
-	</div>
+    <div class="actions">
+        <t:pagelink page="asset" class="back">Back</t:pagelink>
+        <t:pagelink page="asset/observer/add" context="asset" class="add">Add Observer</t:pagelink>
+    </div>
 
     <h1>Asset: ${asset.assetName}</h1>
 	
-	<div class="layout-grid-col-holder">
+    <div class="layout-grid-col-holder">
 	
-		<div class="layout-grid-col2">
+        <div class="layout-grid-col2">
 	
-			<div class="asset-observers">
-				<t:observerlist asset="asset" scope="external" title="External Observers" />
-				<t:observerlist asset="asset" scope="client" title="Client Observers" />
-			</div>
-			
-		</div>
-	
-		<div class="layout-grid-col">
-    
-		    <div class="asset-overview">
+            <div class="asset-observers">
+                <t:observerlist asset="asset" scope="external" title="External Observers" />
+                <t:observerlist asset="asset" scope="client" title="Client Observers" />
+                
+                <div class="observers">
 
-				<div class="actions">
-					<t:pagelink page="asset/manage" context="asset" class="edit">Edit</t:pagelink>
-				</div>
-		    
-		    	<h2>Basic Information</h2>
-		    
-			    <t:beandisplay object="asset" add="location,escalationScheme,system"
-			    	exclude="id,carePack,purchasing,managed,errorOccured,lastUpdatedObserver,lastTickReceived"
-			    	reorder="assetIdentifier,assetName,host,escalationScheme,description,system,location,roomNumber">
-			    	
-			    	<p:escalationScheme>
-			    		<t:if test="asset.escalationScheme">
-			    			<t:pagelink page="escalation/view" context="asset.escalationScheme">
-			    				${asset.escalationScheme.name}
-			    			</t:pagelink>
-			    		</t:if>
-			    	</p:escalationScheme>
-			    	
-			    	<p:system>
-			    		<t:if test="asset.system">
-			    			<t:pagelink page="system/view" context="asset.system">
-			    				${asset.system.name}
-			    			</t:pagelink>
-			    		</t:if>
-			    	</p:system>
-			    	
-			    	<p:location>
-			    		<t:if test="asset.location">
-			    			<t:pagelink page="location/view" context="asset.location">
-			    				${asset.location.name}
-			    			</t:pagelink>
-			    		</t:if>
-			    	</p:location>
-			    	
-			    	<p:lastTickReceived>
-			    		${lastTickReceived}
-			    	</p:lastTickReceived>
-			    	
-			    </t:beandisplay>
-			</div>
-    
-		    <div class="asset-overview">
-			    
-		     	<h2>Graph</h2>
-		     	
-		     	<img src="${assetGraphForAllAssetRelations}" />
-			    
-			</div>
+                    <div class="box-holder">
+                        <div class="box-head">
+                            <div class="actions">
+                                <t:pagelink page="asset/assetcontact/add" context="asset" class="add">Add Contact</t:pagelink>
+                            </div>
+                            <h2>Contact / Responsible Persons</h2>
+                        </div>
+                
+                
+                        <t:grid t:source="asset.assetContacts" t:row="assetContact" add="contact,businessrole,delete" exclude="id" reorder="contact,businessRole,delete">
+                            <p:contactCell>
+                        ${assetContact.contact.formattedName} (${assetContact.contact.mail})
+                            </p:contactCell>
+                            <p:businessroleCell>
+                        ${assetContact.businessrole?.name}
+                            </p:businessroleCell>
+                            <p:deleteCell>
+                                <t:actionlink t:id="deleteAssetContact" context="assetContact.id" onclick="return confirm('Are you sure?');" class="icon icon-delete">delete</t:actionlink>
+                            </p:deleteCell>
+                            <p:empty>
+                                <div class="t-data-grid-empty">
+                            No Contacts defined for this asset
+                                </div>
+                            </p:empty>
+                        </t:grid>
+                    </div>
+                </div>
+                
+                <div class="observers">
+
+                    <div class="box-holder">
+                        <div class="box-head">
+                            <div class="actions">
+                                <t:pagelink page="asset/assetsoftwarelicense/add" context="asset" class="add">Add License</t:pagelink>
+                            </div>
+                            <h2>Licenses</h2>
+                        </div>         
+                
+                        <t:grid t:source="asset.assetSoftwareLicenses" t:row="assetSoftwareLicense" add="softwareLicense,delete" exclude="id" reorder="softwareLicense,version,expirationDate,licenseKey,remark,delete">
+                            <p:softwareLicenseCell>
+                        ${assetSoftwareLicense.softwareLicense.name}
+                            </p:softwareLicenseCell>
+                            <p:deleteCell>
+                                <t:actionlink t:id="deleteAssetSoftwareLicense" context="assetSoftwareLicense.id" onclick="return confirm('Are you sure?');" class="icon icon-delete">delete</t:actionlink>
+                            </p:deleteCell>
+                            <p:empty>
+                                <div class="t-data-grid-empty">
+                            No Licenses defined for this asset
+                                </div>
+                            </p:empty>
+                        </t:grid>
+                    </div>
+                </div>
+                
+                
+                
+            </div>
 			
-		</div>
+        </div>
+	
+        <div class="layout-grid-col">
+    
+            <div class="asset-overview">
+
+                <div class="actions">
+                    <t:pagelink page="asset/manage" context="asset" class="edit">Edit</t:pagelink>
+                </div>
+		    
+                <h2>Basic Information</h2>
+		    
+                <t:beandisplay object="asset" add="location,escalationScheme,system"
+			    	exclude="id,managed,errorOccured,lastUpdatedObserver,lastTickReceived"
+			    	reorder="assetIdentifier,assetName,host,escalationScheme,description,system,location,roomNumber,purchased,costPerYear">
+			    	
+                    <p:escalationScheme>
+                        <t:if test="asset.escalationScheme">
+                            <t:pagelink page="escalation/view" context="asset.escalationScheme">
+                                ${asset.escalationScheme.name}
+                            </t:pagelink>
+                        </t:if>
+                    </p:escalationScheme>
+			    	
+                    <p:system>
+                        <t:if test="asset.system">
+                            <t:pagelink page="system/view" context="asset.system">
+                                ${asset.system.name}
+                            </t:pagelink>
+                        </t:if>
+                    </p:system>
+			    	
+                    <p:location>
+                        <t:if test="asset.location">
+                            <t:pagelink page="location/view" context="asset.location">
+                                ${asset.location.name}
+                            </t:pagelink>
+                        </t:if>
+                    </p:location>
+			    	
+                    <p:lastTickReceived>
+                        ${lastTickReceived}
+                    </p:lastTickReceived>
+			    	
+                </t:beandisplay>
+            </div>
+    
+            <div class="asset-overview">
+                
+                <div class="actions">
+                    <t:pagelink page="asset/relation" context="asset" class="edit">Edit Relations</t:pagelink>
+                </div>
+			    
+                <h2>Graph</h2>
+		     	
+                <img src="${assetGraphForAllAssetRelations}" />
+			    
+            </div>
+			
+        </div>
 		
-	</div>
+    </div>
     
 </t:layout>

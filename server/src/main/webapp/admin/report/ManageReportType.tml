@@ -1,0 +1,43 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    
+    <div class="actions">
+        <t:pagelink page="admin/report/reportindex" class="back">Back</t:pagelink>
+    </div>
+	
+    <t:if test="reportType.id">
+        <h1>Edit Report Type: ${reportType.name}</h1>
+        <t:parameter name="else">
+            <h1>Add Report Type</h1>
+        </t:parameter>
+    </t:if>
+    
+    <t:form t:id="reportTypeForm">
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="name">Name</t:label>
+            </div>
+            <div class="form-item">
+                <t:textfield t:id="name" validate="required" t:value="reportType.name" />
+            </div>
+        </div>
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="hqlQuery">HQL Query</t:label>
+            </div>
+            <div class="form-item">
+                <t:textarea t:id="hqlQuery" t:value="reportType.hqlQuery" />
+            </div>
+        </div>
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="jasperXmlCode">Jasper XML</t:label>
+            </div>
+            <div class="form-item">
+                <t:textarea class="huge" t:id="jasperXmlCode" t:value="reportType.jasperXmlCode" />
+            </div>
+        </div>
+        <div class="form-item-holder">
+            <button type="submit">Save</button>
+        </div>
+    </t:form>
+</t:layout>

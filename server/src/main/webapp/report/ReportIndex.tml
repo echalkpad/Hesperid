@@ -1,20 +1,20 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
-<div id="breadcrumbs">You are here: <t:pagelink page="contact">Reports &amp; Export</t:pagelink></div>
+    <h1>Report &amp; Exports</h1>
 
     <t:form t:id="contactForm">
-            <div class="form-item-holder">
-                    <div class="label">
-                             <t:label for="reportType">Report Type</t:label>
-                    </div>
-                    <div class="form-item">
-                            <select t:id="reportType" t:type="select" t:model="reportTypes"
-                             t:value="reportType" t:encoder="reportTypes" />
-                    </div>
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="reportType">Report Type</t:label>
             </div>
-            <div class="form-item-holder">
-                    <t:submit t:id="csv" class="download_csv" value="Generate CSV Export"/>
-                    <t:submit t:id="excel" class="download_excel" value="Generate Excel Export"/>
-                    <t:submit t:id="view" class="download_view" value="View Report"/>
+            <div class="form-item">
+                <select t:id="reportType" t:type="select" t:model="reportTypes"
+                             t:value="reportType" t:encoder="reportTypes" t:validate="required" />
             </div>
+        </div>
+        <div class="form-item-holder">
+            <t:submit t:id="pdf" class="download_csv" value="Generate PDF Export"/>
+            <t:submit t:id="excel" class="download_excel" value="Generate Excel Export"/>
+            <!-- <t:submit t:id="view" class="download_view" value="View Report"/> -->
+        </div>
     </t:form>
 </t:layout>

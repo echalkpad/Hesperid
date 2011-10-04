@@ -15,6 +15,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.admin.observerstrategy;
 
+import ch.astina.hesperid.dao.AssetDAO;
 import java.util.List;
 
 import org.apache.tapestry5.annotations.Property;
@@ -22,7 +23,12 @@ import org.apache.tapestry5.ioc.annotations.Inject;
 import org.springframework.security.annotation.Secured;
 
 import ch.astina.hesperid.dao.ObserverDAO;
+import ch.astina.hesperid.model.base.ObservationScope;
+import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverStrategy;
+import ch.astina.hesperid.web.services.scheduler.SchedulerService;
+import java.util.Date;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 
 /**
  * @author $Author: kstarosta $
@@ -33,12 +39,34 @@ public class ObserverStrategyIndex
 {
     @Inject
     private ObserverDAO observerDAO;
+    
     @SuppressWarnings("unused")
     @Property
     private ObserverStrategy observerStrategy;
+    
+    @Inject
+    private AssetDAO assetDAO;
+    
+    @Inject
+    private SchedulerService schedulerService;
 
     public List<ObserverStrategy> getObserverStrategies()
     {
         return observerDAO.getObserverStrategies();
+    }
+    
+    @CommitAfter
+    public void onActionFromDelete(ObserverStrategy os)
+    {
+        for (Observer o : os.getObservers()) {
+            o.getAsset().setLastUpdatedObserver(new Date());
+            assetDAO.saveOrUpdateAsset(o.getAsset());
+        
+            if (o.getObserverStrategy().getObservationScope().equals(ObservationScope.EXTERNAL)) {
+                schedulerService.restartExternalObservers(o.getAsset());
+            }
+        }
+        
+        observerDAO.delete(os);
     }
 }

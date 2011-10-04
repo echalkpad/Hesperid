@@ -1,0 +1,28 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+	
+    <div class="actions">
+        <t:pagelink page="escalation/escalationindex" class="back">Abort</t:pagelink>
+    </div>
+	
+    <t:if test="escalationScheme.id">
+        <h1>Edit Escalation Scheme: ${escalationScheme.name}</h1>
+        <t:parameter name="else">
+            <h1>Add Escalation Scheme</h1>
+        </t:parameter>
+    </t:if>
+	
+    <t:form>
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="name">Name</t:label>
+            </div>
+            <div class="form-item">
+                <t:textfield t:id="name" validate="required" t:value="escalationScheme.name" />
+            </div>
+        </div>
+        <div class="form-button-holder">
+            <button type="submit">Save</button>
+        </div>
+    </t:form>
+	
+</t:layout>

@@ -1,0 +1,37 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+	
+    <t:if test="asset.id">
+	
+        <div class="actions">
+            <t:pagelink page="asset/relation" context="asset" class="back">Abort</t:pagelink>
+        </div>
+	
+        <h1>Add Relation ${asset.assetName} (${asset.assetIdentifier})</h1>
+        
+        <t:form>
+            <div class="form-item-holder">
+                <div class="label">
+                    <t:label for="relatedAsset">Related Asset</t:label>
+                </div>
+                <div class="form-item">
+                    <select t:id="relatedAsset" t:type="select" t:model="relatedAssets"
+                             t:value="relatedAsset" t:encoder="relatedAssets" t:validate="required"/>
+                </div>
+            </div>
+            <div class="form-item-holder">
+                <div class="label">
+                    <t:label for="clientRelationType">Relation Type</t:label>
+                </div>
+                <div class="form-item">
+                    <select t:id="clientRelationType" t:type="select" t:validate="required" />
+                </div>
+            </div>
+            <div class="form-item-holder">
+                <button type="submit">Save</button>
+            </div>
+        </t:form>
+	    
+    </t:if>
+	
+	
+</t:layout>

@@ -1,99 +1,114 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 	
-	<t:if test="asset.id">
+    <t:if test="asset.id">
 	
-		<div class="actions">
-			<t:pagelink page="asset/overview" context="asset" class="back">Abort</t:pagelink>
-		</div>
+        <div class="actions">
+            <t:pagelink page="asset/overview" context="asset" class="back">Abort</t:pagelink>
+        </div>
 	
-	    <h1>Edit Asset: ${asset.assetName} (${asset.assetIdentifier})</h1>
+        <h1>Edit Asset: ${asset.assetName} (${asset.assetIdentifier})</h1>
 	    
-	    <p:else>
+        <p:else>
 	
-		<div class="actions">
-			<t:pagelink page="asset" class="back">Abort</t:pagelink>
-		</div>
-	    	<h1>Add Asset</h1>	    
-	    </p:else>
+            <div class="actions">
+                <t:pagelink page="asset" class="back">Abort</t:pagelink>
+            </div>
+            <h1>Add Asset</h1>	    
+        </p:else>
 	    
-	</t:if>
+    </t:if>
 	
-	<div class="layout-grid-col-holder">
+    <div class="layout-grid-col-holder">
 		
-		<div class="layout-grid-col3">
+        <div class="layout-grid-col3">
 	
-		    <t:form t:id="assetForm" class="box-holder">
+            <t:form t:id="assetForm" class="box-holder">
 		    
-		    	<div class="box-head">
-		    		<h2>Basic Information</h2>
-		    	</div>
+                <div class="box-head">
+                    <h2>Basic Information</h2>
+                </div>
 		    	
-		    	<div class="box-content">
+                <div class="box-content">
 		    	
-		    		<fieldset>
+                    <fieldset>
 					
-						<div class="form-item">
-							<t:label t:for="assetIdentifier">Asset Identifier</t:label>
-							<t:textfield t:id="assetIdentifier" t:value="asset.assetIdentifier" t:validate="required" />
-						</div>
+                        <div class="form-item">
+                            <t:label t:for="assetIdentifier">Asset Identifier</t:label>
+                            <t:textfield t:id="assetIdentifier" t:value="asset.assetIdentifier" t:validate="required" />
+                        </div>
 					
-						<div class="form-item">
-							<t:label t:for="assetName">Name</t:label>
-							<t:textfield t:id="assetName" t:value="asset.assetName" t:validate="required" />
-						</div>
+                        <div class="form-item">
+                            <t:label t:for="assetName">Name</t:label>
+                            <t:textfield t:id="assetName" t:value="asset.assetName" t:validate="required" />
+                        </div>
 					
-						<div class="form-item">
-							<t:label t:for="host">Hostname</t:label>
-							<t:textfield t:id="host" t:value="asset.host" />
-						</div>
+                        <div class="form-item">
+                            <t:label t:for="host">Hostname</t:label>
+                            <t:textfield t:id="host" t:value="asset.host" />
+                        </div>
+                                                
+                        <div class="form-item">
+                            <t:label t:for="carepck">Care Pack</t:label>
+                            <t:textfield t:id="carepck" t:value="asset.carepack" />
+                        </div>
 					
-						<div class="form-item">
-							<t:label t:for="description">Description</t:label>
-							<t:textarea t:id="description" t:value="asset.description" />
-						</div>
+                        <div class="form-item">
+                            <t:label t:for="description">Description</t:label>
+                            <t:textarea t:id="description" t:value="asset.description" />
+                        </div>
 						
-					</fieldset>
+                    </fieldset>
 					
-					<fieldset class="form-col">
+                    <fieldset class="form-col">
 					
-						<div class="form-item">
-							<t:label t:for="escalationScheme">Escalation Scheme</t:label>
-							<t:select t:id="escalationScheme" t:model="escalationSchemes" t:value="asset.escalationScheme" />
-						</div>
+                        <div class="form-item">
+                            <t:label t:for="escalationScheme">Escalation Scheme</t:label>
+                            <t:select t:id="escalationScheme" t:model="escalationSchemes" t:value="asset.escalationScheme" />
+                        </div>
 					
-						<div class="form-item">
-							<t:label t:for="system">System</t:label>
-							<t:select t:id="system" t:model="systems" t:value="asset.system" />
-						</div>
+                        <div class="form-item">
+                            <t:label t:for="system">System</t:label>
+                            <t:select t:id="system" t:model="systems" t:value="asset.system" />
+                        </div>
 					
-						<div class="form-item">
-							<t:label t:for="location">Location</t:label>
-							<t:select t:id="location" t:model="locations" t:value="asset.location" />
-						</div>
+                        <div class="form-item">
+                            <t:label t:for="location">Location</t:label>
+                            <t:select t:id="location" t:model="locations" t:value="asset.location" />
+                        </div>
 					
-						<div class="form-item">
-							<t:label t:for="roomNumber">Room Number</t:label>
-							<t:textfield t:id="roomNumber" t:value="asset.roomNumber" />
-						</div>
+                        <div class="form-item">
+                            <t:label t:for="roomNumber">Room Number</t:label>
+                            <t:textfield t:id="roomNumber" t:value="asset.roomNumber" />
+                        </div>
+                                                
+                        <div class="form-item">
+                            <t:label t:for="purchased">Purchased</t:label>
+                            <t:datefield t:id="purchased" t:value="asset.purchased" />
+                        </div>
+                        
+                        <div class="form-item">
+                            <t:label t:for="costPerYear">Cost per Year</t:label>
+                            <t:textfield t:id="costPerYear" t:value="asset.costPerYear" />
+                        </div>
 					
-					</fieldset>
+                    </fieldset>
 					
-		        </div>
+                </div>
 		        
-		        <div class="box-foot form-foot">
-		        	<button type="submit">Save</button>
-		        	<t:if test="asset.id">
-		        		<t:pagelink page="asset/overview" context="asset" class="button button-cancel">Cancel</t:pagelink>
-		        		<p:else>
-		        			<t:pagelink page="asset" class="button button-cancel">Cancel</t:pagelink>
-		        		</p:else>
-		        	</t:if>
-		        </div>
+                <div class="box-foot form-foot">
+                    <button type="submit">Save</button>
+                    <t:if test="asset.id">
+                        <t:pagelink page="asset/overview" context="asset" class="button button-cancel">Cancel</t:pagelink>
+                        <p:else>
+                            <t:pagelink page="asset" class="button button-cancel">Cancel</t:pagelink>
+                        </p:else>
+                    </t:if>
+                </div>
 		        
-		    </t:form>
+            </t:form>
 		    
-		</div>
+        </div>
 	    
-	</div>
+    </div>
 	
 </t:layout>

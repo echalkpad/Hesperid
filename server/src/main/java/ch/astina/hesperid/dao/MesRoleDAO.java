@@ -17,7 +17,7 @@ package ch.astina.hesperid.dao;
 
 import java.util.List;
 
-import ch.astina.hesperid.model.base.MesRole;
+import ch.astina.hesperid.model.base.BusinessRole;
 
 /**
  * @author $Author: kstarosta $
@@ -25,11 +25,11 @@ import ch.astina.hesperid.model.base.MesRole;
  */
 public interface MesRoleDAO
 {
-    public MesRole getMesRoleForId(Long mesRoleId);
+    public BusinessRole getMesRoleForId(Long mesRoleId);
 
-    public List<MesRole> getAllMesRoles();
+    public List<BusinessRole> getAllMesRoles();
 
-    public void saveOrUpdateMesRole(MesRole mesRole);
+    public void saveOrUpdateMesRole(BusinessRole mesRole);
 
-    public void deleteMesRole(MesRole mesRole);
+    public void deleteMesRole(BusinessRole mesRole);
 }

@@ -1,79 +1,79 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 	
-	<h1>Add Observer Strategy</h1>
+    <h1>Add Observer Strategy</h1>
 	
-	<t:form>
+    <t:form>
 	
-		<t:errors />
+        <t:errors />
 	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="name">Name</t:label>
-			</div>		
-			<div class="form-item">
-				<t:textfield t:id="name" t:value="observerStrategy.name" t:validate="required" />
-			</div>
-		</div>
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="name">Name</t:label>
+            </div>		
+            <div class="form-item">
+                <t:textfield t:id="name" t:value="observerStrategy.name" t:validate="required" />
+            </div>
+        </div>
 		
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="observationScope">Observation Scope</t:label>
-			</div>
-			<div class="form-item">
-				<t:select t:id="observationScope" t:value="observerStrategy.observationScope" t:validate="required" />
-			</div>
-		</div>
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="observationScope">Observation Scope</t:label>
+            </div>
+            <div class="form-item">
+                <t:select t:id="observationScope" t:value="observerStrategy.observationScope" t:validate="required" />
+            </div>
+        </div>
 	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="resultParameterName">Result Parameter Name</t:label>
-			</div>		
-			<div class="form-item">
-				<t:textfield t:id="resultParameterName" t:value="observerStrategy.resultParametername" t:validate="required" />
-			</div>
-		</div>
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="resultParameterName">Result Parameter Name</t:label>
+            </div>		
+            <div class="form-item">
+                <t:textfield t:id="resultParameterName" t:value="observerStrategy.resultParametername" t:validate="required" />
+            </div>
+        </div>
 	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="description">Description</t:label>
-			</div>		
-			<div class="form-item">
-				<t:textarea t:id="description" t:value="observerStrategy.description" />
-			</div>
-		</div>
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="description">Description</t:label>
+            </div>		
+            <div class="form-item">
+                <t:textarea t:id="description" t:value="observerStrategy.description" />
+            </div>
+        </div>
 	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="possibleParameters">Possible Parameters</t:label>
-			</div>		
-			<div class="form-item">
-				<t:textarea t:id="possibleParameters" t:value="observerStrategy.possibleParameters" />
-			</div>
-		</div>
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="possibleParameters">Possible Parameters</t:label>
+            </div>		
+            <div class="form-item">
+                <t:textarea t:id="possibleParameters" t:value="observerStrategy.possibleParameters" />
+            </div>
+        </div>
 	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="groovyScript">Groovy Script</t:label>
-			</div>		
-			<div class="form-item">
-				<t:textarea t:id="groovyScript" t:value="observerStrategy.groovyScript" 
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="groovyScript">Groovy Script</t:label>
+            </div>		
+            <div class="form-item">
+                <t:textarea t:id="groovyScript" t:value="observerStrategy.groovyScript" 
 					t:validate="required" style="width:800px;height:600px" />
-			</div>
-		</div>
+            </div>
+        </div>
 	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="resultType">Expected Result Type</t:label>
-			</div>		
-			<div class="form-item">
-				<t:select t:id="resultType" t:value="observerStrategy.resultType" t:validate="required" />
-			</div>
-		</div>
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="resultType">Expected Result Type</t:label>
+            </div>		
+            <div class="form-item">
+                <t:select t:id="resultType" t:value="observerStrategy.resultType" t:validate="required" />
+            </div>
+        </div>
 	
-		<div class="form-button-holder">
-			<button type="submit">Save</button>
-		</div>
+        <div class="form-button-holder">
+            <button type="submit">Save</button>
+        </div>
 	
-	</t:form>
+    </t:form>
 	
 </t:layout>

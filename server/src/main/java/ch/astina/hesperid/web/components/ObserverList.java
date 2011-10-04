@@ -15,6 +15,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.components;
 
+import ch.astina.hesperid.dao.AssetDAO;
 import java.util.List;
 
 import org.apache.tapestry5.annotations.Component;
@@ -39,6 +40,8 @@ import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverParameter;
 import ch.astina.hesperid.model.base.ObserverStrategy;
 import ch.astina.hesperid.web.services.failures.FailureService;
+import ch.astina.hesperid.web.services.scheduler.SchedulerService;
+import java.util.Date;
 
 /**
  * @author $Author: kstarosta $
@@ -78,6 +81,10 @@ public class ObserverList
     @Property
     @Persist
     private Boolean filterMonitored;
+    @Inject 
+    private SchedulerService schedulerService;
+    @Inject
+    private AssetDAO assetDAO;
 
     public FilterGridDataSource getObservers()
     {
@@ -113,6 +120,13 @@ public class ObserverList
     @CommitAfter
     public void onActionFromDelete(Observer observer)
     {
+        observer.getAsset().setLastUpdatedObserver(new Date());
+        assetDAO.saveOrUpdateAsset(observer.getAsset());
+        
+        if (observer.getObserverStrategy().getObservationScope().equals(ObservationScope.EXTERNAL)) {
+            schedulerService.restartExternalObservers(observer.getAsset());
+        }
+        
         observerDAO.delete(observer);
     }
 

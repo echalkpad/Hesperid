@@ -3,35 +3,37 @@
 	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd"
 	xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-		<t:pagetitle />
-	</head>
-	<body>
-		<div id="container">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <t:pagetitle />
+    </head>
+    <body>
+        <div id="container">
 
-			<div id="header">
-				<h1>
-					<t:pagelink page="index">${sitemap.applicationName}</t:pagelink>
-				</h1>
+            <div id="header">
 				
-				<div id="service">
-					<t:user.userinfo />
-				</div>
-			</div>
+                <t:pagelink page="index">
+                    <img src="${context:images/hesperid-logo.png}" />
+                </t:pagelink>
+				
+				
+                <div id="service">
+                    <t:user.userinfo />
+                </div>
+            </div>
 
-			<t:security.ifloggedin>
-				<t:twolevelnavigation id="menu" />
-			</t:security.ifloggedin>
+            <t:security.ifloggedin>
+                <t:twolevelnavigation id="menu" />
+            </t:security.ifloggedin>
 
-			<div id="main">
-				<div class="content">
-					<t:breadcrumbs />
-					<t:feedback />
-				    <t:body />
-				</div>
-			</div>
-		</div>
+            <div id="main">
+                <div class="content">
+                    <t:breadcrumbs />
+                    <t:feedback />
+                    <t:body />
+                </div>
+            </div>
+        </div>
         <div id="version">Version ${version.versionString}</div>
-	</body>
+    </body>
 </html>

@@ -45,18 +45,21 @@ public class SitemapModule
         StaticPageProvider pageProvider = new StaticPageProvider();
         pageProvider.addFirstLevelPage(new Page("index", "Dashboard"));
         pageProvider.addFirstLevelPage(new Page("asset", "Assets"));
+        pageProvider.addFirstLevelPage(new Page("contact", "Contacts"));
         pageProvider.addFirstLevelPage(new Page("system", "Systems"));
         pageProvider.addFirstLevelPage(new Page("location", "Locations"));
         pageProvider.addFirstLevelPage(new Page("escalation", "Escalation"));
-//		pageProvider.addFirstLevelPage(new Page("mesrole", "Roles"));
         pageProvider.addFirstLevelPage(new Page("report", "Report & Exports"));
 
         Page adminPage = new Page("admin", "Admin");
-        adminPage.addChildPage(new Page("admin/observerstrategy", "Observer Strategies"));
         adminPage.addChildPage(new Page("admin/user", "Users"));
-        adminPage.addChildPage(new Page("admin/systemhealthlog", "System Health"));
+        adminPage.addChildPage(new Page("admin/businessrole", "Business Roles"));
+        adminPage.addChildPage(new Page("admin/softwarelicense", "Software Licenses"));
         adminPage.addChildPage(new Page("admin/systemsettings", "System Settings"));
+        adminPage.addChildPage(new Page("admin/report", "Reports"));
+        adminPage.addChildPage(new Page("admin/observerstrategy", "Observer Strategies"));
         adminPage.addChildPage(new Page("admin/agentbundle", "Agent Software"));
+        adminPage.addChildPage(new Page("admin/systemhealthlog", "System Health"));
 
         pageProvider.addFirstLevelPage(adminPage);
 

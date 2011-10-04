@@ -1,0 +1,16 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <div class="actions">
+        <t:pagelink page="admin/softwarelicense/managesoftwarelicense" class="add">Add Software License</t:pagelink>
+    </div>
+    
+    <h1>Software Licenses</h1>
+    
+    <t:grid source="allSoftwareLicenses" row="softwareLicense" exclude="id" add="actions">
+        <t:parameter name="actionsHeader"></t:parameter>
+        <t:parameter name="actionsCell">
+            <t:pagelink page="admin/softwarelicense/managesoftwarelicense" context="softwarelicense.id" class="icon icon-edit">edit</t:pagelink>
+            <t:actionlink t:id="delete" context="softwarelicense.id" onclick="return confirm('Are you sure? The license will also be deleted in all Assets');" class="icon icon-delete">delete</t:actionlink>
+        </t:parameter>
+    </t:grid>
+    
+</t:layout>

@@ -1,12 +1,15 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
-    <div id="breadcrumbs">You are here: Contacts</div>
-    <t:pagelink page="contact/managecontact">create new contact</t:pagelink>
-    <t:grid source="allcontacts" row="contact" add="edit,delete">
-        <t:parameter name="editCell">
-            <t:pagelink page="contact/managecontact" context="contact.id">edit</t:pagelink>
-        </t:parameter>
-        <t:parameter name="deleteCell">
-            <t:actionlink t:id="delete" context="contact.id" onclick="return confirm('Are you sure?');">delete</t:actionlink>
+    <div class="actions">
+        <t:pagelink page="contact/manage" class="add">Add Contact</t:pagelink>
+    </div>
+    
+    <h1>Contacts</h1>
+    
+    <t:grid source="allcontacts" row="contact" add="actions">
+        <t:parameter name="actionsHeader"></t:parameter>
+        <t:parameter name="actionsCell">
+            <t:pagelink page="contact/managecontact" context="contact.id" class="icon icon-edit">edit</t:pagelink>
+            <t:actionlink t:id="delete" context="contact.id" onclick="return confirm('Are you sure?');" class="icon icon-delete">delete</t:actionlink>
         </t:parameter>
     </t:grid>
 </t:layout>

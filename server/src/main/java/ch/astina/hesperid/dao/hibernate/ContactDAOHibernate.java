@@ -36,25 +36,30 @@ public class ContactDAOHibernate implements ContactDAO
         this.session = session;
     }
 
+    @Override
     public Contact getContactForId(Long contactId)
     {
         return (Contact) session.get(Contact.class, contactId);
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public List<Contact> getAllContacts()
     {
         return session.createCriteria(Contact.class).list();
     }
 
+    @Override
     public void saveOrUpdateContact(Contact contact)
     {
         session.saveOrUpdate(contact);
     }
 
+    @Override
     public void deleteContact(Contact contact)
     {
-        // XXX
+        session.createSQLQuery("DELETE FROM asset_contact WHERE contact = :contactId").setLong("contactId", contact.getId()).executeUpdate();
+        
         session.delete(contact);
     }
 }

@@ -13,41 +13,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-package ch.astina.hesperid.web.pages.mesrole;
+package ch.astina.hesperid.dao.hibernate;
 
+import ch.astina.hesperid.dao.HqlDAO;
 import java.util.List;
-
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.springframework.security.annotation.Secured;
-
-import ch.astina.hesperid.dao.MesRoleDAO;
-import ch.astina.hesperid.model.base.MesRole;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  * @author $Author: kstarosta $
- * @version $Revision: 118 $, $Date: 2011-09-21 16:33:28 +0200 (Mi, 21 Sep 2011) $
+ * @version $Revision: 122 $, $Date: 2011-09-22 15:06:31 +0200 (Do, 22 Sep 2011) $
  */
-@Secured({"ROLE_ADMIN"})
-public class MesRoleIndex
+public class HqlDAOHibernate implements HqlDAO
 {
-    @Inject
-    private MesRoleDAO mesRoleDAO;
+    private Session session;
 
-    @SuppressWarnings("unused")
-    @Property
-    private MesRole mesRole;
-
-    public List<MesRole> getAllMesRoles()
+    public HqlDAOHibernate(Session session)
     {
-        return mesRoleDAO.getAllMesRoles();
+        this.session = session;
     }
 
-    @CommitAfter
-    public void onActionFromDelete(Long mesRoleId)
+    public List getExecuteHql(String hqlQuery) 
     {
-        MesRole mr = mesRoleDAO.getMesRoleForId(mesRoleId);
-        mesRoleDAO.deleteMesRole(mr);
+        Query query = session.createQuery(hqlQuery);
+        return query.list();
     }
 }

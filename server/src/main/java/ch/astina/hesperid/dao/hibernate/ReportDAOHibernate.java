@@ -45,4 +45,22 @@ public class ReportDAOHibernate implements ReportDAO
     {
         return session;
     }
+
+    @Override
+    public ReportType getReportTypeForId(Long reportTypeId) 
+    {
+        return (ReportType) session.get(ReportType.class, reportTypeId);
+    }
+
+    @Override
+    public void saveOrUpdateReportType(ReportType reportType) 
+    {
+        session.saveOrUpdate(reportType);
+    }
+
+    @Override
+    public void deleteReportType(ReportType reportType) 
+    {
+        session.delete(reportType);
+    }
 }

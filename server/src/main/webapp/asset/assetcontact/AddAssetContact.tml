@@ -1,0 +1,36 @@
+
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    
+    <div class="actions">
+        <t:pagelink page="asset/assetoverview" context="asset" class="back">Abort</t:pagelink>
+    </div>
+    
+    <h1>Add Contact ${asset.assetName}</h1>
+    
+    <t:form>
+        
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="contact">Contact</t:label>
+            </div>
+            <div class="form-item">
+                <t:select t:id="contact" t:model="contacts" t:validate="required" />
+            </div>
+        </div>
+    
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="businessRole">Business Role</t:label>
+            </div>
+            <div class="form-item">
+                <t:select t:id="businessRole" t:model="businessRoles" />
+            </div>
+        </div>
+    	
+        <div class="form-button-holder">
+            <button type="submit">Save</button>
+        </div>
+    
+    </t:form>
+    
+</t:layout>

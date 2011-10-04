@@ -30,6 +30,7 @@ import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverParameter;
 import ch.astina.hesperid.model.base.ObserverStrategy;
 import ch.astina.hesperid.model.mail.HtmlMailMessage;
+import ch.astina.hesperid.model.user.User;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -40,16 +41,11 @@ import org.slf4j.LoggerFactory;
 public class FailureNotificationMail extends HtmlMailMessage
 {
     private Logger logger = LoggerFactory.getLogger(FailureNotificationMail.class);
-    
-    public FailureNotificationMail(Failure failure)
-    {
-        this(failure, failure.getEscalationLevel().getContact());
-    }
 
-    public FailureNotificationMail(Failure failure, Contact contact)
+    public FailureNotificationMail(Failure failure, User user)
     {
         Observer observer = failure.getObserver();
-        String emailAddress = contact.getMail();
+        String emailAddress = user.getEmail();
 
         ObserverStrategy observerStrategy = observer.getObserverStrategy();
         ObserverParameter observerParameter = failure.getObserverParameter();

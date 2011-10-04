@@ -76,6 +76,10 @@ public class ObserverDAOHibernate implements ObserverDAO
     @Override
     public void delete(ObserverStrategy observerStrategy)
     {
+        for (Observer o : observerStrategy.getObservers()) {
+            delete(o);
+        }
+        
         session.delete(observerStrategy);
     }
 

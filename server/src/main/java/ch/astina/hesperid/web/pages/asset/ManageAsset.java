@@ -69,6 +69,7 @@ public class ManageAsset
         asset = assetDAO.getAssetForId(assetId);
     }
 
+    @Secured({"ROLE_ADMIN"})
     public void onActivate()
     {
         if (asset == null) {

@@ -19,6 +19,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 
 /**
  * @author $Author: kstarosta $
@@ -29,6 +30,8 @@ public class ReportType
 {
     private Long id;
     private String name;
+    private String jasperXmlCode;
+    private String hqlQuery;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -50,5 +53,27 @@ public class ReportType
     public void setName(String name)
     {
         this.name = name;
+    }
+
+    @Lob
+    public String getJasperXmlCode() 
+    {
+        return jasperXmlCode;
+    }
+
+    public void setJasperXmlCode(String jasperXmlCode) 
+    {
+        this.jasperXmlCode = jasperXmlCode;
+    }
+
+    @Lob
+    public String getHqlQuery() 
+    {
+        return hqlQuery;
+    }
+
+    public void setHqlQuery(String hqlQuery) 
+    {
+        this.hqlQuery = hqlQuery;
     }
 }

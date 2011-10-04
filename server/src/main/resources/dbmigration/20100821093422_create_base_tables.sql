@@ -3,14 +3,14 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Erstellungszeit: 21. September 2011 um 11:58
+-- Erstellungszeit: 04. Oktober 2011 um 13:59
 -- Server Version: 5.1.54
 -- PHP-Version: 5.3.5-1ubuntu7.2
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 
 --
--- Datenbank: `molo`
+-- Datenbank: `hesperid`
 --
 
 -- --------------------------------------------------------
@@ -44,25 +44,90 @@ CREATE TABLE IF NOT EXISTS `asset` (
   `asset_identifier` varchar(255) DEFAULT NULL,
   `asset_name` varchar(255) DEFAULT NULL,
   `care_pack` varchar(255) DEFAULT NULL,
+  `cost_per_year` decimal(19,2) DEFAULT NULL,
   `description` varchar(255) DEFAULT NULL,
   `host` varchar(255) DEFAULT NULL,
   `last_tick_received` datetime DEFAULT NULL,
   `last_updated_observer` datetime DEFAULT NULL,
   `managed` bit(1) NOT NULL,
-  `purchasing` date DEFAULT NULL,
+  `purchased` date DEFAULT NULL,
   `room_number` varchar(255) DEFAULT NULL,
   `escalation_scheme` bigint(20) DEFAULT NULL,
   `location` bigint(20) DEFAULT NULL,
   `system` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `asset_identifier` (`asset_identifier`),
-  KEY `FK58CEAF0B18421F8` (`escalation_scheme`),
-  KEY `FK58CEAF042BA7139` (`location`),
-  KEY `FK58CEAF02BC43DED` (`system`)
+  KEY `FK58CEAF0386B28C0` (`escalation_scheme`),
+  KEY `FK58CEAF09858C001` (`location`),
+  KEY `FK58CEAF0F0B79EB5` (`system`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Daten für Tabelle `asset`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `asset_contact`
+--
+
+CREATE TABLE IF NOT EXISTS `asset_contact` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `asset` bigint(20) DEFAULT NULL,
+  `business_role` bigint(20) DEFAULT NULL,
+  `contact` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKC71C5D1F53EF4A9` (`asset`),
+  KEY `FKC71C5D166C6D8C9` (`contact`),
+  KEY `FKC71C5D142BC8302` (`business_role`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Daten für Tabelle `asset_contact`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `asset_software_license`
+--
+
+CREATE TABLE IF NOT EXISTS `asset_software_license` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `expiration_date` date DEFAULT NULL,
+  `license_key` longtext,
+  `remark` longtext,
+  `version` varchar(255) DEFAULT NULL,
+  `asset` bigint(20) DEFAULT NULL,
+  `software_license` bigint(20) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `FKD48AB18F53EF4A9` (`asset`),
+  KEY `FKD48AB183449CDCC` (`software_license`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Daten für Tabelle `asset_software_license`
+--
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `business_role`
+--
+
+CREATE TABLE IF NOT EXISTS `business_role` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `description` varchar(255) DEFAULT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Daten für Tabelle `business_role`
 --
 
 
@@ -78,34 +143,12 @@ CREATE TABLE IF NOT EXISTS `client_hierarchy` (
   `first_asset` bigint(20) DEFAULT NULL,
   `second_asset` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKCCEC7EC143540022` (`first_asset`),
-  KEY `FKCCEC7EC156ED0EE6` (`second_asset`)
+  KEY `FKCCEC7EC1C58D665A` (`first_asset`),
+  KEY `FKCCEC7EC1D926751E` (`second_asset`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
 -- Daten für Tabelle `client_hierarchy`
---
-
-
--- --------------------------------------------------------
-
---
--- Tabellenstruktur für Tabelle `connection_credential`
---
-
-CREATE TABLE IF NOT EXISTS `connection_credential` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `connection_credential_protocol` int(11) DEFAULT NULL,
-  `last_successful_connection` datetime DEFAULT NULL,
-  `password` varchar(255) DEFAULT NULL,
-  `user` varchar(255) DEFAULT NULL,
-  `asset` bigint(20) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `FK5F50685873058E71` (`asset`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Daten für Tabelle `connection_credential`
 --
 
 
@@ -125,7 +168,7 @@ CREATE TABLE IF NOT EXISTS `contact` (
   `phone` varchar(255) DEFAULT NULL,
   `location` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK38B7242042BA7139` (`location`)
+  KEY `FK38B724209858C001` (`location`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -144,11 +187,9 @@ CREATE TABLE IF NOT EXISTS `escalation_level` (
   `level` int(11) NOT NULL,
   `timeout` int(11) NOT NULL,
   `username` varchar(255) DEFAULT NULL,
-  `contact` bigint(20) DEFAULT NULL,
   `escalation_scheme` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKAD47E55AB18421F8` (`escalation_scheme`),
-  KEY `FKAD47E55A8D4E2091` (`contact`)
+  KEY `FKAD47E55A386B28C0` (`escalation_scheme`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -193,10 +234,10 @@ CREATE TABLE IF NOT EXISTS `failure` (
   `observer` bigint(20) DEFAULT NULL,
   `observer_parameter` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKBF3C318A32EA604` (`observer_parameter`),
-  KEY `FKBF3C318A73058E71` (`asset`),
-  KEY `FKBF3C318AD38F29A` (`escalation_level`),
-  KEY `FKBF3C318A89A9D77B` (`observer`)
+  KEY `FKBF3C318A5928783C` (`observer_parameter`),
+  KEY `FKBF3C318AF53EF4A9` (`asset`),
+  KEY `FKBF3C318A8D71F2D2` (`escalation_level`),
+  KEY `FKBF3C318ADF482643` (`observer`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -216,8 +257,8 @@ CREATE TABLE IF NOT EXISTS `failure_escalation` (
   `escalation_level` bigint(20) DEFAULT NULL,
   `failure` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKFB6D946A9A583B65` (`failure`),
-  KEY `FKFB6D946AD38F29A` (`escalation_level`)
+  KEY `FKFB6D946A73D0F39D` (`failure`),
+  KEY `FKFB6D946A8D71F2D2` (`escalation_level`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -273,24 +314,6 @@ CREATE TABLE IF NOT EXISTS `mail_server` (
 -- --------------------------------------------------------
 
 --
--- Tabellenstruktur für Tabelle `mes_role`
---
-
-CREATE TABLE IF NOT EXISTS `mes_role` (
-  `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `description` varchar(255) DEFAULT NULL,
-  `name` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
-
---
--- Daten für Tabelle `mes_role`
---
-
-
--- --------------------------------------------------------
-
---
 -- Tabellenstruktur für Tabelle `observer`
 --
 
@@ -308,8 +331,8 @@ CREATE TABLE IF NOT EXISTS `observer` (
   `asset` bigint(20) DEFAULT NULL,
   `observer_strategy` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FK14C752D6415269F4` (`observer_strategy`),
-  KEY `FK14C752D673058E71` (`asset`)
+  KEY `FK14C752D6C83970BC` (`observer_strategy`),
+  KEY `FK14C752D6F53EF4A9` (`asset`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -330,7 +353,7 @@ CREATE TABLE IF NOT EXISTS `observer_parameter` (
   `value` longtext,
   `observer` bigint(20) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  KEY `FKDC35ED8089A9D77B` (`observer`)
+  KEY `FKDC35ED80DF482643` (`observer`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
 
 --
@@ -369,6 +392,8 @@ CREATE TABLE IF NOT EXISTS `observer_strategy` (
 
 CREATE TABLE IF NOT EXISTS `report_type` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `hql_query` longtext,
+  `jasper_xml_code` longtext,
   `name` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
@@ -391,6 +416,8 @@ CREATE TABLE IF NOT EXISTS `role` (
   UNIQUE KEY `name` (`name`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
 
+
+
 -- --------------------------------------------------------
 
 --
@@ -403,6 +430,25 @@ CREATE TABLE IF NOT EXISTS `schema_version` (
   `duration` int(11) NOT NULL,
   UNIQUE KEY `version` (`version`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+
+-- --------------------------------------------------------
+
+--
+-- Tabellenstruktur für Tabelle `software_license`
+--
+
+CREATE TABLE IF NOT EXISTS `software_license` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `description` longtext,
+  `name` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+--
+-- Daten für Tabelle `software_license`
+--
+
 
 -- --------------------------------------------------------
 
@@ -449,12 +495,19 @@ CREATE TABLE IF NOT EXISTS `system_health` (
 
 CREATE TABLE IF NOT EXISTS `user` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `email` varchar(255) DEFAULT NULL,
   `enabled` bit(1) NOT NULL,
+  `first_name` varchar(255) DEFAULT NULL,
+  `last_name` varchar(255) DEFAULT NULL,
   `password` varchar(255) DEFAULT NULL,
   `username` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username` (`username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=2 ;
+
+--
+-- Daten für Tabelle `user`
+--
 
 -- --------------------------------------------------------
 
@@ -466,8 +519,8 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
   `user` bigint(20) NOT NULL,
   `roles` bigint(20) NOT NULL,
   PRIMARY KEY (`user`,`roles`),
-  KEY `FK73429949AB93A7C8` (`roles`),
-  KEY `FK73429949A551702B` (`user`)
+  KEY `FK7342994975F89A90` (`roles`),
+  KEY `FK734299496FB662F3` (`user`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
@@ -478,68 +531,76 @@ CREATE TABLE IF NOT EXISTS `user_roles` (
 -- Constraints der Tabelle `asset`
 --
 ALTER TABLE `asset`
-  ADD CONSTRAINT `FK58CEAF02BC43DED` FOREIGN KEY (`system`) REFERENCES `system` (`id`),
-  ADD CONSTRAINT `FK58CEAF042BA7139` FOREIGN KEY (`location`) REFERENCES `location` (`id`),
-  ADD CONSTRAINT `FK58CEAF0B18421F8` FOREIGN KEY (`escalation_scheme`) REFERENCES `escalation_scheme` (`id`);
+  ADD CONSTRAINT `FK58CEAF0F0B79EB5` FOREIGN KEY (`system`) REFERENCES `system` (`id`),
+  ADD CONSTRAINT `FK58CEAF0386B28C0` FOREIGN KEY (`escalation_scheme`) REFERENCES `escalation_scheme` (`id`),
+  ADD CONSTRAINT `FK58CEAF09858C001` FOREIGN KEY (`location`) REFERENCES `location` (`id`);
+
+--
+-- Constraints der Tabelle `asset_contact`
+--
+ALTER TABLE `asset_contact`
+  ADD CONSTRAINT `FKC71C5D142BC8302` FOREIGN KEY (`business_role`) REFERENCES `business_role` (`id`),
+  ADD CONSTRAINT `FKC71C5D166C6D8C9` FOREIGN KEY (`contact`) REFERENCES `contact` (`id`),
+  ADD CONSTRAINT `FKC71C5D1F53EF4A9` FOREIGN KEY (`asset`) REFERENCES `asset` (`id`);
+
+--
+-- Constraints der Tabelle `asset_software_license`
+--
+ALTER TABLE `asset_software_license`
+  ADD CONSTRAINT `FKD48AB183449CDCC` FOREIGN KEY (`software_license`) REFERENCES `software_license` (`id`),
+  ADD CONSTRAINT `FKD48AB18F53EF4A9` FOREIGN KEY (`asset`) REFERENCES `asset` (`id`);
 
 --
 -- Constraints der Tabelle `client_hierarchy`
 --
 ALTER TABLE `client_hierarchy`
-  ADD CONSTRAINT `FKCCEC7EC156ED0EE6` FOREIGN KEY (`second_asset`) REFERENCES `asset` (`id`),
-  ADD CONSTRAINT `FKCCEC7EC143540022` FOREIGN KEY (`first_asset`) REFERENCES `asset` (`id`);
-
---
--- Constraints der Tabelle `connection_credential`
---
-ALTER TABLE `connection_credential`
-  ADD CONSTRAINT `FK5F50685873058E71` FOREIGN KEY (`asset`) REFERENCES `asset` (`id`);
+  ADD CONSTRAINT `FKCCEC7EC1D926751E` FOREIGN KEY (`second_asset`) REFERENCES `asset` (`id`),
+  ADD CONSTRAINT `FKCCEC7EC1C58D665A` FOREIGN KEY (`first_asset`) REFERENCES `asset` (`id`);
 
 --
 -- Constraints der Tabelle `contact`
 --
 ALTER TABLE `contact`
-  ADD CONSTRAINT `FK38B7242042BA7139` FOREIGN KEY (`location`) REFERENCES `location` (`id`);
+  ADD CONSTRAINT `FK38B724209858C001` FOREIGN KEY (`location`) REFERENCES `location` (`id`);
 
 --
 -- Constraints der Tabelle `escalation_level`
 --
 ALTER TABLE `escalation_level`
-  ADD CONSTRAINT `FKAD47E55A8D4E2091` FOREIGN KEY (`contact`) REFERENCES `contact` (`id`),
-  ADD CONSTRAINT `FKAD47E55AB18421F8` FOREIGN KEY (`escalation_scheme`) REFERENCES `escalation_scheme` (`id`);
+  ADD CONSTRAINT `FKAD47E55A386B28C0` FOREIGN KEY (`escalation_scheme`) REFERENCES `escalation_scheme` (`id`);
 
 --
 -- Constraints der Tabelle `failure`
 --
 ALTER TABLE `failure`
-  ADD CONSTRAINT `FKBF3C318A89A9D77B` FOREIGN KEY (`observer`) REFERENCES `observer` (`id`),
-  ADD CONSTRAINT `FKBF3C318A32EA604` FOREIGN KEY (`observer_parameter`) REFERENCES `observer_parameter` (`id`),
-  ADD CONSTRAINT `FKBF3C318A73058E71` FOREIGN KEY (`asset`) REFERENCES `asset` (`id`),
-  ADD CONSTRAINT `FKBF3C318AD38F29A` FOREIGN KEY (`escalation_level`) REFERENCES `escalation_level` (`id`);
+  ADD CONSTRAINT `FKBF3C318ADF482643` FOREIGN KEY (`observer`) REFERENCES `observer` (`id`),
+  ADD CONSTRAINT `FKBF3C318A5928783C` FOREIGN KEY (`observer_parameter`) REFERENCES `observer_parameter` (`id`),
+  ADD CONSTRAINT `FKBF3C318A8D71F2D2` FOREIGN KEY (`escalation_level`) REFERENCES `escalation_level` (`id`),
+  ADD CONSTRAINT `FKBF3C318AF53EF4A9` FOREIGN KEY (`asset`) REFERENCES `asset` (`id`);
 
 --
 -- Constraints der Tabelle `failure_escalation`
 --
 ALTER TABLE `failure_escalation`
-  ADD CONSTRAINT `FKFB6D946AD38F29A` FOREIGN KEY (`escalation_level`) REFERENCES `escalation_level` (`id`),
-  ADD CONSTRAINT `FKFB6D946A9A583B65` FOREIGN KEY (`failure`) REFERENCES `failure` (`id`);
+  ADD CONSTRAINT `FKFB6D946A8D71F2D2` FOREIGN KEY (`escalation_level`) REFERENCES `escalation_level` (`id`),
+  ADD CONSTRAINT `FKFB6D946A73D0F39D` FOREIGN KEY (`failure`) REFERENCES `failure` (`id`);
 
 --
 -- Constraints der Tabelle `observer`
 --
 ALTER TABLE `observer`
-  ADD CONSTRAINT `FK14C752D673058E71` FOREIGN KEY (`asset`) REFERENCES `asset` (`id`),
-  ADD CONSTRAINT `FK14C752D6415269F4` FOREIGN KEY (`observer_strategy`) REFERENCES `observer_strategy` (`id`);
+  ADD CONSTRAINT `FK14C752D6F53EF4A9` FOREIGN KEY (`asset`) REFERENCES `asset` (`id`),
+  ADD CONSTRAINT `FK14C752D6C83970BC` FOREIGN KEY (`observer_strategy`) REFERENCES `observer_strategy` (`id`);
 
 --
 -- Constraints der Tabelle `observer_parameter`
 --
 ALTER TABLE `observer_parameter`
-  ADD CONSTRAINT `FKDC35ED8089A9D77B` FOREIGN KEY (`observer`) REFERENCES `observer` (`id`);
+  ADD CONSTRAINT `FKDC35ED80DF482643` FOREIGN KEY (`observer`) REFERENCES `observer` (`id`);
 
 --
 -- Constraints der Tabelle `user_roles`
 --
 ALTER TABLE `user_roles`
-  ADD CONSTRAINT `FK73429949A551702B` FOREIGN KEY (`user`) REFERENCES `user` (`id`),
-  ADD CONSTRAINT `FK73429949AB93A7C8` FOREIGN KEY (`roles`) REFERENCES `role` (`id`);
+  ADD CONSTRAINT `FK734299496FB662F3` FOREIGN KEY (`user`) REFERENCES `user` (`id`),
+  ADD CONSTRAINT `FK7342994975F89A90` FOREIGN KEY (`roles`) REFERENCES `role` (`id`);

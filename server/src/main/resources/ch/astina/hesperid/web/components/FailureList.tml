@@ -48,8 +48,7 @@
 				
 				<p:escalationLevelCell>
 					<t:if test="failure.escalationLevel">
-						${failure.escalationLevel.contact.formattedName}
-						(${failure.escalationLevel.contact.mail})
+						${failure.escalationLevel.username}
 					</t:if>
 				</p:escalationLevelCell>
 				

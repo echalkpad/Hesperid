@@ -32,7 +32,6 @@ public class EscalationLevel
     private Long id;
     private EscalationScheme escalationScheme;
     private String username;
-    private Contact contact;
     private int level;
     private int timeout;
 
@@ -68,18 +67,7 @@ public class EscalationLevel
     {
         this.username = username;
     }
-
-    @ManyToOne(cascade = CascadeType.PERSIST)
-    public Contact getContact()
-    {
-        return contact;
-    }
-
-    public void setContact(Contact contact)
-    {
-        this.contact = contact;
-    }
-
+    
     public int getLevel()
     {
         return level;

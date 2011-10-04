@@ -13,7 +13,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-package ch.astina.hesperid.web.pages.mesrole;
+package ch.astina.hesperid.web.pages.admin.businessrole;
 
 import org.apache.tapestry5.hibernate.HibernateSessionSource;
 import org.apache.tapestry5.test.PageTester;
@@ -23,14 +23,14 @@ import org.testng.annotations.Test;
 
 import ch.astina.hesperid.dao.MesRoleDAO;
 import ch.astina.hesperid.dao.hibernate.MesRoleDAOHibernate;
-import ch.astina.hesperid.model.base.MesRole;
+import ch.astina.hesperid.model.base.BusinessRole;
 import ch.astina.hesperid.web.PageTesterFactory;
 
 /**
  * @author $Author: kstarosta $
  * @version $Revision: 118 $, $Date: 2011-09-21 16:33:28 +0200 (Mi, 21 Sep 2011) $
  */
-public class ManageMesRoleTest
+public class ManageBusinessRoleTest
 {
     private Long mesRoleId = null;
 
@@ -44,7 +44,7 @@ public class ManageMesRoleTest
         MesRoleDAO mesRoleDAO = new MesRoleDAOHibernate(session);
         session.beginTransaction();
 
-        MesRole mesRole = new MesRole();
+        BusinessRole mesRole = new BusinessRole();
         mesRole.setName("testmesrolename");
 
         mesRoleDAO.saveOrUpdateMesRole(mesRole);
@@ -52,7 +52,7 @@ public class ManageMesRoleTest
 
         mesRoleId = mesRole.getId();
 
-        MesRole newMesRole = mesRoleDAO.getMesRoleForId(mesRoleId);
+        BusinessRole newMesRole = mesRoleDAO.getMesRoleForId(mesRoleId);
 
         Assert.assertNotNull(newMesRole);
     }
@@ -68,7 +68,7 @@ public class ManageMesRoleTest
         MesRoleDAO mesRoleDAO = new MesRoleDAOHibernate(session);
         session.beginTransaction();
 
-        MesRole newMesRole = mesRoleDAO.getMesRoleForId(mesRoleId);
+        BusinessRole newMesRole = mesRoleDAO.getMesRoleForId(mesRoleId);
         mesRoleDAO.deleteMesRole(newMesRole);
         session.getTransaction().commit();
 

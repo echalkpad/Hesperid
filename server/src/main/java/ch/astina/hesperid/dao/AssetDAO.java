@@ -15,6 +15,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao;
 
+import ch.astina.hesperid.model.base.AssetContact;
+import ch.astina.hesperid.model.base.AssetSoftwareLicense;
 import java.util.List;
 
 import ch.astina.hesperid.dao.hibernate.FilterGridDataSource;
@@ -51,4 +53,16 @@ public interface AssetDAO
     public List<Asset> getAllRelatedAssets(Asset asset);
 
     public abstract FilterGridDataSource getFilterGridDataSource();
+
+    public void saveOrUpdateAssetContact(AssetContact assetContact);
+
+    public void saveOrUpdateAssetSoftwareLicense(AssetSoftwareLicense assetSoftwareLicense);
+
+    public AssetSoftwareLicense getAssetSoftwareLicenseForId(Long assetSoftwareLicenseId);
+
+    public void deleteAssetSoftwareLicense(AssetSoftwareLicense assetSoftwareLicense);
+
+    public AssetContact getAssetContactForId(Long assetContactId);
+
+    public void deleteAssetContact(AssetContact ac);
 }

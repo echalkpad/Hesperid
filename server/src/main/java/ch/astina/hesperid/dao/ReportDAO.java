@@ -26,4 +26,7 @@ import ch.astina.hesperid.model.internal.ReportType;
 public interface ReportDAO
 {
     public List<ReportType> getAllReportTypes();
+    public ReportType getReportTypeForId(Long reportTypeId);
+    public void saveOrUpdateReportType(ReportType reportType);
+    public void deleteReportType(ReportType reportType);
 }

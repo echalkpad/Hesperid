@@ -1,16 +1,18 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 	
-	<div class="actions">
-		<t:pagelink page="admin/observerstrategy/add" class="add">Add Observer Strategy</t:pagelink>
-	</div>
+    <div class="actions">
+        <t:pagelink page="admin/observerstrategy/add" class="add">Add Observer Strategy</t:pagelink>
+    </div>
 	
-	<h1>Observer Strategies</h1>
+    <h1>Observer Strategies</h1>
 	
-	<t:grid source="observerStrategies" row="observerStrategy" exclude="groovyScript,possibleParameters"
-		add="edit">
-		<p:editCell>
-			<t:pagelink page="admin/observerstrategy/manage" context="observerStrategy">Edit</t:pagelink>
-		</p:editCell>
-	</t:grid>
+    <t:grid source="observerStrategies" row="observerStrategy" exclude="groovyScript,possibleParameters"
+		add="actions">
+        <p:actionsHeader></p:actionsHeader>
+        <p:actionsCell>
+            <t:pagelink page="admin/observerstrategy/manage" context="observerStrategy" class="icon icon-edit">Edit</t:pagelink>
+            <t:actionlink t:id="delete" context="observerStrategy" onclick="return confirm('Are you sure? The observer will also be deleted in all Assets');" class="icon icon-delete">Delete</t:actionlink>
+        </p:actionsCell>
+    </t:grid>
 	
 </t:layout>

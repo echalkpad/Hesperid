@@ -74,7 +74,6 @@ public class EscalationLevelEdit
             escalationLevel.setUsername(user.getUsername());
         }
 
-        contactDAO.saveOrUpdateContact(escalationLevel.getContact());
         escalationDAO.save(escalationLevel);
 
         return linkSource.createPageRenderLinkWithContext(EscalationView.class,

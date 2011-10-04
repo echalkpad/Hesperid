@@ -1,0 +1,35 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    
+    <div class="actions">
+        <t:pagelink page="admin/softwarelicense/softwarelicenseindex" class="back">Back</t:pagelink>
+    </div>
+	
+    <t:if test="softwarelicense.id">
+        <h1>Edit Software License: ${softwarelicense.name}</h1>
+        <t:parameter name="else">
+            <h1>Add Software License</h1>
+        </t:parameter>
+    </t:if>
+    
+    <t:form t:id="mesRoleForm">
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="name">Name</t:label>
+            </div>
+            <div class="form-item">
+                <t:textfield t:id="name" validate="required" t:value="softwarelicense.name" />
+            </div>
+        </div>
+        <div class="form-item-holder">
+            <div class="label">
+                <t:label for="description">Description</t:label>
+            </div>
+            <div class="form-item">
+                <t:textarea t:id="description" t:value="softwarelicense.description" />
+            </div>
+        </div>
+        <div class="form-item-holder">
+            <button type="submit">Save</button>
+        </div>
+    </t:form>
+</t:layout>

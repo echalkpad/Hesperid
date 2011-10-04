@@ -1,0 +1,26 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
+        
+    <t:if test="asset.id">
+	
+        <div class="actions">
+            <t:pagelink page="asset/overview" context="asset" class="back">Back</t:pagelink>
+            <t:pagelink page="asset/relation/add" context="asset" class="add">Add Relation</t:pagelink>
+        </div>
+	
+        <h1>Edit Relations ${asset.assetName} (${asset.assetIdentifier})</h1>
+        
+        <t:grid source="asset.clientHierarchies" row="clientHierarchy" add="asset,actions" exclude="id">
+            <p:assetCell>
+                ${clientHierarchy.secondAsset.assetName} (${clientHierarchy.secondAsset.assetIdentifier})
+            </p:assetCell>
+            <p:actionsCell>
+                <t:actionlink t:id="delete" context="clientHierarchy" class="icon icon-delete"
+            	onclick="return confirm('Are you sure?');">Delete
+                </t:actionlink>
+            </p:actionsCell>
+        </t:grid>
+	    
+    </t:if>
+	
+	
+</t:layout>

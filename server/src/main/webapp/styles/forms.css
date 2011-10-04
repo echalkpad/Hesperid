@@ -39,6 +39,10 @@ textarea {
 textarea.large {
 	height: 300px;
 }
+textarea.huge {
+    width: 800px;
+    height: 300px;
+}
 select {
 	border-radius: 3px;
 	-moz-border-radius: 3px;

@@ -27,7 +27,6 @@ import org.springframework.security.annotation.Secured;
 import ch.astina.hesperid.dao.ContactDAO;
 import ch.astina.hesperid.dao.EscalationDAO;
 import ch.astina.hesperid.dao.UserDAO;
-import ch.astina.hesperid.model.base.Contact;
 import ch.astina.hesperid.model.base.EscalationLevel;
 import ch.astina.hesperid.model.base.EscalationScheme;
 import ch.astina.hesperid.model.user.User;
@@ -61,7 +60,6 @@ public class EscalationLevelAdd
             escalationLevel = new EscalationLevel();
             escalationLevel.setLevel(getNextEscalationLevelNumber());
             escalationLevel.setTimeout(600);
-            escalationLevel.setContact(new Contact());
         }
     }
 
@@ -79,7 +77,6 @@ public class EscalationLevelAdd
             escalationLevel.setUsername(user.getUsername());
         }
 
-        contactDAO.saveOrUpdateContact(escalationLevel.getContact());
         escalationDAO.save(escalationLevel);
 
         return linkSource.createPageRenderLinkWithContext(EscalationView.class, escalationScheme);

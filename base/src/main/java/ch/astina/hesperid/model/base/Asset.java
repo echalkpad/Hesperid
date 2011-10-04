@@ -15,6 +15,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.model.base;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
@@ -46,13 +47,16 @@ public class Asset
     private Location location;
     private String roomNumber;
     private String carePack;
-    private Date purchasing;
+    private Date purchased;
     private List<ClientHierarchy> clientHierarchies;
     private List<Observer> observers;
+    private List<AssetContact> assetContacts;
+    private List<AssetSoftwareLicense> assetSoftwareLicenses;
     private Date lastUpdatedObserver;
     private Date lastTickReceived;
     private boolean managed;
     private EscalationScheme escalationScheme;
+    private BigDecimal costPerYear;
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -128,14 +132,14 @@ public class Asset
     }
 
     @Temporal(TemporalType.DATE)
-    public Date getPurchasing()
+    public Date getPurchased() 
     {
-        return purchasing;
+        return purchased;
     }
 
-    public void setPurchasing(Date purchasing) 
+    public void setPurchased(Date purchased) 
     {
-        this.purchasing = purchasing;
+        this.purchased = purchased;
     }
 
     public String getRoomNumber()
@@ -193,6 +197,16 @@ public class Asset
         this.observers = observers;
     }
 
+    public BigDecimal getCostPerYear() 
+    {
+        return costPerYear;
+    }
+
+    public void setCostPerYear(BigDecimal costPerYear) 
+    {    
+        this.costPerYear = costPerYear;
+    }
+    
     @Temporal(TemporalType.TIMESTAMP)
     public Date getLastTickReceived()
     {
@@ -224,6 +238,30 @@ public class Asset
     public void setEscalationScheme(EscalationScheme escalationScheme)
     {
         this.escalationScheme = escalationScheme;
+    }
+
+    @XmlTransient
+    @OneToMany(mappedBy="asset")
+    public List<AssetContact> getAssetContacts() 
+    {
+        return assetContacts;
+    }
+
+    public void setAssetContacts(List<AssetContact> assetContacts) 
+    {
+        this.assetContacts = assetContacts;
+    }
+
+    @XmlTransient
+    @OneToMany(mappedBy="asset")
+    public List<AssetSoftwareLicense> getAssetSoftwareLicenses() 
+    {
+        return assetSoftwareLicenses;
+    }
+
+    public void setAssetSoftwareLicenses(List<AssetSoftwareLicense> assetSoftwareLicenses) 
+    {
+        this.assetSoftwareLicenses = assetSoftwareLicenses;
     }
 
     @XmlTransient

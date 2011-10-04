@@ -28,7 +28,7 @@ import ch.astina.hesperid.dao.LocationDAO;
 import ch.astina.hesperid.dao.MesRoleDAO;
 import ch.astina.hesperid.model.base.Contact;
 import ch.astina.hesperid.model.base.Location;
-import ch.astina.hesperid.model.base.MesRole;
+import ch.astina.hesperid.model.base.BusinessRole;
 import ch.astina.hesperid.util.GenericSelectModel;
 
 /**
@@ -44,7 +44,7 @@ public class ManageContact
     private GenericSelectModel<Location> locations;
     @SuppressWarnings("unused")
     @Property
-    private GenericSelectModel<MesRole> mesRoles;
+    private GenericSelectModel<BusinessRole> mesRoles;
     @SuppressWarnings("unused")
     @Property
     @Persist(PersistenceConstants.FLASH)
@@ -71,7 +71,7 @@ public class ManageContact
         }
 
         locations = new GenericSelectModel<Location>(manufacturingLocationDAO.getAllLocations(), Location.class, "name", "id", propertyAccess);
-        mesRoles = new GenericSelectModel<MesRole>(mesRoleDAO.getAllMesRoles(), MesRole.class, "name", "id", propertyAccess);
+        mesRoles = new GenericSelectModel<BusinessRole>(mesRoleDAO.getAllMesRoles(), BusinessRole.class, "name", "id", propertyAccess);
     }
 
     public Long onPassivate()

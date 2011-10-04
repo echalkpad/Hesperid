@@ -36,6 +36,7 @@ public class LocationDAOHibernate implements LocationDAO
         this.session = session;
     }
 
+    @Override
     public Location getLocationById(Long id)
     {
         return (Location) session.get(Location.class,
@@ -43,25 +44,27 @@ public class LocationDAOHibernate implements LocationDAO
     }
 
     @SuppressWarnings("unchecked")
+    @Override
     public List<Location> getAllLocations()
     {
         return session.createCriteria(Location.class).list();
     }
 
+    @Override
     public void save(Location location)
     {
         session.saveOrUpdate(location);
     }
 
+    @Override
     public void delete(Location location)
     {
-        // XXX
-        String sql = "UPDATE contact SET manufacturing_location = NULL WHERE manufacturing_location = ?";
+        String sql = "UPDATE contact SET location = NULL WHERE location = ?";
         Query query = session.createSQLQuery(sql);
         query.setLong(0, location.getId());
         query.executeUpdate();
 
-        sql = "UPDATE asset SET manufacturing_location = NULL WHERE manufacturing_location = ?";
+        sql = "UPDATE asset SET location = NULL WHERE location = ?";
         query = session.createSQLQuery(sql);
         query.setLong(0, location.getId());
         query.executeUpdate();

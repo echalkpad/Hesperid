@@ -15,6 +15,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao.hibernate;
 
+import ch.astina.hesperid.model.base.AssetContact;
+import ch.astina.hesperid.model.base.AssetSoftwareLicense;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -158,5 +160,41 @@ public class AssetDAOHibernate implements AssetDAO
     public FilterGridDataSource getFilterGridDataSource()
     {
         return new FilterGridDataSource(session, Asset.class);
+    }
+
+    @Override
+    public void saveOrUpdateAssetContact(AssetContact assetContact) 
+    {
+        session.saveOrUpdate(assetContact);
+    }
+    
+    @Override
+    public AssetContact getAssetContactForId(Long assetContactId) 
+    {
+        return (AssetContact) session.get(AssetContact.class, assetContactId);
+    }
+
+    @Override
+    public void deleteAssetContact(AssetContact assetContact) 
+    {
+        session.delete(assetContact);
+    }
+
+    @Override
+    public void saveOrUpdateAssetSoftwareLicense(AssetSoftwareLicense assetSoftwareLicense) 
+    {
+        session.saveOrUpdate(assetSoftwareLicense);
+    }
+
+    @Override
+    public AssetSoftwareLicense getAssetSoftwareLicenseForId(Long assetSoftwareLicenseId) 
+    {
+        return (AssetSoftwareLicense) session.get(AssetSoftwareLicense.class, assetSoftwareLicenseId);
+    }
+
+    @Override
+    public void deleteAssetSoftwareLicense(AssetSoftwareLicense assetSoftwareLicense) 
+    {
+        session.delete(assetSoftwareLicense);
     }
 }

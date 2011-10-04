@@ -25,9 +25,12 @@ import ch.astina.hesperid.dao.AssetDAO;
 import ch.astina.hesperid.dao.ObserverDAO;
 import ch.astina.hesperid.global.GlobalConstants;
 import ch.astina.hesperid.model.base.Asset;
+import ch.astina.hesperid.model.base.AssetContact;
+import ch.astina.hesperid.model.base.AssetSoftwareLicense;
 import ch.astina.hesperid.model.base.ClientHierarchy;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.util.DotNotationBuilder;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 
 /**
  * @author $Author: kstarosta $
@@ -38,13 +41,22 @@ public class AssetOverview
 {
     @Property
     private Asset asset;
+    
     @SuppressWarnings("unused")
     @Property
     private ClientHierarchy clientHierarchy;
+    
     @Inject
     private AssetDAO assetDAO;
+    
     @Inject
     private ObserverDAO observerDAO;
+    
+    @Property
+    private AssetContact assetContact;
+    
+    @Property
+    private AssetSoftwareLicense assetSoftwareLicense;
 
     public void onActivate(Long assetId)
     {
@@ -84,5 +96,19 @@ public class AssetOverview
         a.add(asset);
 
         return "http://chart.apis.google.com/chart?cht=gv&chl=" + DotNotationBuilder.buildAssetGraph(a);
+    }
+    
+    @CommitAfter
+    public void onActionFromDeleteAssetSoftwareLicense(Long assetSoftwareLicenseId)
+    {
+        AssetSoftwareLicense asl = assetDAO.getAssetSoftwareLicenseForId(assetSoftwareLicenseId);
+        assetDAO.deleteAssetSoftwareLicense(asl);
+    }
+
+    @CommitAfter
+    public void onActionFromDeleteAssetContact(Long assetContactId)
+    {
+        AssetContact ac = assetDAO.getAssetContactForId(assetContactId);
+        assetDAO.deleteAssetContact(ac);
     }
 }

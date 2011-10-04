@@ -24,6 +24,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import ch.astina.hesperid.dao.FailureDAO;
+import ch.astina.hesperid.dao.UserDAO;
 import ch.astina.hesperid.mails.FailureNotificationMail;
 import ch.astina.hesperid.model.base.EscalationLevel;
 import ch.astina.hesperid.model.base.EscalationScheme;
@@ -42,6 +43,7 @@ public class FailureServiceImpl implements FailureService
 {
     private FailureDAO failureDAO;
     private MailerService mailerService;
+    private UserDAO userDAO;
     private Logger logger = LoggerFactory.getLogger(FailureServiceImpl.class);
 
     public FailureServiceImpl(FailureDAO failureDAO, MailerService mailerService)
@@ -161,8 +163,7 @@ public class FailureServiceImpl implements FailureService
         failureDAO.save(failure);
 
         for (FailureEscalation failureEscalation : failure.getFailureEscalations()) {
-            FailureNotificationMail message = new FailureNotificationMail(failure,
-                    failureEscalation.getEscalationLevel().getContact());
+            FailureNotificationMail message = new FailureNotificationMail(failure, userDAO.getUserByName(failureEscalation.getEscalationLevel().getUsername()));
             try {
                 mailerService.sendHtmlMail(message);
             } catch (MessagingException e) {
@@ -184,7 +185,7 @@ public class FailureServiceImpl implements FailureService
     {
         logger.info("Notifying contact about failure: " + failure);
 
-        FailureNotificationMail message = new FailureNotificationMail(failure);
+        FailureNotificationMail message = new FailureNotificationMail(failure, userDAO.getUserByName(failure.getEscalationLevel().getUsername()));
         mailerService.sendHtmlMail(message);
     }
 

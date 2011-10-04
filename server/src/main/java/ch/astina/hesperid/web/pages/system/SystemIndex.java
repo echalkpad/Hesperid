@@ -37,7 +37,7 @@ public class SystemIndex
 
     @SuppressWarnings("unused")
     @Property
-    private System mesSystem;
+    private System system;
 
     public List<System> getSystems()
     {

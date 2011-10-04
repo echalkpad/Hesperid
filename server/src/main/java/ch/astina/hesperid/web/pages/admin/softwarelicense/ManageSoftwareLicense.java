@@ -13,62 +13,60 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-package ch.astina.hesperid.web.pages.mesrole;
+package ch.astina.hesperid.web.pages.admin.softwarelicense;
 
-import org.apache.tapestry5.PersistenceConstants;
-import org.apache.tapestry5.annotations.Persist;
+import ch.astina.hesperid.dao.SoftwareLicenseDAO;
+import ch.astina.hesperid.model.base.SoftwareLicense;
+import org.apache.tapestry5.Link;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.PageRenderLinkSource;
 import org.springframework.security.annotation.Secured;
-
-import ch.astina.hesperid.dao.MesRoleDAO;
-import ch.astina.hesperid.model.base.MesRole;
 
 /**
  * @author $Author: kstarosta $
- * @version $Revision: 118 $, $Date: 2011-09-21 16:33:28 +0200 (Mi, 21 Sep 2011) $
+ * @version $Revision: 122 $, $Date: 2011-09-22 15:06:31 +0200 (Do, 22 Sep 2011) $
  */
-public class ManageMesRole
+@Secured({"ROLE_ADMIN"})
+public class ManageSoftwareLicense 
 {
     @Property
-    private MesRole mesRole;
-
-    @SuppressWarnings("unused")
-    @Property
-    @Persist(PersistenceConstants.FLASH)
-    private boolean success;
+    private SoftwareLicense softwareLicense;
 
     @Inject
-    private MesRoleDAO mesRoleDAO;
+    private SoftwareLicenseDAO softwareLicenseDAO;
+    
+    @Inject
+    private PageRenderLinkSource pageRenderLinkSource;
 
-    public void onActivate(Long mesRoleId)
+    public void onActivate(Long softwareLicenseId)
     {
-        mesRole = mesRoleDAO.getMesRoleForId(mesRoleId);
+        softwareLicense = softwareLicenseDAO.getSoftwareLicenseForId(softwareLicenseId);
     }
 
     @Secured({"ROLE_ADMIN"})
     public void onActivate()
     {
-        if (mesRole == null) {
-            mesRole = new MesRole();
+        if (softwareLicense == null) {
+            softwareLicense = new SoftwareLicense();
         }
     }
 
     public Long onPassivate()
     {
-        if (mesRole != null) {
-            return mesRole.getId();
+        if (softwareLicense != null) {
+            return softwareLicense.getId();
         }
 
         return null;
     }
 
     @CommitAfter
-    public void onSuccessFromMesRoleForm()
+    public Link onSuccessFromMesRoleForm()
     {
-        mesRoleDAO.saveOrUpdateMesRole(mesRole);
+        softwareLicenseDAO.saveOrUpdateSoftwareLicense(softwareLicense);
 
-        success = true;
-    }
+        return pageRenderLinkSource.createPageRenderLink(SoftwareLicenseIndex.class);
+    }    
 }

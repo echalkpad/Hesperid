@@ -1,0 +1,16 @@
+<t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
+    <div class="actions">
+        <t:pagelink page="admin/report/managereporttype" class="add">Add Report Type</t:pagelink>
+    </div>
+    
+    <h1>Report Types</h1>
+    
+    <t:grid source="allReportTypes" row="reportType" exclude="id,hqlquery,jasperxmlcode" add="actions">
+        <t:parameter name="actionsHeader"></t:parameter>
+        <t:parameter name="actionsCell">
+            <t:pagelink page="admin/report/managereporttype" context="reportType.id" class="icon icon-edit">edit</t:pagelink>
+            <t:actionlink t:id="delete" context="reportType.id" onclick="return confirm('Are you sure?');" class="icon icon-delete">delete</t:actionlink>
+        </t:parameter>
+    </t:grid>
+    
+</t:layout>

@@ -13,53 +13,36 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 ////////////////////////////////////////////////////////////////////////////////////////////////////
-package ch.astina.hesperid.model.base;
+package ch.astina.hesperid.util.jasper;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperExportManager;
+
+import java.io.OutputStream;
+
 
 /**
  * @author $Author: kstarosta $
- * @version $Revision: 121 $, $Date: 2011-09-21 16:49:11 +0200 (Mi, 21 Sep 2011) $
+ * @version $Revision: 122 $, $Date: 2011-09-22 15:06:31 +0200 (Do, 22 Sep 2011) $
  */
-@Entity
-public class MesRole
+public class JasperPDFStreamResponse extends JasperStreamResponse 
 {
-    private Long id;
-    private String name;
-    private String description;
+    public static final String PDF_CONTENT_TYPE = "application/pdf";
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    public Long getId()
+    public JasperPDFStreamResponse(JasperPrint jasperPrint, String fileName) 
     {
-        return id;
+        super(jasperPrint, fileName);
     }
 
-    public void setId(Long id)
+    @Override
+    public String getContentType() 
     {
-        this.id = id;
+        return PDF_CONTENT_TYPE;
     }
 
-    public String getName()
+    @Override
+    public void exportReportToStream(JasperPrint jasperPrint, OutputStream outputStream) throws Exception 
     {
-        return name;
-    }
-
-    public void setName(String name)
-    {
-        this.name = name;
-    }
-
-    public String getDescription()
-    {
-        return description;
-    }
-
-    public void setDescription(String description)
-    {
-        this.description = description;
+        JasperExportManager.exportReportToPdfStream(jasperPrint, outputStream);
     }
 }

@@ -21,7 +21,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import ch.astina.hesperid.dao.MesRoleDAO;
-import ch.astina.hesperid.model.base.MesRole;
+import ch.astina.hesperid.model.base.BusinessRole;
 
 /**
  * @author $Author: kstarosta $
@@ -36,29 +36,32 @@ public class MesRoleDAOHibernate implements MesRoleDAO
         this.session = session;
     }
 
-    public MesRole getMesRoleForId(Long mesRoleId)
+    @Override
+    public BusinessRole getMesRoleForId(Long mesRoleId)
     {
-        return (MesRole) session.get(MesRole.class, mesRoleId);
+        return (BusinessRole) session.get(BusinessRole.class, mesRoleId);
     }
 
     @SuppressWarnings("unchecked")
-    public List<MesRole> getAllMesRoles()
+    @Override
+    public List<BusinessRole> getAllMesRoles()
     {
-        return session.createCriteria(MesRole.class).list();
+        return session.createCriteria(BusinessRole.class).list();
     }
 
-    public void saveOrUpdateMesRole(MesRole mesRole)
+    @Override
+    public void saveOrUpdateMesRole(BusinessRole mesRole)
     {
         session.saveOrUpdate(mesRole);
     }
 
-    public void deleteMesRole(MesRole mesRole)
+    @Override
+    public void deleteMesRole(BusinessRole mesRole)
     {
-        // XXX
-        //String sql = "UPDATE contact SET mes_role = NULL WHERE mes_role = ?";
-        //Query query = session.createSQLQuery(sql);
-        //query.setLong(0, mesRole.getId());
-        //query.executeUpdate();
+        String sql = "UPDATE asset_contact SET business_role = NULL WHERE business_role = ?";
+        Query query = session.createSQLQuery(sql);
+        query.setLong(0, mesRole.getId());
+        query.executeUpdate();
 
         session.delete(mesRole);
     }

@@ -1,5 +1,5 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
-    <div id="breadcrumbs">You are here: <t:pagelink page="admin">Admin</t:pagelink> » System Settings</div>
+    <h1>System Settings</h1>
     <h3>Mail server</h3>
     <t:form t:id="mailServerForm">
             <div class="form-item-holder">

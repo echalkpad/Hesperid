@@ -30,34 +30,7 @@
 				<t:label for="username">User</t:label>
 			</div>
 			<div class="form-item">
-				<t:select t:id="username" t:model="users" t:value="user" />
-			</div>
-		</div>
-	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="firstname">First Name</t:label>
-			</div>
-			<div class="form-item">
-				<t:textfield t:id="firstname" t:value="escalationLevel.contact?.firstName" />
-			</div>
-		</div>
-	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="lastname">Last Name</t:label>
-			</div>
-			<div class="form-item">
-				<t:textfield t:id="lastname" t:value="escalationLevel.contact?.lastName" />
-			</div>
-		</div>
-	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="mail">Email Address</t:label>
-			</div>
-			<div class="form-item">
-				<t:textfield t:id="mail" t:value="escalationLevel.contact?.mail" t:validate="email" />
+				<t:select t:id="username" t:model="users" t:value="user" t:validate="required" />
 			</div>
 		</div>
 		

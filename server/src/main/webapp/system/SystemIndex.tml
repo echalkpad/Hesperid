@@ -1,24 +1,34 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
     
     <div class="actions">
-    	<t:pagelink page="system/manage" class="add">Add System</t:pagelink>
+        <t:pagelink page="system/manage" class="add">Add System</t:pagelink>
     </div>
     
     <h1>Systems</h1>
     
     <div class="box-holder">
     
-    	<div class="box-head">
-    		<h2>All Systems</h2>
-    	</div>
+        <div class="box-head">
+            <h2>All Systems</h2>
+        </div>
     
-    	<t:grid t:source="systems" exclude="id">
-    		<p:empty>
-				<div class="t-data-grid-empty">
-					none
-				</div>
-    		</p:empty>
-    	</t:grid>
+        <t:grid t:source="systems" row="system" exclude="id" add="actions">
+            <p:actionsHeader></p:actionsHeader>
+            <p:actionsCell>
+                <t:pagelink page="system/manage" context="system" class="icon icon-edit">Edit</t:pagelink>
+                <t:actionlink t:id="delete" context="system" class="icon icon-delete"
+            	onclick="return confirm('Are you sure?');">Delete
+                </t:actionlink>
+            </p:actionsCell>
+            <p:nameCell>
+                <t:pagelink page="system/view" context="system">${system.name}</t:pagelink>
+            </p:nameCell>
+            <p:empty>
+                <div class="t-data-grid-empty">
+                                    none
+                </div>
+            </p:empty>
+        </t:grid>
     
     </div>
     

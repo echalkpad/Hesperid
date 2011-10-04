@@ -32,8 +32,10 @@ public class Layout
 {
     @Inject
     private Version version;
+    
     @Inject
     private Sitemap sitemap;
+    
     @InjectComponent
     private Feedback feedback;
 
