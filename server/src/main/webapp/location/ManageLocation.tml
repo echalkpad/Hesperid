@@ -1,67 +1,71 @@
+
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 
-	<div class="actions">
-		<t:pagelink page="location" class="back">Back</t:pagelink>
-	</div>
+    <div class="actions">
+        <t:pagelink page="location" class="back">Back</t:pagelink>
+    </div>
 	
-	<t:if test="location.id">
-		<h1>Edit Location: ${location.name}</h1>
-		<p:else>
-			<h1>Add Location</h1>
-		</p:else>
-	</t:if>
-	
-    <t:form>
-            <div class="form-item-holder">
-                    <div class="label">
-                             <t:label for="name">Name</t:label>
-                    </div>
-                    <div class="form-item">
+    <t:if test="location.id">
+        <h1>Edit Location: ${location.name}</h1>
+        <p:else>
+            <h1>Add Location</h1>
+        </p:else>
+    </t:if>
+
+    <div class="layout-grid-col-holder">
+
+        <div class="layout-grid-col">
+            <t:form class="box-holder">
+
+                <div class="box-head">
+                    <h2>Location</h2>
+                </div>
+
+                <div class="box-content">
+
+                    <fieldset>
+
+                        <div class="form-item">
+                            <t:label for="name">Name</t:label>
                             <t:textfield t:id="name" validate="required" t:value="location.name" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <div class="label">
-                             <t:label for="locationCode">Location Code</t:label>
-                    </div>
-                    <div class="form-item">
+                        </div>
+                    
+                        <div class="form-item">
+                            <t:label for="locationCode">Location Code</t:label>
                             <t:textfield t:id="locationCode" t:value="location.locationCode" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <div class="label">
-                             <t:label for="country">Country</t:label>
-                    </div>
-                    <div class="form-item">
+                        </div>
+                             
+                        <div class="form-item">
+                            <t:label for="country">Country</t:label>
                             <t:textfield t:id="country" t:value="location.country" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <div class="label">
-                             <t:label for="street">Street</t:label>
-                    </div>
-                    <div class="form-item">
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="street">Street</t:label>
                             <t:textfield t:id="street" t:value="location.street" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <div class="label">
-                             <t:label for="city">City</t:label>
-                    </div>
-                    <div class="form-item">
+                        </div>
+                    
+                        <div class="form-item">
+                            <t:label for="city">City</t:label>
                             <t:textfield t:id="city" t:value="location.city" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <div class="label">
-                             <t:label for="zip">Zip Code</t:label>
-                    </div>
-                    <div class="form-item">
+                        </div>
+                    
+                        <div class="form-item">
+                            <t:label for="zip">Zip Code</t:label>
                             <t:textfield t:id="zip" t:value="location.zip" />
-                    </div>
-            </div>
-            <div class="form-button-holder">
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="box-foot form-foot">
                     <button type="submit">Save</button>
-            </div>
-    </t:form>
+                    <t:if test="location.id">
+                        <t:pagelink page="location/view" context="location" class="button button-cancel">Cancel</t:pagelink>
+                        <p:else>
+                            <t:pagelink page="location" class="button button-cancel">Cancel</t:pagelink>
+                        </p:else>
+                    </t:if>
+                </div>
+            </t:form>
+        </div>
+    </div>
 </t:layout>

@@ -1,4 +1,3 @@
-
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
     <div class="actions">
         <t:pagelink page="contact" class="back">Back</t:pagelink>
@@ -10,67 +9,65 @@
             <h1>Add Contact</h1>
         </t:parameter>
     </t:if>
+
+    <div class="layout-grid-col-holder">
+
+        <div class="layout-grid-col">
     
-    <t:form t:id="contactForm">
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="firstName">First Name</t:label>
-            </div>
-            <div class="form-item">
-                <t:textfield t:id="firstName" validate="required" t:value="contact.firstName" />
-            </div>
-        </div>
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="lastName">Last Name</t:label>
-            </div>
-            <div class="form-item">
-                <t:textfield t:id="lastName" validate="required" t:value="contact.lastName" />
-            </div>
-        </div>
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="location">Location</t:label>
-            </div>
-            <div class="form-item">
-                <select t:id="location" t:type="select" t:model="locations"
+            <t:form t:id="contactForm" class="box-holder">
+
+                <div class="box-head">
+                    <h2>Contact</h2>
+                </div>
+
+                <div class="box-content">
+
+                    <fieldset>
+
+                
+                        <div class="form-item">
+                            <t:label for="firstName">First Name</t:label>
+                            <t:textfield t:id="firstName" validate="required" t:value="contact.firstName" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="lastName">Last Name</t:label>
+                            <t:textfield t:id="lastName" validate="required" t:value="contact.lastName" />
+                        </div>
+                
+                        <div class="form-item">
+                            <t:label for="location">Location</t:label>
+                            <select t:id="location" t:type="select" t:model="locations"
                              t:value="contact.location" t:encoder="locations" />
-            </div>
+                        </div>
+                
+                        <div class="form-item">
+                            <t:label for="mail">Mail</t:label>
+                            <t:textfield t:id="mail" t:value="contact.mail" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="phone">Phone</t:label>
+                            <t:textfield t:id="phone" t:value="contact.phone" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="mobile">Mobile</t:label>
+                            <t:textfield t:id="mobile" t:value="contact.mobile" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="pager">Pager</t:label>
+                            <t:textfield t:id="pager" t:value="contact.pager" />
+                        </div>
+
+                    </fieldset>
+                </div>
+                <div class="box-foot form-foot">
+                    <button type="submit">Save</button>
+                    <t:pagelink page="contact" class="button button-cancel">Cancel</t:pagelink>
+                </div>
+            </t:form>
         </div>
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="mail">Mail</t:label>
-            </div>
-            <div class="form-item">
-                <t:textfield t:id="mail" t:value="contact.mail" />
-            </div>
-        </div>
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="phone">Phone</t:label>
-            </div>
-            <div class="form-item">
-                <t:textfield t:id="phone" t:value="contact.phone" />
-            </div>
-        </div>
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="mobile">Mobile</t:label>
-            </div>
-            <div class="form-item">
-                <t:textfield t:id="mobile" t:value="contact.mobile" />
-            </div>
-        </div>
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="pager">Pager</t:label>
-            </div>
-            <div class="form-item">
-                <t:textfield t:id="pager" t:value="contact.pager" />
-            </div>
-        </div>
-        <div class="form-item-holder">
-            <button type="submit">Save</button>
-        </div>
-    </t:form>
+    </div>
 </t:layout>

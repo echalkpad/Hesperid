@@ -1,20 +1,32 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
     <h1>Report &amp; Exports</h1>
 
-    <t:form t:id="contactForm">
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="reportType">Report Type</t:label>
-            </div>
-            <div class="form-item">
-                <select t:id="reportType" t:type="select" t:model="reportTypes"
+    <div class="layout-grid-col-holder">
+
+        <div class="layout-grid-col">
+            <t:form t:id="contactForm" class="box-holder">
+
+                <div class="box-head">
+                    <h2>Select Report</h2>
+                </div>
+
+                <div class="box-content">
+
+                    <fieldset>
+                        <div class="form-item">
+                            <t:label for="reportType">Report Type</t:label>
+                            <select t:id="reportType" t:type="select" t:model="reportTypes"
                              t:value="reportType" t:encoder="reportTypes" t:validate="required" />
-            </div>
+                        </div>
+                    </fieldset>
+
+                </div>
+
+                <div class="box-foot form-foot">
+                    <t:submit t:id="pdf" class="button" value="Generate PDF Export"/>
+                    <t:submit t:id="excel" class="button" value="Generate Excel Export"/>
+                </div>
+            </t:form>
         </div>
-        <div class="form-item-holder">
-            <t:submit t:id="pdf" class="download_csv" value="Generate PDF Export"/>
-            <t:submit t:id="excel" class="download_excel" value="Generate Excel Export"/>
-            <!-- <t:submit t:id="view" class="download_view" value="View Report"/> -->
-        </div>
-    </t:form>
+    </div>
 </t:layout>
