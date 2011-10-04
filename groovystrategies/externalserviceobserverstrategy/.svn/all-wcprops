@@ -1,0 +1,41 @@
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/molo/!svn/ver/55/trunk/groovy/externalserviceobserverstrategy
+END
+SimpleSmtpServerObserver.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/molo/!svn/ver/55/trunk/groovy/externalserviceobserverstrategy/SimpleSmtpServerObserver.groovy
+END
+SshCredentialObserver.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/molo/!svn/ver/55/trunk/groovy/externalserviceobserverstrategy/SshCredentialObserver.groovy
+END
+HttpAvailabilityObserver.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/molo/!svn/ver/55/trunk/groovy/externalserviceobserverstrategy/HttpAvailabilityObserver.groovy
+END
+HttpResponseTimeObserver.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/molo/!svn/ver/55/trunk/groovy/externalserviceobserverstrategy/HttpResponseTimeObserver.groovy
+END
+HttpStatusCodeObserver.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 92
+/molo/!svn/ver/55/trunk/groovy/externalserviceobserverstrategy/HttpStatusCodeObserver.groovy
+END
+HtmlRegexObserver.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 87
+/molo/!svn/ver/55/trunk/groovy/externalserviceobserverstrategy/HtmlRegexObserver.groovy
+END
