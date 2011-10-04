@@ -12,7 +12,7 @@
             <h2>All Contacts</h2>
         </div>
     
-        <t:grid source="allcontacts" row="contact" add="actions">
+        <t:grid source="allcontacts" row="contact" add="actions" exclude="id">
             <t:parameter name="actionsHeader"></t:parameter>
             <t:parameter name="actionsCell">
                 <t:pagelink page="contact/managecontact" context="contact.id" class="icon icon-edit">edit</t:pagelink>

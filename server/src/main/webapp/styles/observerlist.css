@@ -57,6 +57,10 @@
 .observers .actions {
 	width: 60px;
 }
+.observers .box-head .actions {
+    width: auto;
+    padding: 6px 0 0 0;
+}
 .observers .failure {
 	font-size: 80%;
 	font-weight: normal;

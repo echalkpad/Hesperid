@@ -14,7 +14,7 @@
         </div>
     
         <t:grid source="locations" row="location" add="actions"
-		exclude="zip,street,locationCode,country,city">
+		exclude="zip,street,locationCode,id" reorder="name,city,country">
 		
             <p:actionsHeader></p:actionsHeader>
 		

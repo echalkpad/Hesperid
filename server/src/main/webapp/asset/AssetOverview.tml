@@ -27,16 +27,18 @@
                         </div>
                 
                 
-                        <t:grid t:source="asset.assetContacts" t:row="assetContact" add="contact,businessrole,delete" exclude="id" reorder="contact,businessRole,delete">
+                        <t:grid t:source="asset.assetContacts" t:row="assetContact" add="contact,businessrole,actions" exclude="id" reorder="contact,businessRole,actions">
                             <p:contactCell>
                         ${assetContact.contact.formattedName} (${assetContact.contact.mail})
                             </p:contactCell>
                             <p:businessroleCell>
                         ${assetContact.businessrole?.name}
                             </p:businessroleCell>
-                            <p:deleteCell>
+                            <p:actionsCell>
                                 <t:actionlink t:id="deleteAssetContact" context="assetContact.id" onclick="return confirm('Are you sure?');" class="icon icon-delete">delete</t:actionlink>
-                            </p:deleteCell>
+                            </p:actionsCell>
+                            <p:actionsheader>
+                            </p:actionsheader>
                             <p:empty>
                                 <div class="t-data-grid-empty">
                             No Contacts defined for this asset
@@ -56,13 +58,15 @@
                             <h2>Licenses</h2>
                         </div>         
                 
-                        <t:grid t:source="asset.assetSoftwareLicenses" t:row="assetSoftwareLicense" add="softwareLicense,delete" exclude="id" reorder="softwareLicense,version,expirationDate,licenseKey,remark,delete">
+                        <t:grid t:source="asset.assetSoftwareLicenses" t:row="assetSoftwareLicense" add="softwareLicense,actions" exclude="id" reorder="softwareLicense,version,expirationDate,licenseKey,remark,actions">
                             <p:softwareLicenseCell>
                         ${assetSoftwareLicense.softwareLicense.name}
                             </p:softwareLicenseCell>
-                            <p:deleteCell>
+                            <p:actionsCell>
                                 <t:actionlink t:id="deleteAssetSoftwareLicense" context="assetSoftwareLicense.id" onclick="return confirm('Are you sure?');" class="icon icon-delete">delete</t:actionlink>
-                            </p:deleteCell>
+                            </p:actionsCell>
+                            <p:actionsheader>
+                            </p:actionsheader>
                             <p:empty>
                                 <div class="t-data-grid-empty">
                             No Licenses defined for this asset
@@ -131,7 +135,7 @@
 			    
                 <h2>Graph</h2>
 		     	
-                <img src="${assetGraphForAllAssetRelations}" />
+                <img src="${assetGraphForAllAssetRelations}" onclick="window.open('${assetGraphForAllAssetRelations}','_blank','width=500,height=500,location=0,location=no,toolbar=0');" />
 			    
             </div>
 			
