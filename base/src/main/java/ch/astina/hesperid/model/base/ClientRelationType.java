@@ -21,5 +21,5 @@ package ch.astina.hesperid.model.base;
  */
 public enum ClientRelationType
 {
-    RELATED_TO, DEPENDS_ON
+    RELATED_TO, DEPENDS_ON, BEFORE, AFTER
 }

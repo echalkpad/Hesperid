@@ -276,6 +276,23 @@ public class Asset
 
         return false;
     }
+    
+    public AssetContact getAssetContactForRolename(String rolename)
+    {
+        if (assetContacts == null) {
+            return null;
+        }
+        
+        for (AssetContact ac : assetContacts) {
+            if (ac.getBusinessRole() != null) {
+                if (ac.getBusinessRole().getName().equals(rolename)) {
+                    return ac;
+                }
+            }
+        }
+        
+        return null;
+    }
 
     @Override
     public String toString()
