@@ -6,7 +6,7 @@
 	
     <h1>Observer Strategies</h1>
 	
-    <t:grid source="observerStrategies" row="observerStrategy" exclude="groovyScript,possibleParameters"
+    <t:grid source="observerStrategies" row="observerStrategy" exclude="id,groovyScript,possibleParameters"
 		add="actions">
         <p:actionsHeader></p:actionsHeader>
         <p:actionsCell>

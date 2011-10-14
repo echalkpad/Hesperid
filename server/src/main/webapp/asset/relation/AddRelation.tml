@@ -7,30 +7,35 @@
         </div>
 	
         <h1>Add Relation ${asset.assetName} (${asset.assetIdentifier})</h1>
-        
-        <t:form>
-            <div class="form-item-holder">
-                <div class="label">
-                    <t:label for="relatedAsset">Related Asset</t:label>
+        <div class="layout-grid-col-holder">
+
+            <div class="layout-grid-col">
+        <t:form class="box-holder">
+                <div class="box-head">
+                    <h2>Relation</h2>
                 </div>
+
+                <div class="box-content">
+                    <fieldset>
                 <div class="form-item">
+                    <t:label for="relatedAsset">Related Asset</t:label>
                     <select t:id="relatedAsset" t:type="select" t:model="relatedAssets"
                              t:value="relatedAsset" t:encoder="relatedAssets" t:validate="required"/>
                 </div>
-            </div>
-            <div class="form-item-holder">
-                <div class="label">
-                    <t:label for="clientRelationType">Relation Type</t:label>
-                </div>
+
                 <div class="form-item">
+                    <t:label for="clientRelationType">Relation Type</t:label>
                     <select t:id="clientRelationType" t:type="select" t:validate="required" />
                 </div>
-            </div>
-            <div class="form-item-holder">
-                <button type="submit">Save</button>
-            </div>
-        </t:form>
-	    
+                    </fieldset>
+                </div>
+                <div class="box-foot form-foot">
+                    <button type="submit">Save</button>
+                        <t:pagelink page="asset/relation" context="asset" class="button button-cancel">Cancel</t:pagelink>
+                </div>
+            </t:form>
+        </div>
+    </div>
     </t:if>
 	
 	

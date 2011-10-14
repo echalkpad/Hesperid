@@ -77,7 +77,7 @@ public class AddAssetContact
         asset = assetDAO.getAssetForId(assetId);
         
         businessRoles = new GenericSelectModel<BusinessRole>(mesRoleDAO.getAllMesRoles(), BusinessRole.class, "name", "id", propertyAccess);
-        contacts = new GenericSelectModel<Contact>(contactDAO.getAllContacts(), Contact.class, "lastName", "id", propertyAccess);
+        contacts = new GenericSelectModel<Contact>(contactDAO.getAllContacts(), Contact.class, "formattedName", "id", propertyAccess);
     }
     
     public Long onPassivate()

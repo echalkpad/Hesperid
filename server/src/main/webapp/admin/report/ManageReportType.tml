@@ -10,34 +10,40 @@
             <h1>Add Report Type</h1>
         </t:parameter>
     </t:if>
-    
-    <t:form t:id="reportTypeForm">
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="name">Name</t:label>
+    <div class="layout-grid-col-holder">
+
+        <div>
+            <t:form t:id="reportTypeForm" class="box-holder">
+                
+                <div class="box-head">
+                    <h2>Report</h2>
+                </div>
+
+                <div class="box-content">
+                    <fieldset>
+
+                    <div class="form-item">
+                        <t:label for="name">Name</t:label>
+                        <t:textfield t:id="name" validate="required" t:value="reportType.name" />
+                    </div>
+
+                    <div class="form-item">
+                        <t:label for="hqlQuery">HQL Query</t:label>
+                        <t:textarea t:id="hqlQuery" t:value="reportType.hqlQuery" />
+                    </div>
+
+                    <div class="form-item">
+                        <t:label for="jasperXmlCode">Jasper XML</t:label>
+                        <t:textarea class="huge" t:id="jasperXmlCode" t:value="reportType.jasperXmlCode" />
+                    </div>
+
+                </fieldset>
             </div>
-            <div class="form-item">
-                <t:textfield t:id="name" validate="required" t:value="reportType.name" />
+            <div class="box-foot form-foot">
+                <button type="submit">Save</button>
+                <t:pagelink page="admin/report" class="button button-cancel">Cancel</t:pagelink>
             </div>
-        </div>
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="hqlQuery">HQL Query</t:label>
-            </div>
-            <div class="form-item">
-                <t:textarea t:id="hqlQuery" t:value="reportType.hqlQuery" />
-            </div>
-        </div>
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="jasperXmlCode">Jasper XML</t:label>
-            </div>
-            <div class="form-item">
-                <t:textarea class="huge" t:id="jasperXmlCode" t:value="reportType.jasperXmlCode" />
-            </div>
-        </div>
-        <div class="form-item-holder">
-            <button type="submit">Save</button>
-        </div>
-    </t:form>
+        </t:form>
+    </div>
+</div>
 </t:layout>

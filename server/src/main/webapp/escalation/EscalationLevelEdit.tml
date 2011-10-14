@@ -1,43 +1,41 @@
+
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
 	
-	<h1>Edit Escalation Level</h1>
+    <h1>Edit Escalation Level</h1>
+    <div class="layout-grid-col-holder">
+
+        <div class="layout-grid-col">
+            <t:form class="box-holder">
+                <div class="box-head">
+                    <h2>Escalation Level</h2>
+                </div>
+
+                <div class="box-content">
+                    <fieldset>
+                        <t:errors />
 	
-	<t:form>
+                        <div class="form-item">
+                            <t:label for="level">Level</t:label>
+                            <t:textfield t:id="level" t:value="escalationLevel.level" t:validate="required" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="timeout">Timeout</t:label>
+                            <t:textfield t:id="timeout" t:value="escalationLevel.timeout" t:validate="required" />
+                            <span>Seconds</span>
+                        </div>
 	
-		<t:errors />
-	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="level">Level</t:label>
-			</div>
-			<div class="form-item">
-				<t:textfield t:id="level" t:value="escalationLevel.level" t:validate="required" />
-			</div>
-		</div>
-	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="timeout">Timeout</t:label>
-			</div>
-			<div class="form-item">
-				<t:textfield t:id="timeout" t:value="escalationLevel.timeout" t:validate="required" />
-				<span>Seconds</span>
-			</div>
-		</div>
-	
-		<div class="form-item-holder">
-			<div class="label">
-				<t:label for="username">User</t:label>
-			</div>
-			<div class="form-item">
-				<t:select t:id="username" t:model="users" t:value="user" t:validate="required" />
-			</div>
-		</div>
-		
-		<div class="form-button-holder">
-			<button type="submit">Save</button>
-		</div>
-		
-	</t:form>
-	
+                        <div class="form-item">
+                            <t:label for="username">User</t:label>
+                            <t:select t:id="username" t:model="users" t:value="user" t:validate="required" />
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="box-foot form-foot">
+                    <button type="submit">Save</button>
+                    <t:pagelink page="escalation/view" context="escalationLevel.escalationScheme" class="button button-cancel">Cancel</t:pagelink>
+                </div>
+            </t:form>
+        </div>
+    </div>
 </t:layout>

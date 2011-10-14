@@ -11,18 +11,29 @@
         </t:parameter>
     </t:if>
 	
-    <t:form>
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="name">Name</t:label>
-            </div>
-            <div class="form-item">
-                <t:textfield t:id="name" validate="required" t:value="escalationScheme.name" />
-            </div>
+    <div class="layout-grid-col-holder">
+
+        <div class="layout-grid-col">
+            <t:form class="box-holder">
+        
+                <div class="box-head">
+                    <h2>Escalation Scheme</h2>
+                </div>
+
+                <div class="box-content">
+                    <fieldset>
+                        <div class="form-item">
+                            <t:label for="name">Name</t:label>
+                            <t:textfield t:id="name" validate="required" t:value="escalationScheme.name" />
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="box-foot form-foot">
+                    <button type="submit">Save</button>
+                    <t:pagelink page="escalation" class="button button-cancel">Cancel</t:pagelink>
+                </div>
+            </t:form>
         </div>
-        <div class="form-button-holder">
-            <button type="submit">Save</button>
-        </div>
-    </t:form>
+    </div>
 	
 </t:layout>

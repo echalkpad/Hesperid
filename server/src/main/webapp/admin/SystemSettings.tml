@@ -1,66 +1,61 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
     <h1>System Settings</h1>
-    <h3>Mail server</h3>
-    <t:form t:id="mailServerForm">
-            <div class="form-item-holder">
-                    <div class="label">
+    
+    <div class="layout-grid-col-holder">
+
+        <div class="layout-grid-col">
+            <t:form t:id="mailServerForm" class="box-holder">
+        
+                <div class="box-head">
+                    <h2>Mail server</h2>
+                </div>
+
+                <div class="box-content">
+                    <fieldset>
+
+                        <div class="form-item">
                             <t:label for="name">Name</t:label>
-                    </div>
-                    <div class="form-item">
                             <t:textfield t:id="name" validate="required" t:value="mailServer.name" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <div class="label">
+                        </div>
+
+
+                        <div class="form-item">
                             <t:label for="host">Host</t:label>
-                    </div>
-                    <div class="form-item">
                             <t:textfield t:id="host" validate="required" t:value="mailServer.host" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <div class="label">
+                        </div>
+
+                        <div class="form-item">
                             <t:label for="userName">Username</t:label>
-                    </div>
-                    <div class="form-item">
                             <t:textfield t:id="userName" t:value="mailServer.userName" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <div class="label">
+                        </div>
+
+                        <div class="form-item">
                             <t:label for="password">Password</t:label>
-                    </div>
-                    <div class="form-item">
                             <t:textfield t:id="password" t:value="mailServer.password" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <div class="label">
+                        </div>
+
+                        <div class="form-item">
                             <t:label for="defaultSender">Default Sender Email</t:label>
-                    </div>
-                    <div class="form-item">
                             <t:textfield t:id="defaultSender" t:value="mailServer.defaultSender" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <div class="label">
+                        </div>
+
+                        <div class="form-item">
                             <t:label for="port">Port</t:label>
-                    </div>
-                    <div class="form-item">
                             <t:textfield t:id="port" t:value="mailServer.port" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <div class="label">
+                        </div>
+
+                        <div class="form-item">
                             <t:label for="mailServerSecureConnectionType">Secure connection Type</t:label>
-                    </div>
-                    <div class="form-item">
                             <select t:id="mailServerSecureConnectionType" t:type="select" t:validate="required"
                             t:value="mailServer.mailServerSecureConnectionType" t:model="mailServerSecureConnectionTypeModel" t:encoder="mailServerSecureConnectionTypeEncoder" />
-                    </div>
-            </div>
-            <div class="form-item-holder">
-                    <button type="submit">Save Mail Server changes</button>
-            </div>
-    </t:form>
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="box-foot form-foot">
+                    <button type="submit">Save</button>
+                    <t:pagelink page="admin" class="button button-cancel">Cancel</t:pagelink>
+                </div>
+            </t:form>
+        </div>
+    </div>
 </t:layout>

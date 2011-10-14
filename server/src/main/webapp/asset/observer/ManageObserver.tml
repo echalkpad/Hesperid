@@ -1,118 +1,90 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd" xmlns:p="tapestry:parameter">
     
     <t:if test="observer.id">
-    	<h1>Manage Observer: ${observer.name}</h1>
-    	<p:else>
-    		<h1>Add Observer: ${observer.asset.assetName}</h1>
-    	</p:else>
+        <h1>Manage Observer: ${observer.name}</h1>
+        <p:else>
+            <h1>Add Observer: ${observer.asset.assetName}</h1>
+        </p:else>
     </t:if>
+    <div class="layout-grid-col-holder">
+
+        <div class="layout-grid-col">
+            <t:form class="box-holder">
+                <div class="box-head">
+                    <h2>Observer Data</h2>
+                </div>
+
+                <div class="box-content">
+                    <fieldset>
+                        <t:errors />
     
-    <t:form>
-    
-    	<t:errors />
-    
-    	<div class="form-item-holder">
-    		<div class="label">
-    			<t:label for="name">Observer Strategy</t:label>
-    		</div>
-    		<div class="form-item">
+                        <div class="form-item">
+                            <t:label for="name">Observer Strategy</t:label>
     			${observer.observerStrategy.name}
-    		</div>
-    	</div>
-    
-    	<div class="form-item-holder">
-    		<div class="label">
-    			<t:label for="name">Name</t:label>
-    		</div>
-    		<div class="form-item">
-    			<t:textfield t:id="name" t:value="observer.name" t:validate="required" />
-    		</div>
-    	</div>
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="name">Name</t:label>
+                            <t:textfield t:id="name" t:value="observer.name" t:validate="required" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="parameters">Parameters</t:label>
+                            <span>${observer.observerStrategy.possibleParameters}</span>
+                            <t:textarea t:id="parameters" t:value="observer.parameters" />
+                        </div>
     	
-    	<div class="form-item-holder">
-    		<div class="label">
-    			<t:label for="parameters">Parameters</t:label>
-    			<span>${observer.observerStrategy.possibleParameters}</span>
-    		</div>
-    		<div class="form-item">
-    			<t:textarea t:id="parameters" t:value="observer.parameters" />
-    		</div>
-    	</div>
+                        <t:if test="resultTypeNumeric">
+
+                            <div class="form-item">
+                                <t:label for="expectedValueMin">Expected Min</t:label>
+                                <t:textfield t:id="expectedValueMin" t:value="observer.expectedValueMin" />
+                            </div>
+
+                            <div class="form-item">
+                                <t:label for="expectedValueMax">Expected Max</t:label>
+                                <t:textfield t:id="expectedValueMax" t:value="observer.expectedValueMax" />
+                            </div>
+                        </t:if>
     	
-    	<t:if test="resultTypeNumeric">
-    		<div class="form-item-holder">
-    			<div class="label">
-    				<t:label for="expectedValueMin">Expected Min</t:label>
-    			</div>
-    			<div class="form-item">
-    				<t:textfield t:id="expectedValueMin" t:value="observer.expectedValueMin" />
-    			</div>
-    		</div>
-   	
-    		<div class="form-item-holder">
-    			<div class="label">
-    				<t:label for="expectedValueMax">Expected Max</t:label>
-    			</div>
-    			<div class="form-item">
-    				<t:textfield t:id="expectedValueMax" t:value="observer.expectedValueMax" />
-    			</div>
-    		</div>
-    	</t:if>
+                        <t:if test="resultTypeString">
+
+                            <div class="form-item">
+                                <t:label for="expectedValueStr">Expected Value</t:label>
+                                <t:textfield t:id="expectedValueStr" t:value="observer.expectedValue" />
+                            </div>
+                        </t:if>
     	
-   		<t:if test="resultTypeString">
-    		<div class="form-item-holder">
-    			<div class="label">
-    				<t:label for="expectedValueStr">Expected Value</t:label>
-    			</div>
-    			<div class="form-item">
-    				<t:textfield t:id="expectedValueStr" t:value="observer.expectedValue" />
-    			</div>
-    		</div>
-   		</t:if>
-    	
-   		<t:if test="resultTypeBoolean">
-    		<div class="form-item-holder">
-    			<div class="label">
-    				<t:label for="expectedValueBool">Expected Value</t:label>
-    			</div>
-    			<div class="form-item">
-    				<t:select t:id="expectedValueBool" t:model="literal:true,false" t:value="observer.expectedValue" />
-    			</div>
-    		</div>
-   		</t:if>
-    
-    	<div class="form-item-holder">
-    		<div class="label">
-    			<t:label for="checkInterval">Check Interval</t:label>
-    		</div>
-    		<div class="form-item">
-    			<t:textfield t:id="checkInterval" t:value="observer.checkInterval" 
+                        <t:if test="resultTypeBoolean">
+
+                            <div class="form-item">
+                                <t:label for="expectedValueBool">Expected Value</t:label>
+                                <t:select t:id="expectedValueBool" t:model="literal:true,false" t:value="observer.expectedValue" />
+                            </div>
+                        </t:if>
+
+                        <div class="form-item">
+                            <t:label for="checkInterval">Check Interval</t:label>
+                            <t:textfield t:id="checkInterval" t:value="observer.checkInterval" 
     				t:validate="required,min=1" />
-    		</div>
-    	</div>
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="monitor">Monitor</t:label>
+                            <t:checkbox t:id="monitor" t:value="observer.monitor" />
+                        </div>
     
-    	<div class="form-item-holder">
-    		<div class="label">
-    			<t:label for="monitor">Monitor</t:label>
-    		</div>
-    		<div class="form-item">
-    			<t:checkbox t:id="monitor" t:value="observer.monitor" />
-    		</div>
-    	</div>
-    
-    	<div class="form-item-holder">
-    		<div class="label">
-    			<t:label for="showOnAssetOverview">Show on Overview</t:label>
-    		</div>
-    		<div class="form-item">
-    			<t:checkbox t:id="showOnAssetOverview" t:value="observer.showOnAssetOverview" />
-    		</div>
-    	</div>
-    
-    	<div class="form-button-holder">
-    		<button type="submit">Save</button>
-    	</div>
-    
-    </t:form>
-    
+                        <div class="form-item">
+                            <t:label for="showOnAssetOverview">Show on Overview</t:label>
+                            <t:checkbox t:id="showOnAssetOverview" t:value="observer.showOnAssetOverview" />
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="box-foot form-foot">
+                    <button type="submit">Save</button>
+                    <t:pagelink page="asset/overview" context="observer.asset" class="button button-cancel">Cancel</t:pagelink>
+                </div>
+            </t:form>
+        </div>
+    </div>
 </t:layout>

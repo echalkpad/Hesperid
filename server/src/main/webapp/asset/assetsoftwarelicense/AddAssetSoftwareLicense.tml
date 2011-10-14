@@ -6,58 +6,49 @@
     </div>
     
     <h1>Add Software License ${asset.assetName}</h1>
-    
-    <t:form>
+    <div class="layout-grid-col-holder">
+
+        <div class="layout-grid-col">
         
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="softwareLicense">Software License</t:label>
-            </div>
-            <div class="form-item">
-                <t:select t:id="softwareLicense" t:value="assetSoftwareLicense.softwareLicense" t:model="softwareLicenses" t:validate="required" />
-            </div>
-        </div>
+            <t:form class="box-holder">
+                <div class="box-head">
+                    <h2>Software License Data</h2>
+                </div>
+
+                <div class="box-content">
+                    <fieldset>
         
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="softwareVersion">Version</t:label>
-            </div>
-            <div class="form-item">
-                <t:textfield t:id="softwareVersion" t:value="assetSoftwareLicense.version" />
-            </div>
+                        <div class="form-item">
+                            <t:label for="softwareLicense">Software License</t:label>
+                            <t:select t:id="softwareLicense" t:value="assetSoftwareLicense.softwareLicense" t:model="softwareLicenses" t:validate="required" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="softwareVersion">Version</t:label>
+                            <t:textfield t:id="softwareVersion" t:value="assetSoftwareLicense.version" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="expirationDate">Expiration Date</t:label>
+                            <t:datefield t:id="expirationDate" t:value="assetSoftwareLicense.expirationDate" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="licenseKey">License Key</t:label>
+                            <t:textfield t:id="licenseKey" t:value="assetSoftwareLicense.licenseKey" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="remark">Remarks</t:label>
+                            <t:textarea t:id="remark" t:value="assetSoftwareLicense.remark" />
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="box-foot form-foot">
+                    <button type="submit">Save</button>
+                    <t:pagelink page="asset/overview" context="asset" class="button button-cancel">Cancel</t:pagelink>
+                </div>
+            </t:form>
         </div>
-        
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="expirationDate">Expiration Date</t:label>
-            </div>
-            <div class="form-item">
-                <t:datefield t:id="expirationDate" t:value="assetSoftwareLicense.expirationDate" />
-            </div>
-        </div>
-    	
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="licenseKey">License Key</t:label>
-            </div>
-            <div class="form-item">
-                <t:textfield t:id="licenseKey" t:value="assetSoftwareLicense.licenseKey" />
-            </div>
-        </div>
-        
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="remark">Remarks</t:label>
-            </div>
-            <div class="form-item">
-                <t:textarea t:id="remark" t:value="assetSoftwareLicense.remark" />
-            </div>
-        </div>
-        
-        <div class="form-button-holder">
-            <button type="submit">Save</button>
-        </div>
-    
-    </t:form>
-    
+    </div>
 </t:layout>

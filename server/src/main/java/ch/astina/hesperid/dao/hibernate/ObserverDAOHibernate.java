@@ -163,6 +163,9 @@ public class ObserverDAOHibernate implements ObserverDAO
     @Override
     public void delete(Observer observer)
     {
+        session.createSQLQuery("DELETE FROM failure WHERE observer = :observerId").setLong("observerId",observer.getId()).executeUpdate();
+        session.createSQLQuery("DELETE FROM observer_parameter WHERE observer = :observerId").setLong("observerId",observer.getId()).executeUpdate();
+        
         session.delete(observer);
     }
 

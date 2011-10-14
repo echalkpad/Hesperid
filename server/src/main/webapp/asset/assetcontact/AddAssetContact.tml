@@ -1,4 +1,3 @@
-
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
     
     <div class="actions">
@@ -7,30 +6,40 @@
     
     <h1>Add Contact ${asset.assetName}</h1>
     
-    <t:form>
+    <div class="layout-grid-col-holder">
+
+        <div class="layout-grid-col">
+    
+            <t:form class="box-holder">
         
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="contact">Contact</t:label>
-            </div>
-            <div class="form-item">
-                <t:select t:id="contact" t:model="contacts" t:validate="required" />
-            </div>
-        </div>
+                <div class="box-head">
+                    <h2>Contact &amp; Role</h2>
+                </div>
+
+                <div class="box-content">
+
+                    <fieldset>
+        
+                        <div class="form-item">
+                            <t:label for="contact">Contact</t:label>
+                            <t:select t:id="contact" t:model="contacts" t:validate="required" />
+                        </div>
     
-        <div class="form-item-holder">
-            <div class="label">
-                <t:label for="businessRole">Business Role</t:label>
-            </div>
-            <div class="form-item">
-                <t:select t:id="businessRole" t:model="businessRoles" />
-            </div>
-        </div>
+                        <div class="form-item">
+                            <t:label for="businessRole">Business Role</t:label>
+                            <t:select t:id="businessRole" t:model="businessRoles" />
+                        </div>
     	
-        <div class="form-button-holder">
-            <button type="submit">Save</button>
-        </div>
+                    </fieldset>
+                </div>
+                <div class="box-foot form-foot">
+                    <button type="submit">Save</button>
+                    <t:pagelink page="asset/overview" context="asset" class="button button-cancel">Cancel</t:pagelink>
+                </div>
     
-    </t:form>
+            </t:form>
+    
+        </div>
+    </div>
     
 </t:layout>

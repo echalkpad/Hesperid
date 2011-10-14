@@ -6,12 +6,7 @@ import org.apache.commons.httpclient.methods.GetMethod;
 
 public class ExternalIpGatherer implements ParameterGatherer
 {
-    public boolean parameterExists()
-    {
-        return true;
-    }
-
-    public String getParameterValue()
+    public String getResult(Map<String, String> parameters)
     {
 	try {
 	    String ip = "";

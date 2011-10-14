@@ -107,17 +107,17 @@ form .box-content {
 }
 .form-foot .button {
 	min-width: 80px;
-	height: 20px;
+	/*height: 20px;*/
 }
 .form-foot a.button:hover {
 	color: white;
 }
 .form-foot .button-cancel {
-	background: #e0e0e0;
+	background: transparent;
 	color: #808080;
 }
 .form-foot a.button-cancel:hover {
-	color: #808080;
+	color: #333;
 }
 
 /* Default Form */
