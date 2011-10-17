@@ -81,7 +81,12 @@ import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
 import ch.astina.hesperid.web.services.systemenvironment.impl.SystemEnvironmentImpl;
 import ch.astina.hesperid.web.services.version.Version;
 import ch.astina.hesperid.web.services.version.impl.VersionImpl;
+import org.apache.log4j.Layout;
 import org.apache.tapestry5.hibernate.HibernateConfigurer;
+import org.apache.tapestry5.ioc.annotations.Startup;
+import org.apache.log4j.PatternLayout;
+import org.apache.log4j.RollingFileAppender;
+import org.slf4j.Logger;
 
 /**
  * @author $Author: kstarosta $
@@ -89,7 +94,32 @@ import org.apache.tapestry5.hibernate.HibernateConfigurer;
  */
 @SubModule({SitemapModule.class, SecurityModule.class})
 public class AppModule
-{
+{   
+    @Startup
+    public static void initHesperid(SystemEnvironment systemEnvironment, Logger logger)
+    {
+        logger.info("Starting Hesperid with home directory: " + systemEnvironment.getApplicationHomeDirectoryPath());
+        
+        try {
+            org.apache.log4j.Logger root = org.apache.log4j.Logger.getRootLogger();
+
+            Layout fileAppenderLayout = new PatternLayout("%d %p (%t) [%c{2}] - %m%n");
+
+            RollingFileAppender rfa = new RollingFileAppender();
+            rfa.setMaxFileSize("10240KB");
+            rfa.setMaxBackupIndex(10);
+            rfa.setLayout(fileAppenderLayout);
+            rfa.setFile(systemEnvironment.getApplicationLogfilePath());
+            rfa.setName("file");
+            rfa.activateOptions();
+
+            root.addAppender(rfa);
+            
+        } catch (Exception e) {
+            logger.error("Cannot add file appender for logging",e);
+        }    
+    }
+    
     public static void bind(ServiceBinder binder)
     {
         binder.bind(DbMigration.class, DbMigrationImpl.class);

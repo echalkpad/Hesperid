@@ -80,7 +80,7 @@ public class PeriodicUpdate
         final JSONObject options = new JSONObject();
 
         options.put("id", id);
-        options.put("uri", link.toAbsoluteURI());
+        options.put("uri", link.toURI());
         options.put("period", period);
 
         javaScriptSupport.addInitializerCall("periodicupdater", options);

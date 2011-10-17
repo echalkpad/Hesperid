@@ -18,6 +18,7 @@ package ch.astina.hesperid.web.services.systemenvironment.impl;
 import ch.astina.hesperid.installer.web.services.InstallationManager;
 import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
 
+import java.io.File;
 import javax.servlet.ServletContext;
 
 import org.apache.commons.configuration.Configuration;
@@ -30,20 +31,13 @@ import org.slf4j.Logger;
  */
 public class SystemEnvironmentImpl extends InstallationManager implements SystemEnvironment
 {
-    private ServletContext servletContext;
-    private String applicationHomeDirectory;
-    private Configuration mainConfiguration;
-    private String contextName;
-    private String applicationHomeBase;
-    private String fallbackContextName;
-    private Logger logger;
-    public static final String HOME_DIRECTORY_POSTFIX = "_HOME";
-
+    @Override
     public Configuration getHibernateConfiguration()
     {
         return getMainConfiguration();
     }
 
+    @Override
     public String getEnvironmentVariableValue(String environmentVariableName)
     {
         try {
@@ -61,5 +55,25 @@ public class SystemEnvironmentImpl extends InstallationManager implements System
         }
 
         return null;
+    }
+
+    @Override
+    public String getApplicationLogfilePath() 
+    {
+        String logfilePath = getApplicationHomeDirectoryPath();
+        
+        if (!logfilePath.endsWith(FILE_SEPARATOR)) {
+            logfilePath += FILE_SEPARATOR;
+        }
+        
+        logfilePath += "logs" + FILE_SEPARATOR;
+        
+        File logfile = new File(logfilePath);
+        
+        if (!logfile.isDirectory()) {
+            logfile.mkdirs();
+        }
+        
+        return logfilePath + "hesperid.out";
     }
 }

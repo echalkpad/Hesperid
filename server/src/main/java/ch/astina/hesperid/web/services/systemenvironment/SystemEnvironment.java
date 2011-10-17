@@ -25,6 +25,7 @@ public interface SystemEnvironment
 {
     public String getEnvironmentVariableValue(String environmentVariableName);
     public String getApplicationHomeDirectoryPath();
+    public String getApplicationLogfilePath();
     public Configuration getMainConfiguration();
     public Configuration getHibernateConfiguration();
     public String getConfigurationFilePath();
