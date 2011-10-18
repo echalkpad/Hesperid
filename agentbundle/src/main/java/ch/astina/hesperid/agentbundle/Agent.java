@@ -79,11 +79,12 @@ public class Agent
 
         String wsdlLocation = xmlConfiguration.getString("hostBaseURL") + "/soap?wsdl";
 
-        AgentFeedbackService service = new AgentFeedbackService(new URL(wsdlLocation), new QName(GlobalConstants.WEBSERVICE_NAMESPACE, "AgentFeedbackService"));
+        AgentFeedbackService service = new AgentFeedbackService(new URL("https", "hesperid.astina.ch", 443, "/hesperid/soap?wsdl"), new QName(GlobalConstants.WEBSERVICE_NAMESPACE, "AgentFeedbackService"));
         AgentFeedback port = service.getAgentFeedbackPort();
 
         ((BindingProvider) port).getRequestContext().put(/*BindingProviderProperties.REQUEST_TIMEOUT*/"com.sun.xml.internal.ws.request.timeout", 1000);
         ((BindingProvider) port).getRequestContext().put(/*JAXWSProperties.CONNECT_TIMEOUT*/"com.sun.xml.internal.ws.connect.timeout", 1000);
+        ((BindingProvider) port).getRequestContext().put(BindingProvider.ENDPOINT_ADDRESS_PROPERTY, xmlConfiguration.getString("hostBaseURL") + "/soap");
 
         SchedulerFactory schedulerFactory = new org.quartz.impl.StdSchedulerFactory();
         Scheduler scheduler = schedulerFactory.getScheduler();

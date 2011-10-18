@@ -24,7 +24,6 @@ import org.apache.velocity.Template;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.VelocityEngine;
 
-import ch.astina.hesperid.model.base.Contact;
 import ch.astina.hesperid.model.base.Failure;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverParameter;

@@ -27,6 +27,7 @@ import org.apache.tapestry5.upload.services.UploadedFile;
 import org.springframework.security.annotation.Secured;
 
 import ch.astina.hesperid.dao.AgentBundleDAO;
+import ch.astina.hesperid.installer.web.services.InstallationManager;
 import ch.astina.hesperid.model.base.AgentBundle;
 import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
 
@@ -77,13 +78,24 @@ public class ManageAgentBundle
 
     @CommitAfter
     public void onSuccessFromAgentBundleForm()
-    {
+    {  
         if (software != null) {
-            File file = new File(systemEnvironment.getApplicationHomeDirectoryPath() + "/microclient/" + software.getFileName());
-            software.write(file);
+            
+            File file = new File(systemEnvironment.getApplicationHomeDirectoryPath() + 
+                    InstallationManager.FILE_SEPARATOR + "agentbundle" +
+                    InstallationManager.FILE_SEPARATOR);
+            
+            if (!file.exists()) {
+                file.mkdirs();
+            }
+            
+            File newSoftware = new File(file,software.getFileName());
+            
+            software.write(newSoftware);
 
             agentBundle.setFilename(software.getFileName());
         }
+        
         agentBundle.setPublished(new Date());
 
         agentBundleDAO.saveOrUpdateAgentBundle(agentBundle);

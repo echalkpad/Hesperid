@@ -46,10 +46,11 @@ public class FailureServiceImpl implements FailureService
     private UserDAO userDAO;
     private Logger logger = LoggerFactory.getLogger(FailureServiceImpl.class);
 
-    public FailureServiceImpl(FailureDAO failureDAO, MailerService mailerService)
+    public FailureServiceImpl(FailureDAO failureDAO, MailerService mailerService, UserDAO userDAO)
     {
         this.failureDAO = failureDAO;
         this.mailerService = mailerService;
+        this.userDAO = userDAO;
     }
 
     @Override
@@ -184,6 +185,8 @@ public class FailureServiceImpl implements FailureService
     private void notifyContact(Failure failure) throws MessagingException
     {
         logger.info("Notifying contact about failure: " + failure);
+        logger.info("Escalation Level: " + failure.getEscalationLevel());
+        logger.info("Username: " + failure.getEscalationLevel().getUsername());
 
         FailureNotificationMail message = new FailureNotificationMail(failure, userDAO.getUserByName(failure.getEscalationLevel().getUsername()));
         mailerService.sendHtmlMail(message);

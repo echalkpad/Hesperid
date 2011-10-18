@@ -36,22 +36,31 @@ public class Index
 {
     @Inject
     private InstallationManager installationManager;
+    
     @InjectComponent
     private Form directoryForm;
+    
     @InjectComponent
     private Form databaseForm;
+    
     @Property
     private String homedirectory;
+    
     @Property
     private String databaseUser;
+    
     @Property
     private String databaseServer;
+    
     @Property
     private String databasePort;
+    
     @Property
     private String databasePassword;
+    
     @Property
     private String databaseName;
+    
     private Logger logger = LoggerFactory.getLogger(Index.class);
 
     public void onActivate()
@@ -91,7 +100,7 @@ public class Index
     }
 
     public void onSuccessFromDirectoryForm()
-    {
+    {   
         installationManager.saveHomeDirectory(homedirectory);
     }
 

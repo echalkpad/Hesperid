@@ -15,11 +15,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.microclient;
 
+import ch.astina.hesperid.installer.web.services.InstallationManager;
 import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
+import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.net.URI;
+import java.net.URL;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Response;
@@ -45,8 +51,30 @@ public class LatestAgentVersionDownload
 
             @Override
             public InputStream getStream() throws IOException {
-                String clientFilePath = systemEnvironment.getApplicationHomeDirectoryPath() + "/microclient/" + filename;
-                return new FileInputStream(clientFilePath);
+                String agentbundleFilePath = systemEnvironment.getApplicationHomeDirectoryPath() + 
+                        InstallationManager.FILE_SEPARATOR + "agentbundle" + 
+                        InstallationManager.FILE_SEPARATOR + filename;
+                
+                File agentbundleFile = new File(agentbundleFilePath);
+                
+                if (agentbundleFile.exists() && agentbundleFile.canRead()) {
+                    return new FileInputStream(agentbundleFile);
+                }
+                
+                //URL fum = ClassLoader.getSystemResource(filename);
+                
+                //return new FileInputStream(fum.getFile());
+                
+                InputStream is =  new BufferedInputStream(getClass().getClassLoader().getResourceAsStream("/" + filename));
+                
+                System.out.println("IS Available bates " + is.available() + " file " + getClass().getClassLoader().getResource("/" + filename).getFile());
+                
+                byte[] byBuf = new byte[is.available()];
+                is.read(byBuf);
+                
+                return new ByteArrayInputStream(byBuf);
+                
+                
             }
 
             @Override
