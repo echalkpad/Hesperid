@@ -53,6 +53,7 @@ public class ExternalObserverJobImpl implements ExternalObserverJob
             result = parameterGatherer.getResult(observer.getParameterMap());
 
         } catch (Exception e) {
+            systemHealthService.log("Error while executing external observer", e.getMessage(), e);
             error = e.getMessage();
         }
 
@@ -67,7 +68,7 @@ public class ExternalObserverJobImpl implements ExternalObserverJob
             observerDAO.save(param);
 
         } catch (Exception e) {
-            systemHealthService.log("Error while executing external observer", e.getMessage(), e);
+            systemHealthService.log("Error while saving observer parameter", e.getMessage(), e);
         }
     }
 }
