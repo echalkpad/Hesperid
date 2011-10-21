@@ -121,17 +121,20 @@ public class MicroClient extends Thread
     {
         String version = "";
 
+        HttpClient client = new HttpClient();
+        HttpMethod method = new GetMethod(xmlConfiguration.getString("hostBaseURL") + "/microclient/latestagentversion");
+        
         try {
-            HttpClient client = new HttpClient();
-            HttpMethod method = new GetMethod(xmlConfiguration.getString("hostBaseURL") + "/microclient/latestagentversion");
-
             client.executeMethod(method);
-
             version = method.getResponseBodyAsString();
-
-            method.releaseConnection();
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            try {
+                method.releaseConnection();
+            } catch (Exception exx) {
+                exx.printStackTrace();
+            }
         }
 
         return version;
@@ -143,9 +146,10 @@ public class MicroClient extends Thread
 
         System.out.println("Retrieving client " + url);
 
+        HttpClient client = new HttpClient();
+        HttpMethod method = new GetMethod(url);
+        
         try {
-            HttpClient client = new HttpClient();
-            HttpMethod method = new GetMethod(url);
             method.setFollowRedirects(true);
 
             client.executeMethod(method);
@@ -161,16 +165,19 @@ public class MicroClient extends Thread
             OutputStream out = new FileOutputStream(file);
             byte buf[]=new byte[1024];
             int len;
+            
             while((len=is.read(buf))>0) {
                 System.out.println("xyz");
                 out.write(buf,0,len);
             }
+            
             out.close();
             is.close();
-
             
         } catch (Exception e) {
             e.printStackTrace();
+        } finally {
+            method.releaseConnection();
         }
     }
 

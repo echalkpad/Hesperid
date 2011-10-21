@@ -6,7 +6,7 @@
 	
 		<h1>Monitoring Alert</h1>
 	
-		<p>$failure.message</p>
+		<p>#if( $failure.message ) $failure.message #end</p>
 	
 		<h2>Details</h2>
 	
@@ -84,7 +84,7 @@
 				</tr>
 				<tr>
 					<th>Contact</th>
-					<td>$failure.escalationLevel.contact.formattedName &lt;${failure.escalationLevel.contact.mail}&gt;</td>
+					<td>$failure.escalationLevel.username</td>
 				</tr>
 			</table>
 		
