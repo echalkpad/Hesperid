@@ -24,8 +24,6 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 
-import java.net.URI;
-import java.net.URL;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.Response;
@@ -61,20 +59,12 @@ public class LatestAgentVersionDownload
                     return new FileInputStream(agentbundleFile);
                 }
                 
-                //URL fum = ClassLoader.getSystemResource(filename);
-                
-                //return new FileInputStream(fum.getFile());
-                
                 InputStream is =  new BufferedInputStream(getClass().getClassLoader().getResourceAsStream("/" + filename));
-                
-                System.out.println("IS Available bates " + is.available() + " file " + getClass().getClassLoader().getResource("/" + filename).getFile());
                 
                 byte[] byBuf = new byte[is.available()];
                 is.read(byBuf);
                 
                 return new ByteArrayInputStream(byBuf);
-                
-                
             }
 
             @Override
