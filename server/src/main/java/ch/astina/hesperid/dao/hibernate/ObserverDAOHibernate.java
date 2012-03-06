@@ -217,9 +217,6 @@ public class ObserverDAOHibernate implements ObserverDAO
     @Override
     public HibernateGridDataSource getObserverParameterGridDataSource(Observer observer)
     {
-        List<Criterion> criterions = new ArrayList<Criterion>();
-        criterions.add(Restrictions.eq("", observer));
-
         FilterGridDataSource filterGridDataSource = new FilterGridDataSource(session, ObserverParameter.class);
         filterGridDataSource.addFilter(Restrictions.eq("observer", observer));
         filterGridDataSource.setOrder(Order.desc("updated"));
