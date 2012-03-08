@@ -15,29 +15,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.scheduler;
 
-import java.util.List;
-
-import java.util.logging.Level;
-import org.apache.tapestry5.ioc.services.PerthreadManager;
-import org.quartz.JobDetail;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerFactory;
-import org.quartz.Trigger;
-import org.quartz.TriggerUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ch.astina.hesperid.dao.AssetDAO;
 import ch.astina.hesperid.dao.ObserverDAO;
 import ch.astina.hesperid.model.base.Asset;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.web.services.dbmigration.DbMigration;
-import ch.astina.hesperid.web.services.jobs.ExternalObserverJob;
-import ch.astina.hesperid.web.services.jobs.ExternalObserverJobExecutor;
-import ch.astina.hesperid.web.services.jobs.FailureCheckerJob;
-import ch.astina.hesperid.web.services.jobs.FailureCheckerJobExecutor;
-import ch.astina.hesperid.web.services.jobs.ObserverStatusCheckerJob;
-import ch.astina.hesperid.web.services.jobs.ObserverStatusCheckerJobExecutor;
+import ch.astina.hesperid.web.services.jobs.*;
+import org.apache.tapestry5.ioc.services.PerthreadManager;
+import org.quartz.*;
+import org.quartz.impl.matchers.GroupMatcher;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.List;
+
 
 /**
  * @author $Author: kstarosta $
@@ -95,22 +86,26 @@ public class SchedulerService
     public void restartExternalObservers(Asset asset)
     {
         try {
-            for (String s : scheduler.getJobNames(asset.getAssetIdentifier())) {
-                scheduler.deleteJob(s, asset.getAssetIdentifier());
-            }
+	        for (JobKey jobKey : scheduler.getJobKeys( GroupMatcher.jobGroupEquals(asset.getAssetIdentifier())) ) {
+		        JobDetail job = scheduler.getJobDetail(jobKey);
+		        scheduler.deleteJob(job.getKey());
+	        }
 
             List<Observer> observers = observerDAO.getExternalObservers(asset);
 
             for (Observer observer : observers) {
 
-                JobDetail jobDetail = new JobDetail(observer.getId().toString(),
-                        asset.getAssetIdentifier(), ExternalObserverJobExecutor.class);
-                jobDetail.getJobDataMap().put("perthreadManager", perthreadManager);
-                jobDetail.getJobDataMap().put("externalObserverJob", externalObserverJob);
-                jobDetail.getJobDataMap().put("observer", observer);
+	            JobDetail jobDetail = JobBuilder.newJob(ExternalObserverJobExecutor.class)
+			            .withIdentity(observer.getId().toString(), asset.getAssetIdentifier())
+			            .build();
 
-                Trigger trigger = TriggerUtils.makeSecondlyTrigger(observer.getCheckInterval() != null ? observer.getCheckInterval().intValue() : DEFAULT_INTERVAL);
-                trigger.setName(observer.getId().toString() + "trigger");
+	            jobDetail.getJobDataMap().put("perthreadManager", perthreadManager);
+	            jobDetail.getJobDataMap().put("externalObserverJob", externalObserverJob);
+	            jobDetail.getJobDataMap().put("observer", observer);
+
+
+	            int interval = observer.getCheckInterval() != null ? observer.getCheckInterval().intValue() : DEFAULT_INTERVAL;
+                Trigger trigger = buildTrigger(observer.getId().toString() + "trigger", interval);
 
                 scheduler.scheduleJob(jobDetail, trigger);
             }
@@ -129,13 +124,14 @@ public class SchedulerService
     public void startObserverStatusChecker()
     {
         try {
-            JobDetail jobDetail = new JobDetail("observerStatusChecker", "observerStatusChecker",
-                    ObserverStatusCheckerJobExecutor.class);
+	        JobDetail jobDetail = JobBuilder.newJob(ObserverStatusCheckerJobExecutor.class)
+			        .withIdentity("observerStatusChecker", "observerStatusChecker")
+			        .build();
+
             jobDetail.getJobDataMap().put("perthreadManager", perthreadManager);
             jobDetail.getJobDataMap().put("serviceStatusCheckerJob", serviceStatusCheckerJob);
 
-            Trigger trigger = TriggerUtils.makeSecondlyTrigger(DEFAULT_INTERVAL);
-            trigger.setName("serviceStatusCheck-trigger");
+	        Trigger trigger = buildTrigger("serviceStatusCheck-trigger", DEFAULT_INTERVAL);
 
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (Exception e) {
@@ -146,16 +142,26 @@ public class SchedulerService
     private void startFailureChecker()
     {
         try {
-            JobDetail jobDetail = new JobDetail("failureChecker", "failureChecker", FailureCheckerJobExecutor.class);
+	        JobDetail jobDetail = JobBuilder.newJob(FailureCheckerJobExecutor.class)
+			        .withIdentity("failureChecker", "failureChecker")
+			        .build();
             jobDetail.getJobDataMap().put("perthreadManager", perthreadManager);
             jobDetail.getJobDataMap().put("failureCheckerJob", failureCheckerJob);
 
-            Trigger trigger = TriggerUtils.makeSecondlyTrigger(DEFAULT_INTERVAL);
-            trigger.setName("failureChecker-trigger");
+	        Trigger trigger = buildTrigger("failureChecker-trigger", DEFAULT_INTERVAL);
 
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (Exception e) {
             logger.error("Error while starting failure checker", e);
         }
     }
+
+	private Trigger buildTrigger(String triggerName, int interval)
+	{
+		return TriggerBuilder.newTrigger()
+				.withIdentity(triggerName)
+				.withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(interval))
+				.startNow()
+				.build();
+	}
 }

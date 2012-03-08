@@ -15,8 +15,18 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.soap;
 
-import java.util.Date;
-import java.util.List;
+import ch.astina.hesperid.dao.AssetDAO;
+import ch.astina.hesperid.dao.ObserverDAO;
+import ch.astina.hesperid.dao.hibernate.AssetDAOHibernate;
+import ch.astina.hesperid.dao.hibernate.ObserverDAOHibernate;
+import ch.astina.hesperid.model.base.Asset;
+import ch.astina.hesperid.model.base.Observer;
+import ch.astina.hesperid.model.base.ObserverParameter;
+import org.apache.tapestry5.hibernate.HibernateSessionSource;
+import org.apache.tapestry5.ioc.ObjectLocator;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.annotation.Resource;
 import javax.jws.WebMethod;
@@ -26,20 +36,8 @@ import javax.jws.soap.SOAPBinding.ParameterStyle;
 import javax.servlet.ServletContext;
 import javax.xml.ws.WebServiceContext;
 import javax.xml.ws.handler.MessageContext;
-
-import org.apache.tapestry5.hibernate.HibernateSessionSource;
-import org.apache.tapestry5.ioc.ObjectLocator;
-import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import ch.astina.hesperid.dao.AssetDAO;
-import ch.astina.hesperid.dao.ObserverDAO;
-import ch.astina.hesperid.dao.hibernate.AssetDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.ObserverDAOHibernate;
-import ch.astina.hesperid.model.base.Asset;
-import ch.astina.hesperid.model.base.Observer;
-import ch.astina.hesperid.model.base.ObserverParameter;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -62,6 +60,11 @@ public class AgentFeedback
         return objectLocator;
     }
 
+	/**
+	 * Returns all observers for the agent client.
+	 * @param asset The asset on which the agent runs.
+	 * @return All client observers.
+	 */
     @WebMethod
     public Observer[] observers(Asset asset)
     {
@@ -89,6 +92,13 @@ public class AgentFeedback
         return null;
     }
 
+	/**
+	 * Delivers the date of the last edit for any of the client observers for the given asset.
+	 * This method also registers a successful request for the agent running on the asset.
+	 *
+	 * @param asset The asset on which the agent runs.
+	 * @return The last edit date of any asset client observer.
+	 */
     @WebMethod
     public Date lastUpdatedObserver(Asset asset)
     {

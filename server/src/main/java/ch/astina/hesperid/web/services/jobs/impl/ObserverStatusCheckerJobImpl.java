@@ -15,11 +15,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.jobs.impl;
 
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-import java.util.regex.Pattern;
-
 import ch.astina.hesperid.dao.ObserverDAO;
 import ch.astina.hesperid.model.base.Failure;
 import ch.astina.hesperid.model.base.Observer;
@@ -28,6 +23,11 @@ import ch.astina.hesperid.model.base.ObserverResultType;
 import ch.astina.hesperid.web.services.SystemHealthService;
 import ch.astina.hesperid.web.services.failures.FailureService;
 import ch.astina.hesperid.web.services.jobs.ObserverStatusCheckerJob;
+
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.regex.Pattern;
 
 /**
  * @author $Author: kstarosta $
@@ -164,18 +164,26 @@ public class ObserverStatusCheckerJobImpl implements ObserverStatusCheckerJob
         }
     }
 
+	/**
+	 * Checks if the agent is still delivering the requested parameters.
+	 */
     private void checkLatestParameterAge(Observer observer)
     {
-        Calendar now = Calendar.getInstance();
-        now.add(Calendar.SECOND,
-                (int) ((observer.getCheckInterval() + PARAMETER_AGE_ALERT_WAIT) * -1));
-
-        ObserverParameter latestParameter = observerDAO.getLatestObserverParameter(observer);
-
-        if (!observer.isFailed()
-                && (latestParameter == null || latestParameter.getUpdated().before(now.getTime()))) {
+        if (!observer.isFailed() && latestUpdateIsOutsideOfNotificationTimeRange(observer)) {
             Failure failure = generateFailure(observer, null, "No observer data received");
             failureService.report(failure);
         }
     }
+
+	private boolean latestUpdateIsOutsideOfNotificationTimeRange(Observer observer)
+	{
+		long alertWaitTime = -(observer.getCheckInterval() + PARAMETER_AGE_ALERT_WAIT);
+
+		Calendar now = Calendar.getInstance();
+		now.add(Calendar.SECOND, (int) alertWaitTime);
+
+		ObserverParameter latestParameter = observerDAO.getLatestObserverParameter(observer);
+
+		return latestParameter == null || latestParameter.getUpdated().before(now.getTime());
+	}
 }
