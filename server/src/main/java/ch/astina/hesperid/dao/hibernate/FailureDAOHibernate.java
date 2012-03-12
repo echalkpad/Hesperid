@@ -15,18 +15,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao.hibernate;
 
-import java.util.List;
-
+import ch.astina.hesperid.dao.FailureDAO;
+import ch.astina.hesperid.model.base.*;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import ch.astina.hesperid.dao.FailureDAO;
-import ch.astina.hesperid.model.base.Asset;
-import ch.astina.hesperid.model.base.Failure;
-import ch.astina.hesperid.model.base.FailureEscalation;
-import ch.astina.hesperid.model.base.FailureStatus;
-import ch.astina.hesperid.model.base.Observer;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -110,7 +105,28 @@ public class FailureDAOHibernate implements FailureDAO
         return new FilterGridDataSource(session, Failure.class);
     }
 
-    @Override
+	@Override
+	public Failure getLatestUnresolvedFailure(Failure failure)
+	{
+		List<Failure> unresolvedFailures = getUnresolvedFailures(failure.getObserver());
+		int count = unresolvedFailures.size();
+		return count == 0 ? null : unresolvedFailures.get(count - 1);
+	}
+
+	@Override
+	public Failure getFailureByExample(Failure failure)
+	{
+		Failure persistent = (Failure) session.createCriteria(Failure.class)
+				.add(Restrictions.eq("asset", failure.getAsset()))
+				.add(Restrictions.eq("observer", failure.getObserver()))
+				.add(Restrictions.ne("failureStatus", FailureStatus.RESOLVED))
+				.add(Restrictions.eq("message", failure.getMessage()))
+				.uniqueResult();
+
+		return persistent;
+	}
+
+	@Override
     public void save(FailureEscalation failureEscalation)
     {
         session.saveOrUpdate(failureEscalation);

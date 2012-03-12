@@ -35,16 +35,6 @@ public interface FailureService
      */
     public void escalate(Failure failure);
 
-    /**
-     * Checks if this failure should be escalated.
-     * This is the case if:
-     * 	1) The associated asset has an escalation level specified
-     *  2) The failure has not been acknowledged or resolved, yet
-     *  3) The failure has not been escalated yet or the current escalation leve's
-     *     timeout has been reached
-     */
-    public boolean needsEscalation(Failure failure);
-
     public void acknowledge(Failure failure);
 
     public void resolve(Failure failure);

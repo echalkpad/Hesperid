@@ -15,25 +15,18 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.failures.impl;
 
-import java.util.Date;
-import java.util.List;
-
-import javax.mail.MessagingException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ch.astina.hesperid.dao.FailureDAO;
 import ch.astina.hesperid.dao.UserDAO;
 import ch.astina.hesperid.mails.FailureNotificationMail;
-import ch.astina.hesperid.model.base.EscalationLevel;
-import ch.astina.hesperid.model.base.EscalationScheme;
-import ch.astina.hesperid.model.base.Failure;
-import ch.astina.hesperid.model.base.FailureEscalation;
-import ch.astina.hesperid.model.base.FailureStatus;
-import ch.astina.hesperid.model.base.Observer;
+import ch.astina.hesperid.model.base.*;
+import ch.astina.hesperid.web.services.failures.EscalationSpecification;
 import ch.astina.hesperid.web.services.failures.FailureService;
 import ch.astina.hesperid.web.services.mail.MailerService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.mail.MessagingException;
+import java.util.Date;
 
 /**
  * @author $Author: kstarosta $
@@ -58,32 +51,16 @@ public class FailureServiceImpl implements FailureService
     {
         logger.info("Reporting failure: " + failure);
 
-        // failure already known?
-        Failure latest = getLatestUnresolvedFailure(failure);
-        if (latest != null) {
-            failure = latest;
-        }
+	    // Make sure that no failure for this observer problem already exists.
+	    Failure existingFailure = failureDAO.getFailureByExample(failure);
+	    if (existingFailure != null) {
+		    failure = existingFailure;
+	    } else {
+		    failure.setDetected(new Date());
+		    failure.setFailureStatus(FailureStatus.DETECTED);
 
-        // should not be necessary, but does not hurt either ...
-        if (failure.isStatusAcknowledged() || failure.isStatusResolved()) {
-            logger.info("Failure already acknowledged or resolved");
-            return;
-        }
-
-        // first time this failure is reported?
-        boolean firstTime = failure.getDetected() == null;
-        if (firstTime) {
-            failure.setDetected(new Date());
-            failure.setFailureStatus(FailureStatus.DETECTED);
-        }
-
-        failureDAO.save(failure);
-
-        // only escalate if this is a new failure. FailureCheckerJob takes care of further
-        // escalation
-        if (firstTime && needsEscalation(failure)) {
-            escalate(failure);
-        }
+		    failureDAO.save(failure);
+	    }
     }
 
     @Override
@@ -91,7 +68,7 @@ public class FailureServiceImpl implements FailureService
     {
         logger.info("Escalating failure: " + failure);
 
-        EscalationLevel level = getNextEscalationLevel(failure);
+        EscalationLevel level = EscalationSpecification.nextEscalationLevelFor(failure);
 
         failure.setEscalationLevel(level);
         failure.setEscalated(new Date());
@@ -110,42 +87,6 @@ public class FailureServiceImpl implements FailureService
             e.printStackTrace();
             throw new RuntimeException(e);
         }
-    }
-
-    @Override
-    public boolean needsEscalation(Failure failure)
-    {
-        if (failure.getAsset().getEscalationScheme() == null) {
-            logger.info("Asset " + failure.getAsset() + " has no escalation scheme");
-            return false;
-        }
-
-        if (!failure.isStatusDetected()) {
-            return false;
-        }
-
-        EscalationLevel level = getNextEscalationLevel(failure);
-        if (level == null) {
-            return false;
-        }
-
-        EscalationLevel currentLevel = failure.getEscalationLevel();
-
-        Date lastEscalation = failure.getEscalated();
-        if (lastEscalation == null) {
-            return true;
-        }
-
-        Date now = new Date();
-        Long diff = now.getTime() - lastEscalation.getTime();
-        return diff > (currentLevel.getTimeout() * 1000);
-    }
-
-    private Failure getLatestUnresolvedFailure(Failure failure)
-    {
-        List<Failure> unresolvedFailures = failureDAO.getUnresolvedFailures(failure.getObserver());
-        int count = unresolvedFailures.size();
-        return count == 0 ? null : unresolvedFailures.get(count - 1);
     }
 
     @Override
@@ -192,26 +133,4 @@ public class FailureServiceImpl implements FailureService
         mailerService.sendHtmlMail(message);
     }
 
-    private EscalationLevel getNextEscalationLevel(Failure failure)
-    {
-        EscalationLevel currentLevel = failure.getEscalationLevel();
-        EscalationScheme scheme = failure.getAsset().getEscalationScheme();
-        List<EscalationLevel> levels = scheme.getEscalationLevels();
-
-        for (EscalationLevel level : levels) {
-
-            // no level set? use first level
-            if (currentLevel == null) {
-                return level;
-            }
-
-            // next level (levels should be ordered at this point)
-            // {@link ch.astina.hesperid.model.base.EscalationScheme#getEscalationLevels()}
-            if (level.getLevel() > currentLevel.getLevel()) {
-                return level;
-            }
-        }
-
-        return null;
-    }
 }

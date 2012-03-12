@@ -15,16 +15,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao;
 
-import java.util.List;
-
+import ch.astina.hesperid.dao.hibernate.FilterGridDataSource;
+import ch.astina.hesperid.model.base.*;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 
-import ch.astina.hesperid.dao.hibernate.FilterGridDataSource;
-import ch.astina.hesperid.model.base.Asset;
-import ch.astina.hesperid.model.base.Failure;
-import ch.astina.hesperid.model.base.FailureEscalation;
-import ch.astina.hesperid.model.base.FailureStatus;
-import ch.astina.hesperid.model.base.Observer;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -52,6 +47,10 @@ public interface FailureDAO
     public List<Failure> getUnresolvedFailures(Observer observer);
 
     public FilterGridDataSource getFailureFilterGridDataSource();
+
+	public Failure getLatestUnresolvedFailure(Failure failure);
+
+	public Failure getFailureByExample(Failure failure);
 
     @CommitAfter
     public void save(FailureEscalation failureEscalation);

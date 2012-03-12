@@ -101,68 +101,78 @@ public class ObserverStatusCheckerJobImpl implements ObserverStatusCheckerJob
     private void validateObserverParameter(ObserverParameter parameter)
     {
         Observer observer = parameter.getObserver();
-
-        // XXX do better
-
         ObserverResultType resultType = observer.getObserverStrategy().getResultType();
+
         if (resultType.isNumeric()) {
-            try {
-
-                // no min/max?
-                if (observer.getExpectedValueMin() == null
-                        && observer.getExpectedValueMax() == null) {
-                    return;
-                }
-
-                float value = Float.parseFloat(parameter.getValue());
-
-                if (observer.getExpectedValueMin() != null && value < observer.getExpectedValueMin()) {
-                    throw new RuntimeException("Parameter value is below expected minimum");
-                }
-                if (observer.getExpectedValueMax() != null && value > observer.getExpectedValueMax()) {
-                    throw new RuntimeException("Parameter value is above expected maximum");
-                }
-
-                // everything is ok. auto-resolve existing failures
-                failureService.autoresolve(observer);
-
-            } catch (RuntimeException rte) {
-                throw rte;
-
-            } catch (Exception e) {
-                systemHealthService.log("Error in asset information check Numeric comparison", "",
-                        e);
-            }
+			validateNumeric(observer, parameter);
         } else if (resultType.equals(ObserverResultType.BOOLEAN)) {
-
-            if (!parameter.getValue().equals(observer.getExpectedValue())) {
-                throw new RuntimeException("Parameter value does not match expected value");
-            }
-
-            // everything is ok. auto-resolve existing failures
-            failureService.autoresolve(observer);
-
+			validateBoolean(observer, parameter);
         } else if (resultType.equals(ObserverResultType.STRING)) {
-            try {
-                Pattern pattern = Pattern.compile(observer.getExpectedValue(), Pattern.DOTALL
-                        | Pattern.MULTILINE);
-
-                if (!pattern.matcher(parameter.getValue()).matches()) {
-                    throw new RuntimeException("Parameter value does not match expected value");
-                }
-
-                // everything is ok. auto-resolve existing failures
-                failureService.autoresolve(observer);
-
-            } catch (RuntimeException rte) {
-                throw rte;
-
-            } catch (Exception e) {
-                systemHealthService.log("Error in asset information check Result Regex Pattern",
-                        "", e);
-            }
+			validateString(observer, parameter);
         }
     }
+
+	private void validateNumeric(Observer observer, ObserverParameter parameter)
+	{
+		try {
+			// no min/max?
+			if (observer.getExpectedValueMin() == null
+					&& observer.getExpectedValueMax() == null) {
+				return;
+			}
+
+			float value = Float.parseFloat(parameter.getValue());
+
+			if (observer.getExpectedValueMin() != null && value < observer.getExpectedValueMin()) {
+				throw new RuntimeException("Parameter value is below expected minimum");
+			}
+			if (observer.getExpectedValueMax() != null && value > observer.getExpectedValueMax()) {
+				throw new RuntimeException("Parameter value is above expected maximum");
+			}
+
+			// everything is ok. auto-resolve existing failures
+			failureService.autoresolve(observer);
+
+		} catch (RuntimeException rte) {
+			throw rte;
+
+		} catch (Exception e) {
+			systemHealthService.log("Error in asset information check Numeric comparison", "",
+					e);
+		}
+	}
+
+	private void validateBoolean(Observer observer, ObserverParameter parameter)
+	{
+		if (!parameter.getValue().equals(observer.getExpectedValue())) {
+			throw new RuntimeException("Parameter value does not match expected value");
+		}
+
+		// everything is ok. auto-resolve existing failures
+		failureService.autoresolve(observer);
+	}
+
+	private void validateString(Observer observer, ObserverParameter parameter)
+	{
+		try {
+			Pattern pattern = Pattern.compile(observer.getExpectedValue(), Pattern.DOTALL
+					| Pattern.MULTILINE);
+
+			if (!pattern.matcher(parameter.getValue()).matches()) {
+				throw new RuntimeException("Parameter value does not match expected value");
+			}
+
+			// everything is ok. auto-resolve existing failures
+			failureService.autoresolve(observer);
+
+		} catch (RuntimeException rte) {
+			throw rte;
+
+		} catch (Exception e) {
+			systemHealthService.log("Error in asset information check Result Regex Pattern",
+					"", e);
+		}
+	}
 
 	/**
 	 * Checks if the agent is still delivering the requested parameters.

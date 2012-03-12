@@ -15,15 +15,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.jobs.impl;
 
-import java.util.List;
-
+import ch.astina.hesperid.dao.FailureDAO;
+import ch.astina.hesperid.model.base.Failure;
+import ch.astina.hesperid.web.services.failures.EscalationSpecification;
+import ch.astina.hesperid.web.services.failures.FailureService;
+import ch.astina.hesperid.web.services.jobs.FailureCheckerJob;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import ch.astina.hesperid.dao.FailureDAO;
-import ch.astina.hesperid.model.base.Failure;
-import ch.astina.hesperid.web.services.failures.FailureService;
-import ch.astina.hesperid.web.services.jobs.FailureCheckerJob;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -52,11 +52,14 @@ public class FailureCheckerJobImpl implements FailureCheckerJob
 
             logger.info("Checking failure: " + failure);
 
-            if (failureService.needsEscalation(failure)) {
+	        EscalationSpecification specification = new EscalationSpecification();
+
+            if (specification.isSatisfiedBy(failure)) {
                 logger.info("Escalating failure: " + failure);
                 failureService.escalate(failure);
             } else {
                 logger.info("No escalation needed: " + failure);
+	            logger.info("Reason: " + specification.getRegisteredMessage());
             }
         }
     }
