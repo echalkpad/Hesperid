@@ -88,6 +88,7 @@ public class Agent
 	{
 		logger.info("Initializing agent feedback port form service...");
 		String wsdlLocation = xmlConfiguration.getString("hostBaseURL") + "/soap?wsdl";
+		logger.info("Using wsdl location: " + wsdlLocation);
 
 		AgentFeedbackService service = new AgentFeedbackService(new URL(wsdlLocation), new QName(GlobalConstants.WEBSERVICE_NAMESPACE, "AgentFeedbackService"));
 		agentFeedbackPort = service.getAgentFeedbackPort();

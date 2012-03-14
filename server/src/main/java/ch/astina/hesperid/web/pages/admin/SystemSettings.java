@@ -15,6 +15,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.admin;
 
+import ch.astina.hesperid.dao.MailServerDAO;
+import ch.astina.hesperid.dao.SystemSettingsDAO;
+import ch.astina.hesperid.model.internal.MailServer;
+import ch.astina.hesperid.model.internal.MailServerSecureConnectionType;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.SelectModel;
 import org.apache.tapestry5.ValueEncoder;
@@ -23,10 +27,6 @@ import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.util.EnumSelectModel;
 import org.apache.tapestry5.util.EnumValueEncoder;
-
-import ch.astina.hesperid.dao.MailServerDAO;
-import ch.astina.hesperid.model.internal.MailServer;
-import ch.astina.hesperid.model.internal.MailServerSecureConnectionType;
 
 /**
  * @author $Author: kstarosta $
@@ -37,11 +37,17 @@ public class SystemSettings
     @Inject
     private MailServerDAO mailServerDAO;
 
+	@Inject
+	private SystemSettingsDAO systemSettingsDAO;
+
     @Inject
     private ComponentResources componentResources;
 
     @Property
     private MailServer mailServer;
+
+	@Property
+	private ch.astina.hesperid.model.internal.SystemSettings systemSettings;
 
     public void onActivate()
     {
@@ -50,6 +56,12 @@ public class SystemSettings
         if (mailServer == null) {
             mailServer = new MailServer();
         }
+
+	    systemSettings = systemSettingsDAO.getSystemSettingsForId(1l);
+
+	    if (systemSettings == null) {
+		    systemSettings = new ch.astina.hesperid.model.internal.SystemSettings();
+	    }
     }
 
     public SelectModel getMailServerSecureConnectionTypeModel()
@@ -63,8 +75,9 @@ public class SystemSettings
     }
 
     @CommitAfter
-    public void onSuccessFromMailServerForm()
+    public void onSuccessFromSettingsForm()
     {
         mailServerDAO.saveOrUpdateMailServer(mailServer);
+	    systemSettingsDAO.saveOrUpdateSystemSettings(systemSettings);
     }
 }

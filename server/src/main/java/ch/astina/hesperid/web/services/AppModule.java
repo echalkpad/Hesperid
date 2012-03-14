@@ -15,50 +15,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services;
 
-import java.util.HashMap;
-
-import org.apache.tapestry5.SymbolConstants;
-import org.apache.tapestry5.hibernate.HibernateTransactionAdvisor;
-import org.apache.tapestry5.ioc.Configuration;
-import org.apache.tapestry5.ioc.MappedConfiguration;
-import org.apache.tapestry5.ioc.MethodAdviceReceiver;
-import org.apache.tapestry5.ioc.OrderedConfiguration;
-import org.apache.tapestry5.ioc.ScopeConstants;
-import org.apache.tapestry5.ioc.ServiceBinder;
-import org.apache.tapestry5.ioc.annotations.InjectService;
-import org.apache.tapestry5.ioc.annotations.Marker;
-import org.apache.tapestry5.ioc.annotations.Match;
-import org.apache.tapestry5.ioc.annotations.SubModule;
-import org.springframework.security.providers.AuthenticationProvider;
-
-import ch.astina.hesperid.dao.AgentBundleDAO;
-import ch.astina.hesperid.dao.AssetDAO;
-import ch.astina.hesperid.dao.ContactDAO;
-import ch.astina.hesperid.dao.EscalationDAO;
-import ch.astina.hesperid.dao.FailureDAO;
-import ch.astina.hesperid.dao.HqlDAO;
-import ch.astina.hesperid.dao.MailServerDAO;
-import ch.astina.hesperid.dao.LocationDAO;
-import ch.astina.hesperid.dao.MesRoleDAO;
-import ch.astina.hesperid.dao.SystemDAO;
-import ch.astina.hesperid.dao.ObserverDAO;
-import ch.astina.hesperid.dao.ReportDAO;
-import ch.astina.hesperid.dao.SoftwareLicenseDAO;
-import ch.astina.hesperid.dao.SystemHealthDAO;
-import ch.astina.hesperid.dao.hibernate.AgentBundleDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.AssetDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.ContactDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.EscalationDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.FailureDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.HqlDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.MailServerDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.LocationDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.MesRoleDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.SystemDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.ObserverDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.ReportDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.SoftwareLicenseDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.SystemHealthDAOHibernate;
+import ch.astina.hesperid.dao.*;
+import ch.astina.hesperid.dao.hibernate.*;
 import ch.astina.hesperid.mails.SmtpCredentials;
 import ch.astina.hesperid.model.internal.MailServer;
 import ch.astina.hesperid.util.HibernateFileConfigurer;
@@ -67,9 +25,11 @@ import ch.astina.hesperid.web.services.dbmigration.impl.DbMigrationImpl;
 import ch.astina.hesperid.web.services.failures.FailureService;
 import ch.astina.hesperid.web.services.failures.impl.FailureServiceImpl;
 import ch.astina.hesperid.web.services.impl.SystemHealthServiceImpl;
+import ch.astina.hesperid.web.services.jobs.DbCleanupJob;
 import ch.astina.hesperid.web.services.jobs.ExternalObserverJob;
 import ch.astina.hesperid.web.services.jobs.FailureCheckerJob;
 import ch.astina.hesperid.web.services.jobs.ObserverStatusCheckerJob;
+import ch.astina.hesperid.web.services.jobs.impl.DbCleanupJobImpl;
 import ch.astina.hesperid.web.services.jobs.impl.ExternalObserverJobImpl;
 import ch.astina.hesperid.web.services.jobs.impl.FailureCheckerJobImpl;
 import ch.astina.hesperid.web.services.jobs.impl.ObserverStatusCheckerJobImpl;
@@ -82,11 +42,17 @@ import ch.astina.hesperid.web.services.systemenvironment.impl.SystemEnvironmentI
 import ch.astina.hesperid.web.services.version.Version;
 import ch.astina.hesperid.web.services.version.impl.VersionImpl;
 import org.apache.log4j.Layout;
-import org.apache.tapestry5.hibernate.HibernateConfigurer;
-import org.apache.tapestry5.ioc.annotations.Startup;
 import org.apache.log4j.PatternLayout;
 import org.apache.log4j.RollingFileAppender;
+import org.apache.tapestry5.SymbolConstants;
+import org.apache.tapestry5.hibernate.HibernateConfigurer;
+import org.apache.tapestry5.hibernate.HibernateTransactionAdvisor;
+import org.apache.tapestry5.ioc.*;
+import org.apache.tapestry5.ioc.annotations.*;
 import org.slf4j.Logger;
+import org.springframework.security.providers.AuthenticationProvider;
+
+import java.util.HashMap;
 
 /**
  * @author $Author: kstarosta $
@@ -144,7 +110,9 @@ public class AppModule
         binder.bind(ExternalObserverJob.class, ExternalObserverJobImpl.class);
         binder.bind(ObserverStatusCheckerJob.class, ObserverStatusCheckerJobImpl.class);
         binder.bind(FailureCheckerJob.class, FailureCheckerJobImpl.class);
+	    binder.bind(DbCleanupJob.class, DbCleanupJobImpl.class);
         binder.bind(SchedulerService.class).scope(ScopeConstants.DEFAULT).eagerLoad();
+	    binder.bind(SystemSettingsDAO.class, SystemSettingsDAOHibernate.class);
     }
 
     public static void contributeHibernateEntityPackageManager(Configuration<String> configuration)

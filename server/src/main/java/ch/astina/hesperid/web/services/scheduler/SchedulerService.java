@@ -17,6 +17,7 @@ package ch.astina.hesperid.web.services.scheduler;
 
 import ch.astina.hesperid.dao.AssetDAO;
 import ch.astina.hesperid.dao.ObserverDAO;
+import ch.astina.hesperid.dao.SystemSettingsDAO;
 import ch.astina.hesperid.model.base.Asset;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.web.services.dbmigration.DbMigration;
@@ -38,11 +39,16 @@ public class SchedulerService
 {
     private static final int DEFAULT_INTERVAL = 60;
     private PerthreadManager perthreadManager;
+
     private ExternalObserverJob externalObserverJob;
     private ObserverStatusCheckerJob serviceStatusCheckerJob;
     private FailureCheckerJob failureCheckerJob;
+	private DbCleanupJob dbCleanupJob;
+
     private ObserverDAO observerDAO;
     private AssetDAO assetDAO;
+	private SystemSettingsDAO systemSettingsDAO;
+
     private SchedulerFactory schedulerFactory;
     private DbMigration dbMigration;
     private Scheduler scheduler;
@@ -51,15 +57,20 @@ public class SchedulerService
     public SchedulerService(PerthreadManager perthreadManager,
             ExternalObserverJob externalServiceMonitoringJob,
             ObserverStatusCheckerJob serviceStatusCheckerJob,
-            FailureCheckerJob failureCheckerJob, ObserverDAO observerDAO,
+            FailureCheckerJob failureCheckerJob,
+            DbCleanupJob dbCleanupJob,
+            ObserverDAO observerDAO,
+            SystemSettingsDAO systemSettingsDAO,
             AssetDAO assetDAO, DbMigration dbMigration)
     {
             this.perthreadManager = perthreadManager;
             this.externalObserverJob = externalServiceMonitoringJob;
             this.serviceStatusCheckerJob = serviceStatusCheckerJob;
             this.failureCheckerJob = failureCheckerJob;
+	        this.dbCleanupJob = dbCleanupJob;
             this.observerDAO = observerDAO;
             this.assetDAO = assetDAO;
+	        this.systemSettingsDAO = systemSettingsDAO;
             this.dbMigration = dbMigration;
             
             try {
@@ -77,6 +88,7 @@ public class SchedulerService
                 startExternalObservers();
                 startObserverStatusChecker();
                 startFailureChecker();
+	            startDatabaseCleanupJob();
 
             } catch (Exception e) {
                 logger.error("Error while starting scheduler service", e);
@@ -155,6 +167,23 @@ public class SchedulerService
             logger.error("Error while starting failure checker", e);
         }
     }
+
+	private void startDatabaseCleanupJob()
+	{
+		try {
+			JobDetail jobDetail = JobBuilder.newJob(DbCleanupJobExecutor.class)
+					.withIdentity("dbCleanup", "dbCleanup")
+					.build();
+			jobDetail.getJobDataMap().put("perthreadManager", perthreadManager);
+			jobDetail.getJobDataMap().put("dbCleanupJob", dbCleanupJob);
+
+			Trigger trigger = buildTrigger("dbCleanup-trigger", 3600);
+
+			scheduler.scheduleJob(jobDetail, trigger);
+		} catch (Exception e) {
+			logger.error("Error while starting database cleanup job", e);
+		}
+	}
 
 	private Trigger buildTrigger(String triggerName, int interval)
 	{

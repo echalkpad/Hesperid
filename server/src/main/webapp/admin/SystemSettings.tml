@@ -4,7 +4,7 @@
     <div class="layout-grid-col-holder">
 
         <div class="layout-grid-col">
-            <t:form t:id="mailServerForm" class="box-holder">
+            <t:form t:id="settingsForm" class="box-holder">
         
                 <div class="box-head">
                     <h2>Mail server</h2>
@@ -51,7 +51,23 @@
                         </div>
                     </fieldset>
                 </div>
-                <div class="box-foot form-foot">
+
+	            <div class="box-head">
+		            <h2>Custom Settings</h2>
+	            </div>
+
+	            <div class="box-content">
+		            <fieldset>
+
+			            <div class="form-item">
+				            <t:label for="deletionBarrier">Data deletion barrier</t:label>
+				            <t:textfield t:id="deletionBarrier" validate="required" t:value="systemSettings.dataDeletionBarrier" /> seconds
+			            </div>
+
+		            </fieldset>
+	            </div>
+
+	            <div class="box-foot form-foot">
                     <button type="submit">Save</button>
                     <t:pagelink page="admin" class="button button-cancel">Cancel</t:pagelink>
                 </div>

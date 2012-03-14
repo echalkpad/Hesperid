@@ -15,17 +15,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-
 import ch.astina.hesperid.dao.hibernate.FilterGridDataSource;
 import ch.astina.hesperid.model.base.Asset;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverParameter;
 import ch.astina.hesperid.model.base.ObserverStrategy;
 import org.apache.tapestry5.hibernate.HibernateGridDataSource;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -77,6 +76,8 @@ public interface ObserverDAO
     public void save(ObserverParameter observerParameter);
 
     public void delete(ObserverParameter observerParameter);
+
+	public void deleteObserverParameterBefore(Date keepDataBarrier);
 
     public abstract FilterGridDataSource getObserverGridDataSource();
 }

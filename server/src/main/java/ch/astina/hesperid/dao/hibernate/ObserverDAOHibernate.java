@@ -208,6 +208,24 @@ public class ObserverDAOHibernate implements ObserverDAO
         session.delete(observerParameter);
     }
 
+	@Override
+	public void deleteObserverParameterBefore(Date keepDataBarrier)
+	{
+		String updateQuery = "UPDATE failure SET observer_parameter = null";
+		updateQuery += " WHERE observer_parameter IN (";
+		updateQuery += " SELECT id FROM observer_parameter WHERE updated < :updated";
+		updateQuery += ");";
+
+		session.createSQLQuery(updateQuery)
+			.setTimestamp("updated", keepDataBarrier)
+			.executeUpdate();
+		
+		session.createSQLQuery("DELETE FROM observer_parameter WHERE updated < :updated ;")
+				.setTimestamp("updated", keepDataBarrier)
+				.executeUpdate();
+
+	}
+
     @Override
     public FilterGridDataSource getObserverGridDataSource()
     {
