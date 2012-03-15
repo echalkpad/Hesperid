@@ -15,13 +15,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao.hibernate;
 
-import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-
 import ch.astina.hesperid.dao.SystemHealthDAO;
 import ch.astina.hesperid.model.internal.SystemHealth;
+import org.hibernate.Session;
+import org.hibernate.criterion.MatchMode;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Restrictions;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -36,7 +37,16 @@ public class SystemHealthDAOHibernate implements SystemHealthDAO
         this.session = session;
     }
 
-    @SuppressWarnings("unchecked")
+	@Override
+	public List<SystemHealth> findByLog(String searchString)
+	{
+		return session.createCriteria(SystemHealth.class)
+				.add(Restrictions.like("log", searchString, MatchMode.ANYWHERE))
+				.addOrder(Order.desc("id"))
+				.list();
+	}
+
+	@SuppressWarnings("unchecked")
     public List<SystemHealth> getAllSystemHealthEntries()
     {
         return session.createCriteria(SystemHealth.class).addOrder(Order.desc("id")).list();

@@ -19,15 +19,14 @@ import ch.astina.hesperid.dao.ObserverDAO;
 import ch.astina.hesperid.model.base.Failure;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverParameter;
-import ch.astina.hesperid.model.base.ObserverResultType;
 import ch.astina.hesperid.web.services.SystemHealthService;
 import ch.astina.hesperid.web.services.failures.FailureService;
 import ch.astina.hesperid.web.services.jobs.ObserverStatusCheckerJob;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
-import java.util.regex.Pattern;
 
 /**
  * @author $Author: kstarosta $
@@ -52,11 +51,9 @@ public class ObserverStatusCheckerJobImpl implements ObserverStatusCheckerJob
     public void checkObservers()
     {
         try {
-
             for (Observer observer : observerDAO.getMonitoredObservers()) {
                 checkObserver(observer);
             }
-
         } catch (Exception e) {
             systemHealthService.log("Error during status check", e.getMessage(), e);
         }
@@ -65,13 +62,20 @@ public class ObserverStatusCheckerJobImpl implements ObserverStatusCheckerJob
     private void checkObserver(Observer observer)
     {
         // check new paramaters since last check
-        List<ObserverParameter> parameters = observerDAO.getObserverParameters(observer,
-                observer.getLastCheck());
-        for (ObserverParameter parameter : parameters) {
-            checkObserverParameter(observer, parameter);
+        List<ObserverParameter> parameters = observerDAO.getObserverParameters(observer, observer.getLastCheck());
+
+	    for ( Iterator<ObserverParameter> parameterIter = parameters.iterator(); parameterIter.hasNext(); ) {
+
+		    ObserverParameter parameter = parameterIter.next();
+
+	        if (parameter.getValue() != null) {
+		        checkObserverParameter(observer, parameter);
+	        } else if (!parameterIter.hasNext()) {
+		        Failure failure = generateFailure(observer, parameter, "Parameter delivery had an error: " + parameter.getError());
+		        failureService.report(failure);
+	        }
         }
 
-        // check age of latest parameter
         checkLatestParameterAge(observer);
 
         observer.setLastCheck(new Date());
@@ -81,10 +85,15 @@ public class ObserverStatusCheckerJobImpl implements ObserverStatusCheckerJob
     private void checkObserverParameter(Observer observer, ObserverParameter parameter)
     {
         try {
-            validateObserverParameter(parameter);
+	        ObserverParameterValidator validator = new ObserverParameterValidator();
+	        if(validator.isValid(parameter)) {
+		        failureService.autoresolve(observer);
+	        } else {
+		        Failure failure = generateFailure(observer, parameter, validator.getValidationMessage());
+		        failureService.report(failure);
+	        }
         } catch (Exception e) {
-            Failure failure = generateFailure(observer, parameter, e.getMessage());
-            failureService.report(failure);
+	        systemHealthService.log("Error occurred during validation of parameter with id:" + parameter.getId(), "", e);
         }
     }
 
@@ -97,82 +106,6 @@ public class ObserverStatusCheckerJobImpl implements ObserverStatusCheckerJob
         failure.setMessage(message);
         return failure;
     }
-
-    private void validateObserverParameter(ObserverParameter parameter)
-    {
-        Observer observer = parameter.getObserver();
-        ObserverResultType resultType = observer.getObserverStrategy().getResultType();
-
-        if (resultType.isNumeric()) {
-			validateNumeric(observer, parameter);
-        } else if (resultType.equals(ObserverResultType.BOOLEAN)) {
-			validateBoolean(observer, parameter);
-        } else if (resultType.equals(ObserverResultType.STRING)) {
-			validateString(observer, parameter);
-        }
-    }
-
-	private void validateNumeric(Observer observer, ObserverParameter parameter)
-	{
-		try {
-			// no min/max?
-			if (observer.getExpectedValueMin() == null
-					&& observer.getExpectedValueMax() == null) {
-				return;
-			}
-
-			float value = Float.parseFloat(parameter.getValue());
-
-			if (observer.getExpectedValueMin() != null && value < observer.getExpectedValueMin()) {
-				throw new RuntimeException("Parameter value is below expected minimum");
-			}
-			if (observer.getExpectedValueMax() != null && value > observer.getExpectedValueMax()) {
-				throw new RuntimeException("Parameter value is above expected maximum");
-			}
-
-			// everything is ok. auto-resolve existing failures
-			failureService.autoresolve(observer);
-
-		} catch (RuntimeException rte) {
-			throw rte;
-
-		} catch (Exception e) {
-			systemHealthService.log("Error in asset information check Numeric comparison", "",
-					e);
-		}
-	}
-
-	private void validateBoolean(Observer observer, ObserverParameter parameter)
-	{
-		if (!parameter.getValue().equals(observer.getExpectedValue())) {
-			throw new RuntimeException("Parameter value does not match expected value");
-		}
-
-		// everything is ok. auto-resolve existing failures
-		failureService.autoresolve(observer);
-	}
-
-	private void validateString(Observer observer, ObserverParameter parameter)
-	{
-		try {
-			Pattern pattern = Pattern.compile(observer.getExpectedValue(), Pattern.DOTALL
-					| Pattern.MULTILINE);
-
-			if (!pattern.matcher(parameter.getValue()).matches()) {
-				throw new RuntimeException("Parameter value does not match expected value");
-			}
-
-			// everything is ok. auto-resolve existing failures
-			failureService.autoresolve(observer);
-
-		} catch (RuntimeException rte) {
-			throw rte;
-
-		} catch (Exception e) {
-			systemHealthService.log("Error in asset information check Result Regex Pattern",
-					"", e);
-		}
-	}
 
 	/**
 	 * Checks if the agent is still delivering the requested parameters.

@@ -68,7 +68,7 @@
 	            </div>
 
 	            <div class="box-foot form-foot">
-                    <button type="submit">Save</button>
+                    <button type="submit">Filter</button>
                     <t:pagelink page="admin" class="button button-cancel">Cancel</t:pagelink>
                 </div>
             </t:form>

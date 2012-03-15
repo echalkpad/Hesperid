@@ -2,11 +2,30 @@
 
     <h1>System Health Log</h1>
 
+	<div class="box-head">
+		<h2>Log Filter</h2>
+
+		<t:form>
+			<label>
+				Log content
+				<t:textfield t:id="searchString" t:value="searchString" />
+			</label>
+
+			<span class="default">
+				<button type="submit">Filter</button>
+			</span>
+		</t:form>
+
+	</div>
+
+	<br />
+
+
     <div class="actions">
         <t:actionlink t:id="delete" class="delete" onclick="return confirm('Are you sure?');">Clear</t:actionlink>
     </div>
     
-    <t:grid source="allSystemHealthEntries" exclude="id,log" reorder="logDate,title" row="systemhealth" class="system-health">
+    <t:grid source="systemHealthEntries" exclude="id,log" reorder="logDate,title" row="systemhealth" class="system-health">
 
         <p:logDateCell>
             ${logDate}

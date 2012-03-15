@@ -15,16 +15,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.admin;
 
-import java.util.List;
-
+import ch.astina.hesperid.dao.SystemHealthDAO;
+import ch.astina.hesperid.global.GlobalConstants;
+import ch.astina.hesperid.model.internal.SystemHealth;
+import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.springframework.security.annotation.Secured;
 
-import ch.astina.hesperid.dao.SystemHealthDAO;
-import ch.astina.hesperid.global.GlobalConstants;
-import ch.astina.hesperid.model.internal.SystemHealth;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -38,10 +39,21 @@ public class SystemHealthLog
 
     @Property
     private SystemHealth systemHealth;
+	
+	@Property
+	@Persist
+	private String searchString;
 
-    public List<SystemHealth> getAllSystemHealthEntries()
+
+    public List<SystemHealth> getSystemHealthEntries()
     {
-        return systemHealthDAO.getAllSystemHealthEntries();
+	    List<SystemHealth> systemHealthEntries = systemHealthDAO.findByLog(searchString);
+
+	    if(systemHealthEntries != null) {
+		    return systemHealthEntries;
+	    } else {
+		    return new ArrayList<SystemHealth>();
+	    }
     }
 
     @CommitAfter
@@ -49,7 +61,7 @@ public class SystemHealthLog
     {
         systemHealthDAO.deleteAllSystemHeathEntries();
     }
-    
+
     public String getLogDate()
     {
     	return GlobalConstants.DATETIME_FORMAT.format(systemHealth.getLogDate());
