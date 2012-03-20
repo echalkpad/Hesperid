@@ -16,32 +16,21 @@
 package ch.astina.hesperid.web.components;
 
 import ch.astina.hesperid.dao.AssetDAO;
-import java.util.List;
-
-import org.apache.tapestry5.annotations.Component;
-import org.apache.tapestry5.annotations.Import;
-import org.apache.tapestry5.annotations.Mixins;
-import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
+import ch.astina.hesperid.dao.FailureDAO;
+import ch.astina.hesperid.dao.ObserverDAO;
+import ch.astina.hesperid.dao.hibernate.FilterGridDataSource;
+import ch.astina.hesperid.global.GlobalConstants;
+import ch.astina.hesperid.model.base.*;
+import ch.astina.hesperid.web.services.failures.FailureService;
+import ch.astina.hesperid.web.services.scheduler.SchedulerService;
+import org.apache.tapestry5.annotations.*;
 import org.apache.tapestry5.corelib.components.Zone;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.hibernate.criterion.Restrictions;
 
-import ch.astina.hesperid.dao.FailureDAO;
-import ch.astina.hesperid.dao.ObserverDAO;
-import ch.astina.hesperid.dao.hibernate.FilterGridDataSource;
-import ch.astina.hesperid.global.GlobalConstants;
-import ch.astina.hesperid.model.base.Asset;
-import ch.astina.hesperid.model.base.Failure;
-import ch.astina.hesperid.model.base.ObservationScope;
-import ch.astina.hesperid.model.base.Observer;
-import ch.astina.hesperid.model.base.ObserverParameter;
-import ch.astina.hesperid.model.base.ObserverStrategy;
-import ch.astina.hesperid.web.services.failures.FailureService;
-import ch.astina.hesperid.web.services.scheduler.SchedulerService;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -53,36 +42,49 @@ public class ObserverList
     @Component(parameters = {"PeriodicUpdate.event=refresh", "PeriodicUpdate.period=10"})
     @Mixins({"PeriodicUpdate"})
     private Zone observersZone;
+
     @Parameter
     private Asset asset;
+
     @Parameter(defaultPrefix = "literal")
     private String scope;
+
     @SuppressWarnings("unused")
     @Parameter(value = "Observers", defaultPrefix = "literal")
     @Property
     private String title;
+
     @Property
     private Observer observer;
+
     @SuppressWarnings("unused")
     @Property
     private Failure failure;
+
     @Inject
     private FailureService failureService;
+
     @Inject
     private FailureDAO failureDAO;
+
     @Inject
     private ObserverDAO observerDAO;
+
     @Property
     @Persist
     private ObserverStrategy filterObserverStrategy;
+
     @Property
     @Persist
     private Boolean filterFailed;
+
     @Property
     @Persist
     private Boolean filterMonitored;
+
     @Inject 
     private SchedulerService schedulerService;
+
     @Inject
     private AssetDAO assetDAO;
 

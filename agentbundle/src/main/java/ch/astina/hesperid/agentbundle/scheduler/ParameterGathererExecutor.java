@@ -16,9 +16,9 @@
 package ch.astina.hesperid.agentbundle.scheduler;
 
 import ch.astina.hesperid.agentbundle.webservice.AgentFeedback;
-import ch.astina.hesperid.groovy.ParameterGatherer;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverParameter;
+import ch.astina.hesperid.worker.ParameterGathererRunner;
 import org.apache.log4j.Logger;
 
 /**
@@ -40,24 +40,18 @@ public class ParameterGathererExecutor
     public void gatherParameterAndReply() 
     {
         try {
-
-            String value = null;
-            String error = null;
-            try {
-                ParameterGatherer parameterGatherer = observer.getObserverStrategy().getGroovyScriptInstance();
-                value = parameterGatherer.getResult(observer.getParameterMap());
-            } catch (Exception e) {
-                error = e.getMessage();
-                if (error == null) {
-                    error = e.getClass().getName();
-                }
-            }
+	        ParameterGathererRunner runner = new ParameterGathererRunner(observer);
+	        runner.execute();
 
             ObserverParameter parameter = new ObserverParameter();
             parameter.setObserver(observer);
-            parameter.setValue(value);
-            parameter.setError(error);
+            parameter.setValue(runner.getResult());
+            parameter.setError(runner.getErrorMessage());
             agentFeedback.deliverObserverParameter(parameter);
+
+	        if (runner.hasUnknownError()) {
+		        logger.warn("Observer parameter gathering recognized an unknown error.", runner.getException());
+	        }
 
         } catch (Exception e) {
             logger.warn("Exception during parameter gathering", e);

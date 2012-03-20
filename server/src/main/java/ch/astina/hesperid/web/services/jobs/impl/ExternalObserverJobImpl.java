@@ -15,14 +15,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.jobs.impl;
 
-import java.util.Date;
-
 import ch.astina.hesperid.dao.ObserverDAO;
-import ch.astina.hesperid.groovy.ParameterGatherer;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverParameter;
 import ch.astina.hesperid.web.services.SystemHealthService;
 import ch.astina.hesperid.web.services.jobs.ExternalObserverJob;
+import ch.astina.hesperid.worker.ParameterGathererRunner;
+
+import java.util.Date;
 
 /**
  * @author $Author: kstarosta $
@@ -42,30 +42,21 @@ public class ExternalObserverJobImpl implements ExternalObserverJob
     @Override
     public void monitor(Observer observer)
     {
-        String result = null;
-        String error = null;
         try {
-
-            // instantiate strategy
-            ParameterGatherer parameterGatherer = observer.getObserverStrategy().getGroovyScriptInstance();
-
-            // execute strategy code
-            result = parameterGatherer.getResult(observer.getParameterMap());
-
-        } catch (Exception e) {
-            systemHealthService.log("Error while executing external observer", e.getMessage(), e);
-            error = e.getMessage();
-        }
-
-        try {
+	        ParameterGathererRunner runner = new ParameterGathererRunner(observer);
+	        runner.execute();
 
             ObserverParameter param = new ObserverParameter();
             param.setObserver(observer);
-            param.setValue(result);
-            param.setError(error);
+            param.setValue(runner.getResult());
+            param.setError(runner.getErrorMessage());
             param.setUpdated(new Date());
 
             observerDAO.save(param);
+
+	        if (runner.hasUnknownError()) {
+		        systemHealthService.log("Error while saving observer parameter", runner.getException().getClass().getName(), runner.getException());
+	        }
 
         } catch (Exception e) {
             systemHealthService.log("Error while saving observer parameter", e.getMessage(), e);

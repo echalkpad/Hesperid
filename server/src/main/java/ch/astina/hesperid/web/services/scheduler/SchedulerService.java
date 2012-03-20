@@ -22,12 +22,14 @@ import ch.astina.hesperid.model.base.Asset;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.web.services.dbmigration.DbMigration;
 import ch.astina.hesperid.web.services.jobs.*;
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.tapestry5.ioc.services.PerthreadManager;
 import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.Date;
 import java.util.List;
 
 
@@ -165,7 +167,12 @@ public class SchedulerService
             jobDetail.getJobDataMap().put("perthreadManager", perthreadManager);
             jobDetail.getJobDataMap().put("failureCheckerJob", failureCheckerJob);
 
-	        Trigger trigger = buildTrigger("failureChecker-trigger", DEFAULT_INTERVAL);
+	        // Failure checker is startet in one and a half minute that auto resolving can run first.
+	        Trigger trigger = TriggerBuilder.newTrigger()
+			        .withIdentity("failureChecker-trigger")
+			        .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(DEFAULT_INTERVAL))
+			        .startAt(DateUtils.addSeconds(new Date(), 90))
+			        .build();
 
             scheduler.scheduleJob(jobDetail, trigger);
         } catch (Exception e) {

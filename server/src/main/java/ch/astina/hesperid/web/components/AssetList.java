@@ -52,29 +52,39 @@ public class AssetList
 
     @Inject
     private AssetDAO assetDAO;
+
 	@Inject
 	private ObserverDAO observerDAO;
+
     @Inject
     private LocationDAO locationDAO;
+
     @Inject
     private EscalationDAO escalationDAO;
+
     @Property
     private Asset asset;
+
     @SuppressWarnings("unused")
     @Property
     private Observer observer;
+
     @Parameter(allowNull = true)
     @Property
     private Location location;
+
     @Property
     @Persist
     private Location filterLocation;
+
     @Property
     @Persist
     private EscalationScheme filterEscalationScheme;
+
     @Property
     @Persist
     private Boolean filterManaged;
+
     private int i = 0;
 
 	@Inject
