@@ -95,13 +95,18 @@ public class SchedulerService
             }
     }
 
+	public void stopObserverJobsFor(Asset asset) throws SchedulerException
+	{
+		for (JobKey jobKey : scheduler.getJobKeys( GroupMatcher.jobGroupEquals(asset.getAssetIdentifier())) ) {
+			JobDetail job = scheduler.getJobDetail(jobKey);
+			scheduler.deleteJob(job.getKey());
+		}
+	}
+
     public void restartExternalObservers(Asset asset)
     {
         try {
-	        for (JobKey jobKey : scheduler.getJobKeys( GroupMatcher.jobGroupEquals(asset.getAssetIdentifier())) ) {
-		        JobDetail job = scheduler.getJobDetail(jobKey);
-		        scheduler.deleteJob(job.getKey());
-	        }
+	        stopObserverJobsFor(asset);
 
             List<Observer> observers = observerDAO.getExternalObservers(asset);
 

@@ -76,7 +76,7 @@ public class AgentFeedback
 
         try {
 
-            AssetDAO assetDAO = new AssetDAOHibernate(session);
+            AssetDAO assetDAO = new AssetDAOHibernate(session, new ObserverDAOHibernate(session));
             ObserverDAO observerDAO = new ObserverDAOHibernate(session);
             asset = assetDAO.getAssetForAssetIdentifier(asset.getAssetIdentifier());
             List<Observer> observers = observerDAO.getClientObservers(asset);
@@ -111,7 +111,7 @@ public class AgentFeedback
         try {
             session.beginTransaction();
 
-            AssetDAO assetDAO = new AssetDAOHibernate(session);
+            AssetDAO assetDAO = new AssetDAOHibernate(session, new ObserverDAOHibernate(session));
 
             Asset newAsset = assetDAO.getAssetForAssetIdentifier(asset.getAssetIdentifier());
 

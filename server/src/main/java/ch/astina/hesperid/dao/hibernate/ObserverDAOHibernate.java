@@ -15,23 +15,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao.hibernate;
 
-import java.util.Date;
-import java.util.List;
-
+import ch.astina.hesperid.dao.ObserverDAO;
+import ch.astina.hesperid.model.base.*;
+import org.apache.tapestry5.hibernate.HibernateGridDataSource;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import ch.astina.hesperid.dao.ObserverDAO;
-import ch.astina.hesperid.model.base.Asset;
-import ch.astina.hesperid.model.base.ObservationScope;
-import ch.astina.hesperid.model.base.Observer;
-import ch.astina.hesperid.model.base.ObserverParameter;
-import ch.astina.hesperid.model.base.ObserverStrategy;
-import java.util.ArrayList;
-import org.apache.tapestry5.hibernate.HibernateGridDataSource;
-import org.hibernate.criterion.Criterion;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -163,9 +156,18 @@ public class ObserverDAOHibernate implements ObserverDAO
     @Override
     public void delete(Observer observer)
     {
-        session.createSQLQuery("DELETE FROM failure WHERE observer = :observerId").setLong("observerId",observer.getId()).executeUpdate();
-        session.createSQLQuery("DELETE FROM observer_parameter WHERE observer = :observerId").setLong("observerId",observer.getId()).executeUpdate();
-        
+	    for (ObserverParameter parameter : observer.getObserverParameters()) {
+		    delete(parameter);
+	    }
+
+	    for (Failure failure : observer.getFailures()) {
+		    for (FailureEscalation escalation : failure.getFailureEscalations()) {
+			    session.delete(escalation);
+		    }
+
+		    session.delete(failure);
+	    }
+
         session.delete(observer);
     }
 

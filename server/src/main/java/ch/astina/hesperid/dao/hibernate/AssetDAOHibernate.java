@@ -15,20 +15,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao.hibernate;
 
-import ch.astina.hesperid.model.base.AssetContact;
-import ch.astina.hesperid.model.base.AssetSoftwareLicense;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.hibernate.Query;
+import ch.astina.hesperid.dao.AssetDAO;
+import ch.astina.hesperid.dao.ObserverDAO;
+import ch.astina.hesperid.model.base.*;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
 
-import ch.astina.hesperid.dao.AssetDAO;
-import ch.astina.hesperid.model.base.Asset;
-import ch.astina.hesperid.model.base.ClientHierarchy;
-import ch.astina.hesperid.model.base.Location;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -37,10 +32,12 @@ import ch.astina.hesperid.model.base.Location;
 public class AssetDAOHibernate implements AssetDAO
 {
     private Session session;
+	private ObserverDAO observerDAO;
 
-    public AssetDAOHibernate(Session session)
+    public AssetDAOHibernate(Session session, ObserverDAO observerDAO)
     {
         this.session = session;
+	    this.observerDAO = observerDAO;
     }
 
     public Asset getAssetForId(Long asset)
@@ -97,18 +94,22 @@ public class AssetDAOHibernate implements AssetDAO
 
     public void deleteAsset(Asset asset)
     {
-        String sql = "DELETE FROM observer WHERE asset = ?";
-        Query query = session.createSQLQuery(sql);
-        query.setLong(0, asset.getId());
-        query.executeUpdate();
+	    for (Observer observer : asset.getObservers()) {
+		    observerDAO.delete(observer);
+	    }
 
-        sql = "DELETE FROM client_hierarchy WHERE first_asset = ? OR second_asset = ?";
-        query = session.createSQLQuery(sql);
-        query.setLong(0, asset.getId());
-        query.setLong(1, asset.getId());
-        query.executeUpdate();
+	    for (AssetContact contact : asset.getAssetContacts()) {
+		    deleteAssetContact(contact);
+	    }
 
-        deleteAllClientHierarchies(asset);
+	    for (AssetSoftwareLicense license : asset.getAssetSoftwareLicenses()) {
+		    deleteAssetSoftwareLicense(license);
+	    }
+
+	    for (ClientHierarchy hierarchy : asset.getClientHierarchies()) {
+		    session.delete(hierarchy);
+	    }
+
         session.delete(asset);
     }
 

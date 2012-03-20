@@ -169,7 +169,7 @@ public class Failure {
         this.message = message;
     }
 
-    @OneToMany(mappedBy = "failure", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "failure", fetch = FetchType.LAZY)
     public List<FailureEscalation> getFailureEscalations() 
     {
         return failureEscalations;

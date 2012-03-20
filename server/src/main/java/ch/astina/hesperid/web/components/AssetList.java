@@ -15,26 +15,30 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.components;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.commons.lang.time.DateUtils;
-import org.apache.tapestry5.annotations.Import;
-import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.hibernate.criterion.Restrictions;
-
 import ch.astina.hesperid.dao.AssetDAO;
 import ch.astina.hesperid.dao.EscalationDAO;
 import ch.astina.hesperid.dao.LocationDAO;
+import ch.astina.hesperid.dao.ObserverDAO;
 import ch.astina.hesperid.dao.hibernate.FilterGridDataSource;
 import ch.astina.hesperid.global.GlobalConstants;
 import ch.astina.hesperid.model.base.Asset;
 import ch.astina.hesperid.model.base.EscalationScheme;
 import ch.astina.hesperid.model.base.Location;
 import ch.astina.hesperid.model.base.Observer;
+import ch.astina.hesperid.web.services.scheduler.SchedulerService;
+import org.apache.commons.lang.time.DateUtils;
+import org.apache.tapestry5.annotations.Import;
+import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.annotations.Persist;
+import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.hibernate.criterion.Restrictions;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -43,8 +47,13 @@ import ch.astina.hesperid.model.base.Observer;
 @Import(stylesheet = {"context:styles/assetlist.css"})
 public class AssetList
 {
+
+	private final Logger logger = LoggerFactory.getLogger(AssetList.class);
+
     @Inject
     private AssetDAO assetDAO;
+	@Inject
+	private ObserverDAO observerDAO;
     @Inject
     private LocationDAO locationDAO;
     @Inject
@@ -68,12 +77,28 @@ public class AssetList
     private Boolean filterManaged;
     private int i = 0;
 
+	@Inject
+	private SchedulerService schedulerService;
+
     void setupRender()
     {
         if (location != null) {
             filterLocation = location;
         }
     }
+
+	@CommitAfter
+	public void onActionFromDelete(Long id)
+	{
+		Asset asset = assetDAO.getAssetForId(id);
+
+		try {
+			schedulerService.stopObserverJobsFor(asset);
+			assetDAO.deleteAsset(asset);
+		} catch (Exception ex) {
+			logger.error("Could not delete asset: " + asset.getAssetIdentifier(), ex);
+		}
+	}
 
     public FilterGridDataSource getAssets()
     {

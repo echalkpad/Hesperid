@@ -33,8 +33,13 @@
 	
             <t:grid source="assets" row="asset" rowClass="rowclass" inPlace="true"
 				exclude="id,assetIdentifier,carePack,description,purchased,lastUpdatedObserver,managed,errorOccured,agentInstalled,costPerYear"
-				add="status,location" reorder="status,assetName,host,location,roomNumber,lastTickReceived">
-			
+				add="status,location,actions" reorder="status,assetName,host,location,roomNumber,lastTickReceived">
+
+	            <t:parameter name="actionsHeader"></t:parameter>
+	            <t:parameter name="actionsCell">
+		            <t:actionlink t:id="delete" context="asset.id" onclick="return confirm('Are you sure?');" class="icon icon-delete">delete</t:actionlink>
+	            </t:parameter>
+
                 <p:statusHeader></p:statusHeader>
 				
                 <p:statusCell>

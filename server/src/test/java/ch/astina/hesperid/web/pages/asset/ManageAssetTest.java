@@ -15,19 +15,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.asset;
 
-import java.util.ArrayList;
-
+import ch.astina.hesperid.dao.AssetDAO;
+import ch.astina.hesperid.dao.hibernate.AssetDAOHibernate;
+import ch.astina.hesperid.dao.hibernate.ObserverDAOHibernate;
+import ch.astina.hesperid.model.base.Asset;
+import ch.astina.hesperid.model.base.Observer;
+import ch.astina.hesperid.web.PageTesterFactory;
 import org.apache.tapestry5.hibernate.HibernateSessionSource;
 import org.apache.tapestry5.test.PageTester;
 import org.hibernate.Session;
 import org.testng.Assert;
 import org.testng.annotations.Test;
 
-import ch.astina.hesperid.dao.AssetDAO;
-import ch.astina.hesperid.dao.hibernate.AssetDAOHibernate;
-import ch.astina.hesperid.model.base.Asset;
-import ch.astina.hesperid.model.base.Observer;
-import ch.astina.hesperid.web.PageTesterFactory;
+import java.util.ArrayList;
 
 /**
  * @author $Author: kstarosta $
@@ -42,7 +42,7 @@ public class ManageAssetTest
         
         HibernateSessionSource hibernateSessionSource = pageTester.getService(HibernateSessionSource.class);
         Session session = hibernateSessionSource.create();
-        AssetDAO assetDao = new AssetDAOHibernate(session);
+        AssetDAO assetDao = new AssetDAOHibernate(session, new ObserverDAOHibernate(session));
         session.beginTransaction();
 
         Asset asset = new Asset();
@@ -67,7 +67,7 @@ public class ManageAssetTest
 
         HibernateSessionSource hibernateSessionSource = pageTester.getService(HibernateSessionSource.class);
         Session session = hibernateSessionSource.create();
-        AssetDAO assetDao = new AssetDAOHibernate(session);
+        AssetDAO assetDao = new AssetDAOHibernate(session, new ObserverDAOHibernate(session));
         session.beginTransaction();
 
         Asset newAsset = assetDao.getAssetForAssetIdentifier("testassetidentifier");
