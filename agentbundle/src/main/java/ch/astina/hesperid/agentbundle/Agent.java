@@ -121,6 +121,7 @@ public class Agent
 
 			try {
 				Date lastObserverUpdate = agentFeedbackPort.lastUpdatedObserver(asset);
+				logger.info("Last observer update was: " + lastObserverUpdate);
 
 				// Reschedule all observer jobs when there are observer modifications on the server.
 				if ( serverHasObserverModifications(lastObserverUpdate, lastUpdatedInformationOnClient) ) {

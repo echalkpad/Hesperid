@@ -20,8 +20,6 @@ public final class ParameterGathererRunner
 	private Exception exception;
 	private int maxRetries = 3;
 
-	private static String UNKNOWN_ERROR_MSG = "An unknown error occurred. Please check the application log.";
-
 	public ParameterGathererRunner(Observer observer)
 	{
 		this.observer = observer;

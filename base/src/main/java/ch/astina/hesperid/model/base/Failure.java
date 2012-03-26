@@ -16,6 +16,7 @@
 package ch.astina.hesperid.model.base;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -40,12 +41,23 @@ public class Failure {
     private Date acknowledged;
     private Date resolved;
     private String message;
-    private List<FailureEscalation> failureEscalations;
+    private List<FailureEscalation> failureEscalations = new ArrayList<FailureEscalation>();
 
     @Override
-    public String toString() 
+    public String toString()
     {
-        return String.format("%s: %s", asset.getAssetIdentifier(), message);
+	    StringBuilder builder = new StringBuilder(this.getClass().getSimpleName());
+	    builder.append(": [failureId: ")
+			    .append(this.id == null ? "null" : this.id)
+			    .append(", observer: ")
+			    .append(observer == null || observer.getName() == null ? "null" : observer.getName())
+			    .append(", observerParameter: ")
+			    .append(observerParameter == null || observerParameter.getId() == null ? "null" : observerParameter.getId())
+			    .append(", observerParameterValue: ")
+			    .append(observerParameter == null || observerParameter.getValue() == null ? "null" : observerParameter.getValue())
+			    .append("]");
+
+        return String.format("%s: %s %s", asset.getAssetIdentifier(), message, builder.toString());
     }
 
     @Id

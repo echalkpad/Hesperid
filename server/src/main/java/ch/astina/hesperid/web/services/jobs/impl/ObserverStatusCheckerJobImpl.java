@@ -93,7 +93,10 @@ public class ObserverStatusCheckerJobImpl implements ObserverStatusCheckerJob
 		        failureService.report(failure);
 	        }
         } catch (Exception e) {
-	        systemHealthService.log("Error occurred during validation of parameter with id:" + parameter.getId(), "", e);
+	        systemHealthService.log("Error occurred during validation of parameter with id:"
+			        + parameter.getId() + "\n"
+			        + observer
+			        , "", e);
         }
     }
 

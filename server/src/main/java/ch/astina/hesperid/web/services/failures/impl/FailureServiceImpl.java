@@ -104,19 +104,24 @@ public class FailureServiceImpl implements FailureService
         failure.setResolved(new Date());
         failureDAO.save(failure);
 
-        for (FailureEscalation failureEscalation : failure.getFailureEscalations()) {
-            FailureNotificationMail message = new FailureNotificationMail(failure, userDAO.getUserByName(failureEscalation.getEscalationLevel().getUsername()));
-            try {
-                mailerService.sendHtmlMail(message);
-            } catch (MessagingException e) {
-                logger.error(e.getMessage());
-            }
-        }
+	    if(failure.getFailureEscalations() != null) {
+	        for (FailureEscalation failureEscalation : failure.getFailureEscalations()) {
+		        logger.info("Sending notification email for escalation: " + failureEscalation.getId());
+	            FailureNotificationMail message = new FailureNotificationMail(failure, userDAO.getUserByName(failureEscalation.getEscalationLevel().getUsername()));
+	            try {
+	                mailerService.sendHtmlMail(message);
+	            } catch (MessagingException e) {
+	                logger.error(e.getMessage());
+	            }
+	        }
+	    }
     }
 
     @Override
     public void autoresolve(Observer observer)
     {
+	    logger.info("Checking for unresolved failures to resolve for " + observer);
+
         for (Failure failure : failureDAO.getUnresolvedFailures(observer)) {
             logger.info("Auto-resolving failure: " + failure);
             resolve(failure);

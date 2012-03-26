@@ -210,8 +210,11 @@ public class Observer
     @Override
     public String toString() 
     {
-        return "Observer [name=" + name + ", asset=" + asset.getAssetIdentifier() + ", observerStrategy="
-                + observerStrategy.getName() + "]";
+        return "Observer [id=" + id
+		        + ", name=" + name
+		        + ", asset=" + asset.getAssetIdentifier()
+		        + ", observerStrategy=" + observerStrategy.getName()
+		        + "]";
     }
 
     @Transient

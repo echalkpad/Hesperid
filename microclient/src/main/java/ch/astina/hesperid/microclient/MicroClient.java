@@ -1,20 +1,17 @@
 package ch.astina.hesperid.microclient;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
+import org.apache.commons.configuration.XMLConfiguration;
+import org.apache.commons.httpclient.HttpClient;
+import org.apache.commons.httpclient.HttpMethod;
+import org.apache.commons.httpclient.methods.GetMethod;
+
+import java.io.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
-import org.apache.commons.configuration.XMLConfiguration;
-import org.apache.commons.httpclient.HttpClient;
-import org.apache.commons.httpclient.HttpMethod;
-import org.apache.commons.httpclient.methods.GetMethod;
 
 /**
  * @author $Author: kstarosta $
@@ -25,6 +22,8 @@ public class MicroClient extends Thread
     private final XMLConfiguration xmlConfiguration;
     private Date lastUpdated;
     private File cacheDir;
+
+	private static Process process = null;
 
     public MicroClient(XMLConfiguration xmlConfiguration)
     {
@@ -43,79 +42,70 @@ public class MicroClient extends Thread
     @Override
     public void run()
     {
-        Runtime.getRuntime().addShutdownHook(new Thread() {
-            @Override
-            public void run() {
-        System.out.println("stopping");
-        try {
-            File file = new File(xmlConfiguration.getString("clientInstallDir") + "/pid/stopped");
-            OutputStream out = new FileOutputStream(file);
-            out.write("stopped".getBytes());
-            out.flush();
-            out.close();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-            }
-        });
-
-        boolean running = true;
-        Process process = null;
-
-        try
-        {      
-            while (running) {
-                try {
-                    String version = getVersionOnServer();
-                    String agentDate = version.substring(0, version.indexOf(";"));
-                    String agentFile = version.replaceFirst(agentDate + ";", "");
-
-                    System.out.println("Agent Date " + agentDate);
-
-                    if (version.length() > 4) {
-
-                        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-
-                        Date compareDate = df.parse(agentDate);
-
-                        if (lastUpdated == null || compareDate.after(lastUpdated) || cacheDir.list().length == 0) {
-
-                            String bundleLocation = xmlConfiguration.getString("hostBaseURL") + "/microclient/latestagentversiondownload/" + agentFile;
-                            retrieveClient(bundleLocation);
-                            if (process != null) {
-                                //stopChilds();
-                                //process.waitFor();
-                                process.destroy();
-                            }
-                            process = null;
-
-                            System.out.println("Installing Bundle " + bundleLocation);
-
-                            lastUpdated = new Date();
-                        }
-                    }
-
-                    if (process == null) {
-                        process = startJar(cacheDir.getPath() + "/agent.jar", true);
-                    }
-
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-
-                Thread.sleep(xmlConfiguration.getLong("updateCheckIntervalMillis"));
-            }
-        }
-        catch (Exception ex)
-        {
-            stopChilds();
-            System.err.println("Could not create framework: " + ex);
-            ex.printStackTrace();
-            System.exit(-1);
-        }
-
-        stopChilds();
+		startShutdownHook();
+	    startAgentBundleObserver();
     }
+
+	private void startShutdownHook()
+	{
+		Runtime.getRuntime().addShutdownHook(new Thread() {
+			@Override
+			public void run() {
+				System.out.println("stopping");
+				try {
+					File file = new File(xmlConfiguration.getString("clientInstallDir") + "/pid/stopped");
+					OutputStream out = new FileOutputStream(file);
+					out.write("stopped".getBytes());
+					out.flush();
+					out.close();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	private void startAgentBundleObserver()
+	{
+		boolean running = true;
+
+
+		while (running) {
+			try {
+				String version = getVersionOnServer();
+				AgentInfo agentInfo = new AgentInfo(version);
+
+				// Download the agent jars if needed
+				if(agentInfo.isValid() && isAgentUpdateNeeded(agentInfo)) {
+
+					System.out.println("New agent library is available on the server.");
+					String bundleLocation = xmlConfiguration.getString("hostBaseURL")
+							+ "/microclient/latestagentversiondownload/"
+							+ agentInfo.getAgentFile();
+
+					retrieveClient(bundleLocation);
+					quitProcess();
+
+					lastUpdated = new Date();
+				}
+
+				startProcess();
+
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+
+			sleep();
+		}
+
+		quitProcess();
+		stopChilds();
+	}
+
+	private boolean isAgentUpdateNeeded(AgentInfo agentInfo)
+	{
+		return lastUpdated == null || agentInfo.getNewestAgentDate().after(lastUpdated) || cacheDir.list().length == 0;
+	}
 
     private String getVersionOnServer()
     {
@@ -142,9 +132,7 @@ public class MicroClient extends Thread
 
     private void retrieveClient(String url)
     {
-        String version = "";
-
-        System.out.println("Retrieving client " + url);
+	    System.out.println("Retrieving new agent library from " + url);
 
         HttpClient client = new HttpClient();
         HttpMethod method = new GetMethod(url);
@@ -182,7 +170,43 @@ public class MicroClient extends Thread
     }
 
 
-    Process startJar(String jarFile, boolean mergeStreams) throws InterruptedException, IOException
+	/*************** Process handling ***************/
+
+	private void sleep()
+	{
+		try {
+			long sleepInterval = xmlConfiguration.getLong("updateCheckIntervalMillis");
+			System.out.println("Sleeping for: " + sleepInterval + " (in Milliseconds)");
+			Thread.sleep(sleepInterval);
+		} catch (Exception ex) {
+			stopChilds();
+			System.err.println("Could not create framework: " + ex);
+			ex.printStackTrace();
+			System.exit(-1);
+		}
+	}
+
+	private void quitProcess()
+	{
+		if (process != null) {
+			System.out.println("Stopping current agent process: " + process.toString());
+			//stopChilds();
+			//process.waitFor();
+			process.destroy();
+		}
+		process = null;
+	}
+
+	private void startProcess() throws IOException, InterruptedException
+	{
+		if (process == null) {
+			System.out.println("Starting agent process...");
+			process = startJar(cacheDir.getPath() + "/agent.jar", true);
+			System.out.println("New agent process started " + process.getOutputStream().toString());
+		}
+	}
+
+    private Process startJar(String jarFile, boolean mergeStreams) throws InterruptedException, IOException
     {
         List<String> command = new ArrayList<String>();
         command.add("java");
@@ -218,4 +242,54 @@ public class MicroClient extends Thread
             e.printStackTrace();
         }
     }
+
+
+
+	/***************** Server Information *****************/
+	
+	private class AgentInfo {
+		
+		private String agentInformation;
+		private Date newestAgentDate;
+		private String agentFile;
+		
+		AgentInfo (String agentInformation) {
+			this.agentInformation = agentInformation;
+			extractAgentDate(agentInformation);
+		}
+		
+		private void extractAgentDate(String agentInformation)
+		{
+			try {
+				String agentDateString = agentInformation.substring(0, agentInformation.indexOf(";"));
+				agentFile = agentInformation.replaceFirst(agentDateString + ";", "");
+
+				System.out.println("Agent Date from server is: " + agentDateString);
+
+				if (agentInformation.length() > 4) {
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+					newestAgentDate = df.parse(agentDateString);
+				}
+			} catch (Exception ex) {
+				System.out.println("Extracting agent information from server failed.");
+				ex.printStackTrace();
+			}
+		}
+
+		public boolean isValid()
+		{
+			//return agentInformation.length() > 4;
+			return newestAgentDate != null && agentFile != null;
+		}
+
+		public Date getNewestAgentDate()
+		{
+			return newestAgentDate;
+		}
+
+		public String getAgentFile()
+		{
+			return agentFile;
+		}
+	}
 }

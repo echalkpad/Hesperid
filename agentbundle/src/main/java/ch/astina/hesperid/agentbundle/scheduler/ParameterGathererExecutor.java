@@ -39,22 +39,22 @@ public class ParameterGathererExecutor
 
     public void gatherParameterAndReply() 
     {
-        try {
-	        ParameterGathererRunner runner = new ParameterGathererRunner(observer);
-	        runner.execute();
+	    try {
+		    ParameterGathererRunner runner = new ParameterGathererRunner(observer);
+		    runner.execute();
 
-            ObserverParameter parameter = new ObserverParameter();
-            parameter.setObserver(observer);
-            parameter.setValue(runner.getResult());
-            parameter.setError(runner.getErrorMessage());
-            agentFeedback.deliverObserverParameter(parameter);
+		    ObserverParameter parameter = new ObserverParameter();
+		    parameter.setObserver(observer);
+		    parameter.setValue(runner.getResult());
+		    parameter.setError(runner.getErrorMessage());
+		    agentFeedback.deliverObserverParameter(parameter);
 
-	        if (runner.hasUnknownError()) {
-		        logger.warn("Observer parameter gathering recognized an unknown error.", runner.getException());
-	        }
+		    if (runner.getException() != null) {
+			    logger.warn("Observer parameter gathering recognized an unknown error.", runner.getException());
+		    }
 
-        } catch (Exception e) {
-            logger.warn("Exception during parameter gathering", e);
-        }
+	    } catch (Exception e) {
+		    logger.warn("Exception during parameter gathering", e);
+	    }
     }
 }
