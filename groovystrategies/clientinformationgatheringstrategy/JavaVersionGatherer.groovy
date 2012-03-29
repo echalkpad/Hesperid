@@ -10,19 +10,6 @@ public class JavaVersionGatherer implements ParameterGatherer
 {	
 	public String getResult(Map<String, String> parameters)
 	{
-		List<String> command = new ArrayList<String>();
-		command.add("java");
-		command.add("-version");
-		
-		ProcessBuilder builder = new ProcessBuilder(command);
-		Map<String, String> environ = builder.environment();
-		
-		builder.redirectErrorStream();
-		
-		final Process process = builder.start();
-		
-		BufferedReader inp = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		
-		return inp.readLine();
+		return System.getProperty("java.version");
 	}
 }

@@ -43,6 +43,6 @@ public class ParameterGathererExecutionJob implements Job
         ParameterGathererExecutor executor = new ParameterGathererExecutor(agentFeedback, observer);
         executor.gatherParameterAndReply();
 
-        logger.info("Parameter Gatherer Execution started: " + observer);
+        logger.info("Parameter Gatherer Execution finished for : " + observer);
     }
 }

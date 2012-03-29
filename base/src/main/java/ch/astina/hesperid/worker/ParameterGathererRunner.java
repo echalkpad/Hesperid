@@ -46,7 +46,10 @@ public final class ParameterGathererRunner
 					logger.error("Sleeping the thread for parameter gathering breaks.", e1);
 					throw new RuntimeException("Sleeping the thread for parameter gathering breaks.", e1);
 				}
-				
+
+				logger.warn("Exception while gathering result from ParameterGatherer. Attempt "
+						+ (retryCount+1) + " of " + maxRetries
+						+ " for " + observer);
 				retryCount++;
 			}
 		}
@@ -71,7 +74,8 @@ public final class ParameterGathererRunner
 				if(exception.getMessage() != null) {
 					return exception.getMessage();
 				} else {
-					return exception.getClass().getName();
+					return "ParameterGatherer has " + exception.getClass().getName()
+							+ ". (Check the observer strategy or your observer settings for errors.)";
 				}
 			}
 		} else {

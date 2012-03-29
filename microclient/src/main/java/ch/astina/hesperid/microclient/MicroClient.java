@@ -221,6 +221,7 @@ public class MicroClient extends Thread
             builder.redirectErrorStream();
         }
 
+	    System.out.println("Starting agent with command: " + builder.command().toString());
         final Process process = builder.start();
 
         ClientOutputLogger clientOutputLogger = new ClientOutputLogger(process.getInputStream());

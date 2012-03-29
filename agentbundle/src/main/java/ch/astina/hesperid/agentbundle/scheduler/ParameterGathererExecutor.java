@@ -29,7 +29,10 @@ public class ParameterGathererExecutor
 {
     private AgentFeedback agentFeedback;
     private Observer observer;
-    private Logger logger = Logger.getLogger(AgentFeedback.class);
+    private Logger logger = Logger.getLogger(ParameterGathererExecutor.class);
+
+	private int maxRetries = 3;
+	private int retryCount = 0;
 
     public ParameterGathererExecutor(AgentFeedback agentFeedback, Observer observer) 
     {
@@ -47,6 +50,8 @@ public class ParameterGathererExecutor
 		    parameter.setObserver(observer);
 		    parameter.setValue(runner.getResult());
 		    parameter.setError(runner.getErrorMessage());
+
+		    logger.info("Delivering parameter: " + parameter);
 		    agentFeedback.deliverObserverParameter(parameter);
 
 		    if (runner.getException() != null) {
@@ -55,6 +60,29 @@ public class ParameterGathererExecutor
 
 	    } catch (Exception e) {
 		    logger.warn("Exception during parameter gathering", e);
+			retryIfNecessary();
 	    }
     }
+
+	private void retryIfNecessary()
+	{
+		if(retryCount < maxRetries) {
+			logger.info("Trying again to deliver parameter for " + observer);
+			sleep();
+
+			retryCount++;
+			gatherParameterAndReply();
+		}
+	}
+
+	private void sleep()
+	{
+		try {
+			Thread.sleep(2000);
+		} catch ( InterruptedException e ) {
+			String message = "Sleeping the thread for parameter execution failed";
+			logger.error(message, e);
+			throw new RuntimeException(message, e);
+		}
+	}
 }

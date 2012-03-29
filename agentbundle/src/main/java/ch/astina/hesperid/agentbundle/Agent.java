@@ -26,7 +26,6 @@ import org.apache.commons.configuration.ConfigurationException;
 import org.apache.commons.configuration.XMLConfiguration;
 import org.apache.log4j.Logger;
 import org.quartz.*;
-import org.quartz.impl.matchers.GroupMatcher;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.BindingProvider;
@@ -49,6 +48,8 @@ public class Agent
 	private AgentFeedback agentFeedbackPort;
 	private SchedulerFactory schedulerFactory;
 	private Scheduler scheduler;
+
+	private boolean jobPoolWarning = false;
 
     public static void main(String[] args)
     {
@@ -125,20 +126,15 @@ public class Agent
 
 				// Reschedule all observer jobs when there are observer modifications on the server.
 				if ( serverHasObserverModifications(lastObserverUpdate, lastUpdatedInformationOnClient) ) {
+
 					logger.info("Change detected now updating scheduler");
 
-					Observer[] observers = agentFeedbackPort.observers(asset);
-
-					if (observers != null) {
-						for (JobKey jobKey : scheduler.getJobKeys( GroupMatcher.jobGroupEquals("observerGatheringGroup")) ) {
-							JobDetail job = scheduler.getJobDetail(jobKey);
-							scheduler.deleteJob(job.getKey());
-						}
-
-						scheduleObserverJobs(observers);
-						lastUpdatedInformationOnClient = new Date();
-					}
+					createObserverJobs();
+					lastUpdatedInformationOnClient = new Date();
 				}
+
+				//checkThreadPool();
+
 			} catch (Exception e) {
 				logger.info("Error in checking asset information loop", e);
 			}
@@ -147,10 +143,43 @@ public class Agent
 		}
 	}
 
+	private void createObserverJobs() throws SchedulerException
+	{
+		Observer[] observers = agentFeedbackPort.observers(asset);
+
+		if (observers != null) {
+			deleteObserverJobs();
+			scheduleObserverJobs(observers);
+		}
+	}
+
+	/**
+	 * Check for dead jobs in the thread pool
+	 */
+	private void checkThreadPool() throws SchedulerException
+	{
+		if(scheduler.getCurrentlyExecutingJobs().size() == 3 && jobPoolWarning) {
+			initializeScheduler();
+			createObserverJobs();
+		} else if (scheduler.getCurrentlyExecutingJobs().size() == 3) {
+			jobPoolWarning = true;
+		}
+	}
+
 	private boolean serverHasObserverModifications(Date lastUpdatedObserver, Date lastUpdatedInformationOnClient)
 	{
 		return lastUpdatedObserver != null
 				&& (lastUpdatedInformationOnClient == null || lastUpdatedInformationOnClient.before(lastUpdatedObserver));
+	}
+
+	private void deleteObserverJobs() throws SchedulerException
+	{
+		scheduler.clear();
+		/*for (JobKey jobKey : scheduler.getJobKeys( GroupMatcher.jobGroupEquals("observerGatheringGroup")) ) {
+			JobDetail job = scheduler.getJobDetail(jobKey);
+			scheduler.deleteJob(job.getKey());
+		}
+		*/
 	}
 
 	/**
