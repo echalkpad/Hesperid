@@ -32,6 +32,7 @@ public class ExternalObserverJobImpl implements ExternalObserverJob
 {
     private ObserverDAO observerDAO;
     private SystemHealthService systemHealthService;
+	private Observer observer;
 
     public ExternalObserverJobImpl(ObserverDAO observerDAO, SystemHealthService systemHealthService)
     {
@@ -42,24 +43,56 @@ public class ExternalObserverJobImpl implements ExternalObserverJob
     @Override
     public void monitor(Observer observer)
     {
+	    int maxRetries = 3;
+	    int attemptCount = 0;
+
         try {
-	        ParameterGathererRunner runner = new ParameterGathererRunner(observer);
-	        runner.execute();
-
-            ObserverParameter param = new ObserverParameter();
-            param.setObserver(observer);
-            param.setValue(runner.getResult());
-            param.setError(runner.getErrorMessage());
-            param.setUpdated(new Date());
-
-            observerDAO.save(param);
-
-	        if (runner.hasUnknownError()) {
-		        systemHealthService.log("Error while saving observer parameter", runner.getException().getClass().getName(), runner.getException());
-	        }
-
+			performGathering(observer);
         } catch (Exception e) {
-            systemHealthService.log("Error while saving observer parameter", e.getMessage(), e);
+	        retryIfNecessary(attemptCount, maxRetries, observer);
+
+	        if(attemptCount > maxRetries) {
+		        systemHealthService.log("Error while saving observer parameter", e.getMessage(), e);
+		        attemptCount = 0;
+	        }
         }
     }
+
+	private void performGathering(Observer observer)
+	{
+		ParameterGathererRunner runner = new ParameterGathererRunner(observer);
+		runner.execute();
+
+		ObserverParameter param = new ObserverParameter();
+		param.setObserver(observer);
+		param.setValue(runner.getResult());
+		param.setError(runner.getErrorMessage());
+		param.setUpdated(new Date());
+
+		observerDAO.save(param);
+
+		if (runner.hasUnknownError()) {
+			systemHealthService.log("Error while saving observer parameter", runner.getException().getClass().getName(), runner.getException());
+		}
+	}
+
+	private void retryIfNecessary(int attemptCount, int maxRetries, Observer observer)
+	{
+		if( attemptCount <= maxRetries) {
+			attemptCount++;
+			sleep();
+			performGathering(observer);
+		}
+	}
+
+	private void sleep()
+	{
+		try {
+			Thread.sleep(2000);
+		} catch ( InterruptedException e ) {
+			String title = "Sleeping the thread for parameter execution failed";
+			systemHealthService.log(title, e.getMessage(), e);
+			throw new RuntimeException(title, e);
+		}
+	}
 }

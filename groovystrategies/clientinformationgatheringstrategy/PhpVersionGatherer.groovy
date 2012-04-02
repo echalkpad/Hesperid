@@ -10,18 +10,32 @@ public class PhpVersionGatherer implements ParameterGatherer
 {
     public String getResult(Map<String, String> parameters)
     {
-		List<String> command = new ArrayList<String>();
-		command.add("php");
-		command.add("-version");
+        String result = "";
+        final Process process = null
+        
+        try {
+            List<String> command = new ArrayList<String>();
+            command.add("php");
+            command.add("-version");
 
-		ProcessBuilder builder = new ProcessBuilder(command);
-		Map<String, String> environ = builder.environment();
+            ProcessBuilder builder = new ProcessBuilder(command);
+            Map<String, String> environ = builder.environment();
 
-		builder.redirectErrorStream();
+            builder.redirectErrorStream();
 
-		final Process process = builder.start();
+            process = builder.start();
 
-		BufferedReader inp = new BufferedReader(new InputStreamReader(process.getInputStream()));
-		return inp.readLine();
+            BufferedReader inp = new BufferedReader(new InputStreamReader(process.getInputStream()));
+
+            result = inp.readLine();
+            
+        } catch (Exception e) {
+            process.destroy();
+            throw new RuntimeException(e);
+        } finally {
+            process.destroy();    
+        }
+        
+        return result;
     }
 }
