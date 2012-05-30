@@ -16,7 +16,11 @@
 package ch.astina.hesperid.dao.hibernate;
 
 import ch.astina.hesperid.dao.FailureDAO;
-import ch.astina.hesperid.model.base.*;
+import ch.astina.hesperid.model.base.Asset;
+import ch.astina.hesperid.model.base.Failure;
+import ch.astina.hesperid.model.base.FailureEscalation;
+import ch.astina.hesperid.model.base.FailureStatus;
+import ch.astina.hesperid.model.base.Observer;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;

@@ -15,15 +15,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.microclient;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-
+import ch.astina.hesperid.dao.AgentBundleDAO;
+import ch.astina.hesperid.model.base.AgentBundle;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.util.TextStreamResponse;
 
-import ch.astina.hesperid.dao.AgentBundleDAO;
-import ch.astina.hesperid.model.base.AgentBundle;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 
 /**
  * @author $Author: kstarosta $

@@ -15,16 +15,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.asset.observer;
 
-import java.util.Date;
-import java.util.List;
-
-import org.apache.tapestry5.Link;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.PageRenderLinkSource;
-import org.springframework.security.annotation.Secured;
-
 import ch.astina.hesperid.dao.AssetDAO;
 import ch.astina.hesperid.dao.ObserverDAO;
 import ch.astina.hesperid.model.base.Asset;
@@ -33,6 +23,15 @@ import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverResultType;
 import ch.astina.hesperid.model.base.ObserverStrategy;
 import ch.astina.hesperid.web.services.scheduler.SchedulerService;
+import org.apache.tapestry5.Link;
+import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.PageRenderLinkSource;
+import org.springframework.security.access.annotation.Secured;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

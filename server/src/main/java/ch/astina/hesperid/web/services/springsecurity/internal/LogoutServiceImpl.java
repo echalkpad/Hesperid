@@ -16,13 +16,13 @@
 package ch.astina.hesperid.web.services.springsecurity.internal;
 
 import ch.astina.hesperid.web.services.springsecurity.LogoutService;
-import java.util.List;
-
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.RequestGlobals;
-import org.springframework.security.Authentication;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.ui.logout.LogoutHandler;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

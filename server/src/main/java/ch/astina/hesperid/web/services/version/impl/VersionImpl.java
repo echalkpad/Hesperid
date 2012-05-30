@@ -15,14 +15,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.version.impl;
 
-import java.util.Properties;
-
+import ch.astina.hesperid.web.services.version.Version;
 import org.apache.tapestry5.Asset;
 import org.apache.tapestry5.annotations.Path;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 
-import ch.astina.hesperid.web.services.version.Version;
+import java.util.Properties;
 
 /**
  * @author $Author: kstarosta $

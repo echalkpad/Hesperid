@@ -26,7 +26,6 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.util.EnumSelectModel;
-import org.apache.tapestry5.util.EnumValueEncoder;
 
 /**
  * @author $Author: kstarosta $
@@ -70,8 +69,8 @@ public class SystemSettings
     }
 
     public ValueEncoder<MailServerSecureConnectionType> getMailServerSecureConnectionTypeEncoder()
-    {
-        return new EnumValueEncoder<MailServerSecureConnectionType>(MailServerSecureConnectionType.class);
+    {          //
+        return null; //new EnumValueEncoder<MailServerSecureConnectionType>(MailServerSecureConnectionType.class);
     }
 
     @CommitAfter

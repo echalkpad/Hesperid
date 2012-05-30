@@ -19,7 +19,7 @@ import org.apache.tapestry5.annotations.Component;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Mixins;
 import org.apache.tapestry5.corelib.components.Zone;
-import org.springframework.security.annotation.Secured;
+import org.springframework.security.access.annotation.Secured;
 
 /**
  * @author $Author: kstarosta $

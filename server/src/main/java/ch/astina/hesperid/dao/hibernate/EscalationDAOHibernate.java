@@ -15,14 +15,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao.hibernate;
 
-import java.util.List;
-
-import org.hibernate.Session;
-import org.hibernate.criterion.Order;
-
 import ch.astina.hesperid.dao.EscalationDAO;
 import ch.astina.hesperid.model.base.EscalationLevel;
 import ch.astina.hesperid.model.base.EscalationScheme;
+import org.hibernate.Session;
+import org.hibernate.criterion.Order;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

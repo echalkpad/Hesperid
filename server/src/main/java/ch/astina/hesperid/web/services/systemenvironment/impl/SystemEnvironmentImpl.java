@@ -17,12 +17,9 @@ package ch.astina.hesperid.web.services.systemenvironment.impl;
 
 import ch.astina.hesperid.installer.web.services.InstallationManager;
 import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
+import org.apache.commons.configuration.Configuration;
 
 import java.io.File;
-import javax.servlet.ServletContext;
-
-import org.apache.commons.configuration.Configuration;
-import org.slf4j.Logger;
 
 /**
  * @author $Author: kstarosta $

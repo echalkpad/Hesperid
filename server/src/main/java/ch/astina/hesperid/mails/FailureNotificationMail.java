@@ -15,23 +15,21 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.mails;
 
-import java.io.StringWriter;
-import java.util.Properties;
-
-import javax.mail.internet.InternetAddress;
-
-import org.apache.velocity.Template;
-import org.apache.velocity.VelocityContext;
-import org.apache.velocity.app.VelocityEngine;
-
 import ch.astina.hesperid.model.base.Failure;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverParameter;
 import ch.astina.hesperid.model.base.ObserverStrategy;
 import ch.astina.hesperid.model.mail.HtmlMailMessage;
 import ch.astina.hesperid.model.user.User;
+import org.apache.velocity.Template;
+import org.apache.velocity.VelocityContext;
+import org.apache.velocity.app.VelocityEngine;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import javax.mail.internet.InternetAddress;
+import java.io.StringWriter;
+import java.util.Properties;
 
 /**
  * @author $Author: kstarosta $

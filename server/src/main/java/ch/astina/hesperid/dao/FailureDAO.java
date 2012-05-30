@@ -16,7 +16,11 @@
 package ch.astina.hesperid.dao;
 
 import ch.astina.hesperid.dao.hibernate.FilterGridDataSource;
-import ch.astina.hesperid.model.base.*;
+import ch.astina.hesperid.model.base.Asset;
+import ch.astina.hesperid.model.base.Failure;
+import ch.astina.hesperid.model.base.FailureEscalation;
+import ch.astina.hesperid.model.base.FailureStatus;
+import ch.astina.hesperid.model.base.Observer;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 
 import java.util.List;

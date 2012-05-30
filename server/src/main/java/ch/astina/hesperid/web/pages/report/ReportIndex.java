@@ -16,22 +16,12 @@
 package ch.astina.hesperid.web.pages.report;
 
 import ch.astina.hesperid.dao.HqlDAO;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.services.PropertyAccess;
-
 import ch.astina.hesperid.dao.ReportDAO;
 import ch.astina.hesperid.model.internal.ReportType;
 import ch.astina.hesperid.util.GenericSelectModel;
 import ch.astina.hesperid.util.jasper.JasperExcelStreamResponse;
 import ch.astina.hesperid.util.jasper.JasperPDFStreamResponse;
 import ch.astina.hesperid.util.jasper.JasperStreamResponse;
-import java.awt.Image;
-import java.io.ByteArrayInputStream;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import javax.imageio.ImageIO;
 import net.sf.jasperreports.engine.JasperCompileManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
@@ -40,9 +30,19 @@ import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.xml.JRXmlLoader;
 import org.apache.tapestry5.StreamResponse;
+import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.services.PropertyAccess;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.security.annotation.Secured;
+import org.springframework.security.access.annotation.Secured;
+
+import javax.imageio.ImageIO;
+import java.awt.*;
+import java.io.ByteArrayInputStream;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author $Author: kstarosta $

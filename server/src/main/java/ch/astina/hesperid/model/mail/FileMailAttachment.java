@@ -15,13 +15,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.model.mail;
 
-import java.io.File;
-import java.io.IOException;
+import eu.medsea.mimeutil.MimeUtil;
 
 import javax.activation.DataSource;
 import javax.activation.FileDataSource;
-
-import eu.medsea.mimeutil.MimeUtil;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * @author $Author: kstarosta $

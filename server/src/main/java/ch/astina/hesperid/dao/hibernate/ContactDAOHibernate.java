@@ -15,13 +15,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao.hibernate;
 
-import java.util.List;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-
 import ch.astina.hesperid.dao.ContactDAO;
 import ch.astina.hesperid.model.base.Contact;
+import org.hibernate.Session;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

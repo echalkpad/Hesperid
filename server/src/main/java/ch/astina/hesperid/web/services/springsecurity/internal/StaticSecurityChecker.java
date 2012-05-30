@@ -1,52 +1,50 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Copyright 2011 Astina AG, Zurich
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+ * Copyright 2007 Ivan Dubrov
+ * Copyright 2007 Robin Helgelin
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
 package ch.astina.hesperid.web.services.springsecurity.internal;
 
-import org.springframework.security.ConfigAttributeDefinition;
-import org.springframework.security.intercept.AbstractSecurityInterceptor;
-import org.springframework.security.intercept.InterceptorStatusToken;
-import org.springframework.security.intercept.ObjectDefinitionSource;
-
+import org.springframework.security.access.SecurityMetadataSource;
+import org.springframework.security.access.intercept.AbstractSecurityInterceptor;
+import org.springframework.security.access.intercept.InterceptorStatusToken;
 /**
  * Straighforward implementation of the {@link SecurityChecker}.
  * 
  * @author Ivan Dubrov
  */
 public class StaticSecurityChecker extends AbstractSecurityInterceptor
-        implements SecurityChecker
-{
+        implements SecurityChecker {
+
     /** Object definition source. */
-    private ObjectDefinitionSource objectDefinitionSource = new StaticDefinitionSource();
+    private SecurityMetadataSource objectDefinitionSource = new StaticDefinitionSource();
 
     /**
      * Delegate to the
-     * {@link AbstractSecurityInterceptor#beforeInvocation(Object)}.
+     * {@link org.springframework.security.access.intercept.AbstractSecurityInterceptor#beforeInvocation(Object)}.
      * 
      * @param object
      *            security object.
      * @return interceptor status token
      */
-    public final InterceptorStatusToken checkBefore(final Object object)
-    {
+    public final InterceptorStatusToken checkBefore(final Object object) {
         return beforeInvocation(object);
     }
 
     /**
      * Delegate to the
-     * {@link AbstractSecurityInterceptor#afterInvocation(InterceptorStatusToken ,
+     * {@link org.springframework.security.access.intercept.AbstractSecurityInterceptor#afterInvocation(org.springframework.security.access.intercept.InterceptorStatusToken ,
      * Object)}.
      * 
      * @param token
@@ -56,8 +54,7 @@ public class StaticSecurityChecker extends AbstractSecurityInterceptor
      * @return object to return from the secured method
      */
     public final Object checkAfter(final InterceptorStatusToken token,
-            final Object returnedObject)
-    {
+            final Object returnedObject) {
         return afterInvocation(token, returnedObject);
     }
 
@@ -66,18 +63,13 @@ public class StaticSecurityChecker extends AbstractSecurityInterceptor
      * 
      * @return secured object class.
      */
-    public final Class<ConfigAttributeDefinition> getSecureObjectClass()
-    {
-        return ConfigAttributeDefinition.class;
+    @SuppressWarnings("unchecked")
+    public final Class getSecureObjectClass() {
+        return ConfigAttributeHolder.class;
     }
 
-    /**
-     * Obtain {@link ObjectDefinitionSource}.
-     * 
-     * @return {@link ObjectDefinitionSource}.
-     */
-    public final ObjectDefinitionSource obtainObjectDefinitionSource()
-    {
+    @Override
+    public SecurityMetadataSource obtainSecurityMetadataSource() {
         return objectDefinitionSource;
     }
 }

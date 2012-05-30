@@ -15,12 +15,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.model.mail;
 
+import javax.mail.internet.InternetAddress;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-
-import javax.mail.internet.InternetAddress;
 
 /**
  * @author $Author: kstarosta $

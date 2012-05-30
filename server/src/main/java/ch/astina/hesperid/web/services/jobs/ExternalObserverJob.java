@@ -15,9 +15,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.jobs;
 
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-
 import ch.astina.hesperid.model.base.Observer;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 
 /**
  * @author $Author: kstarosta $

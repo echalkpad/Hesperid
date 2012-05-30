@@ -15,15 +15,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.util;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import ch.astina.hesperid.model.base.Asset;
 import ch.astina.hesperid.model.base.ClientHierarchy;
 import ch.astina.hesperid.model.base.ClientRelationType;
 import ch.astina.hesperid.model.base.Location;
 import ch.astina.hesperid.model.base.System;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author $Author: kstarosta $

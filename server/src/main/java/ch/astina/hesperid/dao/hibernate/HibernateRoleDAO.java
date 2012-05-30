@@ -15,14 +15,13 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao.hibernate;
 
-import java.util.List;
-
+import ch.astina.hesperid.dao.RoleDAO;
+import ch.astina.hesperid.model.user.Role;
 import org.hibernate.Session;
 import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
 
-import ch.astina.hesperid.dao.RoleDAO;
-import ch.astina.hesperid.model.user.Role;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

@@ -15,16 +15,15 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.admin.observerstrategy;
 
+import ch.astina.hesperid.dao.ObserverDAO;
+import ch.astina.hesperid.model.base.ObserverStrategy;
+import ch.astina.hesperid.util.StacktraceUtil;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.springframework.security.annotation.Secured;
-
-import ch.astina.hesperid.dao.ObserverDAO;
-import ch.astina.hesperid.model.base.ObserverStrategy;
-import ch.astina.hesperid.util.StacktraceUtil;
+import org.springframework.security.access.annotation.Secured;
 
 /**
  * @author $Author: kstarosta $

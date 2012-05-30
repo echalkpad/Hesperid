@@ -1,19 +1,29 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Copyright 2011 Astina AG, Zurich
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-////////////////////////////////////////////////////////////////////////////////////////////////////
+/*
+ * Copyright 2007 Robin Helgelin
+ * Copyright 2008 Jonathan Barker
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 package ch.astina.hesperid.web.components.security;
+
+import org.apache.tapestry5.Block;
+import org.apache.tapestry5.annotations.Parameter;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.util.StringUtils;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -22,26 +32,22 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
-import org.apache.tapestry5.Block;
-import org.apache.tapestry5.annotations.Parameter;
-import org.springframework.security.Authentication;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.util.StringUtils;
-
 /**
- * @author $Author: kstarosta $
- * @version $Revision: 123 $, $Date: 2011-09-23 11:53:17 +0200 (Fr, 23 Sep 2011) $
+ * Render it's body depending whether the user is in a specific role or not.
+ * 
+ * @author Jonathan Barker
+ * @author Robin Helgelin
+ * @author Tapestry Project (doc comments)
  */
-public class IfRole
-{
+public class IfRole {
+
     /** 
      * If the logged in user matches this role, then the body of the IfRole component is rendered. If false, the body is
      * omitted.  This is retained for backward compatibility, and corresponds to a single entry in ifAnyGranted
      */
-    @Parameter(required = false, defaultPrefix = "literal", principal = true)
+    @Parameter(required = false, defaultPrefix = "literal", principal=true)
     private String role;
+
     /**
      * A comma-separated list of roles is supplied to one or more of the
      * following parameters. If none are supplied, the default behavior is to
@@ -49,27 +55,31 @@ public class IfRole
      */
     @Parameter(required = false, defaultPrefix = "literal")
     private String ifAllGranted;
+
     @Parameter(required = false, defaultPrefix = "literal")
     private String ifAnyGranted;
+
     @Parameter(required = false, defaultPrefix = "literal")
     private String ifNotGranted;
+
     /**
      * Optional parameter to invert the test. If true, then the body is rendered when the test
      * parameter is false (not true).
      */
     @Parameter
     private boolean negate;
+
     /**
      * An alternate {@link Block} to render if the test parameter is false. The default, null, means
      * render nothing in that situation.
      */
     @Parameter(name = "else")
     private Block elseBlock;
+
     private boolean test;
 
     @SuppressWarnings("unchecked")
-    private Collection getPrincipalAuthorities()
-    {
+    private Collection getPrincipalAuthorities() {
         Authentication currentUser = null;
         currentUser = SecurityContextHolder.getContext().getAuthentication();
 
@@ -77,7 +87,7 @@ public class IfRole
             return Collections.EMPTY_LIST;
         }
 
-        if ((null == currentUser.getAuthorities()) || (currentUser.getAuthorities().length < 1)) {
+        if ((null == currentUser.getAuthorities()) || (currentUser.getAuthorities().size() < 1)) {
             return Collections.EMPTY_LIST;
         }
 
@@ -86,8 +96,7 @@ public class IfRole
     }
 
     @SuppressWarnings("unchecked")
-    private Set authoritiesToRoles(Collection c)
-    {
+    private Set authoritiesToRoles(Collection c) {
         Set target = new HashSet();
 
         for (Iterator iterator = c.iterator(); iterator.hasNext();) {
@@ -95,8 +104,8 @@ public class IfRole
 
             if (null == authority.getAuthority()) {
                 throw new IllegalArgumentException(
-                        "Cannot process GrantedAuthority objects which return null from getAuthority() - attempting to process "
-                        + authority.toString());
+                    "Cannot process GrantedAuthority objects which return null from getAuthority() - attempting to process "
+                    + authority.toString());
             }
 
             target.add(authority.getAuthority());
@@ -106,8 +115,7 @@ public class IfRole
     }
 
     @SuppressWarnings("unchecked")
-    private Set parseAuthoritiesString(String authorizationsString)
-    {
+    private Set parseAuthoritiesString(String authorizationsString) {
         final Set requiredAuthorities = new HashSet();
         final String[] authorities = StringUtils.commaDelimitedListToStringArray(authorizationsString);
 
@@ -144,8 +152,7 @@ public class IfRole
      * <p>
      * <strong>CAVEAT</strong>: This method <strong>will not</strong> work if
      * the granted authorities returns a <code>null</code> string as the
-     * return value of {@link
-     * org.springframework.security.GrantedAuthority#getAuthority()}.
+     * return value of {@link GrantedAuthority#getAuthority()}.
      * </p>
      * 
      * <p>
@@ -156,8 +163,7 @@ public class IfRole
      * @param granted
      *            The authorities granted by the authentication. May be any
      *            implementation of {@link GrantedAuthority} that does
-     *            <strong>not</strong> return <code>null</code> from {@link
-     *            org.springframework.security.GrantedAuthority#getAuthority()}.
+     *            <strong>not</strong> return <code>null</code> from {@link GrantedAuthority#getAuthority()}.
      * @param required
      *            A {@link Set} of {@link GrantedAuthorityImpl}s that have been
      *            built using ifAny, ifAll or ifNotGranted.
@@ -167,8 +173,7 @@ public class IfRole
      * 
      */
     @SuppressWarnings("unchecked")
-    private Set retainAll(final Collection granted, final Set required)
-    {
+    private Set retainAll(final Collection granted, final Set required) {
         Set grantedRoles = authoritiesToRoles(granted);
         Set requiredRoles = authoritiesToRoles(required);
         grantedRoles.retainAll(requiredRoles);
@@ -183,8 +188,7 @@ public class IfRole
      * that are also in the granted Set of Authorities
      */
     @SuppressWarnings("unchecked")
-    private Set rolesToAuthorities(Set grantedRoles, Collection granted)
-    {
+    private Set rolesToAuthorities(Set grantedRoles, Collection granted) {
         Set target = new HashSet();
 
         for (Iterator iterator = grantedRoles.iterator(); iterator.hasNext();) {
@@ -209,12 +213,11 @@ public class IfRole
      * the conditions are effectively AND'd 
      */
     @SuppressWarnings("unchecked")
-    private boolean checkPermission()
-    {
+    private boolean checkPermission() {
         if (((null == ifAllGranted) || "".equals(ifAllGranted))
-                && ((null == ifAnyGranted) || "".equals(ifAnyGranted))
-                && ((null == role) || "".equals(role))
-                && ((null == ifNotGranted) || "".equals(ifNotGranted))) {
+         && ((null == ifAnyGranted) || "".equals(ifAnyGranted))
+         && ((null == role) || "".equals(role))
+         && ((null == ifNotGranted) || "".equals(ifNotGranted))) {
             return false;
         }
 
@@ -252,8 +255,8 @@ public class IfRole
         return true;
     }
 
-    void setupRender()
-    {
+
+    void setupRender() {
         test = checkPermission();
     }
 
@@ -262,8 +265,7 @@ public class IfRole
      * rendering (of the body). If the test parameter is false, returns the else
      * parameter (this may also be null).
      */
-    Object beginRender()
-    {
+    Object beginRender() {
         return test != negate ? null : elseBlock;
     }
 
@@ -271,8 +273,7 @@ public class IfRole
      * If the test method returns true, then the body is rendered, otherwise not. The component does
      * not have a template or do any other rendering besides its body.
      */
-    boolean beforeRenderBody()
-    {
+    boolean beforeRenderBody() {
         return test != negate;
     }
 }

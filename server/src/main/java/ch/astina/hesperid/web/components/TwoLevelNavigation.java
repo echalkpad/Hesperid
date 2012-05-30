@@ -15,17 +15,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.components;
 
-import java.util.List;
-
+import ch.astina.hesperid.web.services.sitemap.NavigationHelper;
+import ch.astina.hesperid.web.services.sitemap.Page;
+import ch.astina.hesperid.web.services.sitemap.Sitemap;
 import org.apache.tapestry5.BindingConstants;
 import org.apache.tapestry5.ComponentResources;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import ch.astina.hesperid.web.services.sitemap.NavigationHelper;
-import ch.astina.hesperid.web.services.sitemap.Page;
-import ch.astina.hesperid.web.services.sitemap.Sitemap;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

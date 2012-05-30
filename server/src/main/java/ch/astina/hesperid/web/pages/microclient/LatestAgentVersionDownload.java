@@ -17,16 +17,16 @@ package ch.astina.hesperid.web.pages.microclient;
 
 import ch.astina.hesperid.installer.web.services.InstallationManager;
 import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
+import org.apache.tapestry5.StreamResponse;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.Response;
+
 import java.io.BufferedInputStream;
 import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-
-import org.apache.tapestry5.StreamResponse;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.Response;
 
 
 /**

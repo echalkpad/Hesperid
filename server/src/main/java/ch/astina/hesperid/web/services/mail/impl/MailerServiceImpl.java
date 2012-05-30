@@ -22,10 +22,8 @@ import ch.astina.hesperid.model.mail.MailAttachment;
 import ch.astina.hesperid.model.mail.MailMessage;
 import ch.astina.hesperid.model.mail.TextMailMessage;
 import ch.astina.hesperid.web.services.mail.MailerService;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Map;
-import java.util.Properties;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.activation.DataHandler;
 import javax.mail.Address;
@@ -39,9 +37,10 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.IOException;
+import java.util.Date;
+import java.util.Map;
+import java.util.Properties;
 
 /**
  * @author $Author: kstarosta $

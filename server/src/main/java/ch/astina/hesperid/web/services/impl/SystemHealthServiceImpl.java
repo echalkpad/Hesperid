@@ -15,18 +15,17 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.impl;
 
-import java.util.Date;
-
-import org.apache.tapestry5.hibernate.HibernateSessionSource;
-import org.hibernate.Session;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import ch.astina.hesperid.dao.SystemHealthDAO;
 import ch.astina.hesperid.dao.hibernate.SystemHealthDAOHibernate;
 import ch.astina.hesperid.model.internal.SystemHealth;
 import ch.astina.hesperid.util.StacktraceUtil;
 import ch.astina.hesperid.web.services.SystemHealthService;
+import org.apache.tapestry5.hibernate.HibernateSessionSource;
+import org.hibernate.Session;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.util.Date;
 
 /**
  * @author $Author: kstarosta $

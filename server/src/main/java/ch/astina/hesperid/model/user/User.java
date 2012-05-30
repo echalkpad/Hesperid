@@ -15,8 +15,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.model.user;
 
-import java.util.HashSet;
-import java.util.Set;
+import org.apache.tapestry5.beaneditor.NonVisual;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.userdetails.UserDetails;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -25,11 +28,10 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 import javax.persistence.UniqueConstraint;
-
-import org.apache.tapestry5.beaneditor.NonVisual;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-import org.springframework.security.userdetails.UserDetails;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * @author $Author: kstarosta $
@@ -63,12 +65,12 @@ public class User implements UserDetails
     }
 
     @Transient
-    public GrantedAuthority[] getAuthorities()
+    public List<GrantedAuthority> getAuthorities()
     {
-        GrantedAuthority[] authorities = new GrantedAuthority[getRoles().size()];
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
         int i = 0;
         for (Role role : getRoles()) {
-            authorities[i++] = new GrantedAuthorityImpl(role.getName());
+            authorities.add(new GrantedAuthorityImpl(role.getName()));
         }
         return authorities;
     }

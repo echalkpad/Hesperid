@@ -16,17 +16,16 @@
 package ch.astina.hesperid.web.pages.asset.observer;
 
 import ch.astina.hesperid.dao.ObserverDAO;
-import org.apache.tapestry5.annotations.PageActivationContext;
-import org.apache.tapestry5.annotations.Property;
-import org.springframework.security.annotation.Secured;
-
 import ch.astina.hesperid.global.GlobalConstants;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverParameter;
+import org.apache.tapestry5.annotations.PageActivationContext;
+import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.HibernateGridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.access.annotation.Secured;
 
 /**
  * @author $Author: kstarosta $

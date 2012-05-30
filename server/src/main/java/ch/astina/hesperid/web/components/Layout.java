@@ -15,12 +15,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.components;
 
+import ch.astina.hesperid.web.services.sitemap.Sitemap;
+import ch.astina.hesperid.web.services.version.Version;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.ioc.annotations.Inject;
-
-import ch.astina.hesperid.web.services.sitemap.Sitemap;
-import ch.astina.hesperid.web.services.version.Version;
 
 /**
  * @author $Author: kstarosta $

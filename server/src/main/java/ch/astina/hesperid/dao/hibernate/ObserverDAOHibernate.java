@@ -16,7 +16,13 @@
 package ch.astina.hesperid.dao.hibernate;
 
 import ch.astina.hesperid.dao.ObserverDAO;
-import ch.astina.hesperid.model.base.*;
+import ch.astina.hesperid.model.base.Asset;
+import ch.astina.hesperid.model.base.Failure;
+import ch.astina.hesperid.model.base.FailureEscalation;
+import ch.astina.hesperid.model.base.ObservationScope;
+import ch.astina.hesperid.model.base.Observer;
+import ch.astina.hesperid.model.base.ObserverParameter;
+import ch.astina.hesperid.model.base.ObserverStrategy;
 import org.apache.tapestry5.hibernate.HibernateGridDataSource;
 import org.hibernate.Query;
 import org.hibernate.Session;

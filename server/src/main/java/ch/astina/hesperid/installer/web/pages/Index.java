@@ -17,7 +17,6 @@ package ch.astina.hesperid.installer.web.pages;
 
 import ch.astina.hesperid.installer.web.services.InstallationManager;
 import com.spreadthesource.tapestry.installer.services.Restart;
-import java.io.File;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.InjectComponent;
 import org.apache.tapestry5.annotations.Property;
@@ -25,6 +24,8 @@ import org.apache.tapestry5.corelib.components.Form;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 /**
  * @author $Author: kstarosta $

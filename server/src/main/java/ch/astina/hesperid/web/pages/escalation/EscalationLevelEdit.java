@@ -15,20 +15,19 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.escalation;
 
-import java.util.List;
-
-import org.apache.tapestry5.Link;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.services.PageRenderLinkSource;
-import org.springframework.security.annotation.Secured;
-
 import ch.astina.hesperid.dao.ContactDAO;
 import ch.astina.hesperid.dao.EscalationDAO;
 import ch.astina.hesperid.dao.UserDAO;
 import ch.astina.hesperid.model.base.EscalationLevel;
 import ch.astina.hesperid.model.user.User;
+import org.apache.tapestry5.Link;
+import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.PageRenderLinkSource;
+import org.springframework.security.access.annotation.Secured;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

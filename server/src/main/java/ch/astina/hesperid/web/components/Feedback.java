@@ -18,12 +18,12 @@ package ch.astina.hesperid.web.components;
 import ch.astina.hesperid.util.feedback.FeedbackManager;
 import ch.astina.hesperid.util.feedback.FeedbackMessage;
 import ch.astina.hesperid.util.feedback.FeedbackType;
-import java.util.List;
-
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.annotations.SessionState;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

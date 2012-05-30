@@ -15,7 +15,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.springsecurity;
 
-import org.springframework.security.providers.dao.SaltSource;
+import org.springframework.security.authentication.dao.SaltSource;
 
 /**
  * @author $Author: kstarosta $

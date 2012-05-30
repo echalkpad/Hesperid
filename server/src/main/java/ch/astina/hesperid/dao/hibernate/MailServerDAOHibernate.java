@@ -15,10 +15,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao.hibernate;
 
-import org.hibernate.Session;
-
 import ch.astina.hesperid.dao.MailServerDAO;
 import ch.astina.hesperid.model.internal.MailServer;
+import org.hibernate.Session;
 
 /**
  * @author $Author: kstarosta $

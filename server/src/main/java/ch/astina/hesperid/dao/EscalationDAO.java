@@ -15,10 +15,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao;
 
-import java.util.List;
-
 import ch.astina.hesperid.model.base.EscalationLevel;
 import ch.astina.hesperid.model.base.EscalationScheme;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

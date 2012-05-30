@@ -15,15 +15,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.system;
 
-import java.util.List;
-
+import ch.astina.hesperid.dao.SystemDAO;
+import ch.astina.hesperid.model.base.System;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.springframework.security.annotation.Secured;
+import org.springframework.security.access.annotation.Secured;
 
-import ch.astina.hesperid.dao.SystemDAO;
-import ch.astina.hesperid.model.base.System;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

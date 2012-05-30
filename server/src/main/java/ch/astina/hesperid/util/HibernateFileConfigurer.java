@@ -16,9 +16,9 @@
 package ch.astina.hesperid.util;
 
 import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
+import org.apache.tapestry5.hibernate.HibernateConfigurer;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.cfg.ImprovedNamingStrategy;
-import org.apache.tapestry5.hibernate.HibernateConfigurer;
 
 /**
  * @author $Author: kstarosta $
@@ -57,5 +57,9 @@ public class HibernateFileConfigurer implements HibernateConfigurer
         this.url = config.getString("database.databaseURL");
         this.username = config.getString("database.username");
         this.password = config.getString("database.password");
+
+        System.out.println("URL " + url);
+        System.out.println("Username " + username);
+        System.out.println("Password " + password);
     }
 }

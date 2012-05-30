@@ -15,15 +15,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.escalation;
 
-import java.util.List;
-
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.springframework.security.annotation.Secured;
-
 import ch.astina.hesperid.dao.EscalationDAO;
 import ch.astina.hesperid.model.base.EscalationScheme;
+import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.springframework.security.access.annotation.Secured;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

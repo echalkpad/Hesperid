@@ -16,9 +16,10 @@
 package ch.astina.hesperid.dao.hibernate;
 
 import ch.astina.hesperid.dao.HqlDAO;
-import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

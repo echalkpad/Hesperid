@@ -16,6 +16,7 @@
 package ch.astina.hesperid.dao;
 
 import ch.astina.hesperid.model.base.SoftwareLicense;
+
 import java.util.List;
 
 /**

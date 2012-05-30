@@ -20,7 +20,7 @@ package ch.astina.hesperid.web.services.springsecurity.internal;
  * @version $Revision: 123 $, $Date: 2011-09-23 11:53:17 +0200 (Fr, 23 Sep 2011) $
  */
 import ch.astina.hesperid.web.services.springsecurity.SaltSourceService;
-import org.springframework.security.providers.dao.salt.SystemWideSaltSource;
+import org.springframework.security.authentication.dao.SystemWideSaltSource;
 
 public class SaltSourceImpl extends SystemWideSaltSource implements
         SaltSourceService

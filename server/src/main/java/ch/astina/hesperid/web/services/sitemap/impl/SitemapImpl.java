@@ -18,8 +18,9 @@ package ch.astina.hesperid.web.services.sitemap.impl;
 import ch.astina.hesperid.web.services.sitemap.Page;
 import ch.astina.hesperid.web.services.sitemap.PageProvider;
 import ch.astina.hesperid.web.services.sitemap.Sitemap;
-import java.util.List;
+
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

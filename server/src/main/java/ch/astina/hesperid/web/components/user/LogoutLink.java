@@ -15,9 +15,8 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.components.user;
 
-import org.apache.tapestry5.ioc.annotations.Inject;
-
 import ch.astina.hesperid.web.services.springsecurity.LogoutService;
+import org.apache.tapestry5.ioc.annotations.Inject;
 
 /**
  * @author $Author: kstarosta $

@@ -15,14 +15,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.components;
 
-import org.apache.tapestry5.annotations.Import;
-import org.apache.tapestry5.annotations.Parameter;
-import org.apache.tapestry5.annotations.Persist;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.hibernate.criterion.Restrictions;
-
 import ch.astina.hesperid.dao.FailureDAO;
 import ch.astina.hesperid.dao.hibernate.FilterGridDataSource;
 import ch.astina.hesperid.global.GlobalConstants;
@@ -32,6 +24,13 @@ import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.user.User;
 import ch.astina.hesperid.web.services.failures.FailureService;
 import ch.astina.hesperid.web.services.users.UserService;
+import org.apache.tapestry5.annotations.Import;
+import org.apache.tapestry5.annotations.Parameter;
+import org.apache.tapestry5.annotations.Persist;
+import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * @author $Author: kstarosta $

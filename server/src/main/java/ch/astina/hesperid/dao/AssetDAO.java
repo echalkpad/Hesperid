@@ -15,14 +15,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao;
 
-import ch.astina.hesperid.model.base.AssetContact;
-import ch.astina.hesperid.model.base.AssetSoftwareLicense;
-import java.util.List;
-
 import ch.astina.hesperid.dao.hibernate.FilterGridDataSource;
 import ch.astina.hesperid.model.base.Asset;
+import ch.astina.hesperid.model.base.AssetContact;
+import ch.astina.hesperid.model.base.AssetSoftwareLicense;
 import ch.astina.hesperid.model.base.ClientHierarchy;
 import ch.astina.hesperid.model.base.Location;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

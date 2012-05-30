@@ -17,14 +17,14 @@ package ch.astina.hesperid.web.services.dbmigration.impl;
 
 import ch.astina.hesperid.web.services.dbmigration.DbMigration;
 import com.carbonfive.db.migration.DataSourceMigrationManager;
-import java.io.PrintWriter;
-
-import java.sql.Connection;
-import java.sql.SQLException;
-import javax.sql.DataSource;
-
 import org.hibernate.Session;
 import org.slf4j.Logger;
+
+import javax.sql.DataSource;
+import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.SQLFeatureNotSupportedException;
 
 /**
  * @author $Author: kstarosta $
@@ -112,6 +112,12 @@ public class DbMigrationImpl implements DbMigration
         public boolean isWrapperFor(Class<?> type) throws SQLException
         {
             throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public java.util.logging.Logger getParentLogger() throws SQLFeatureNotSupportedException
+        {
+            return null;  //To change body of implemented methods use File | Settings | File Templates.
         }
     }
 }

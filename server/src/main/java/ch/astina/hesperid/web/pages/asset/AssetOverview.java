@@ -15,12 +15,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.asset;
 
-import java.util.List;
-
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.springframework.security.annotation.Secured;
-
 import ch.astina.hesperid.dao.AssetDAO;
 import ch.astina.hesperid.dao.ObserverDAO;
 import ch.astina.hesperid.global.GlobalConstants;
@@ -30,7 +24,12 @@ import ch.astina.hesperid.model.base.AssetSoftwareLicense;
 import ch.astina.hesperid.model.base.ClientHierarchy;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.util.DotNotationBuilder;
+import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.springframework.security.access.annotation.Secured;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

@@ -15,21 +15,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.components;
 
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Collections;
-import java.util.Date;
-import java.util.List;
-
+import ch.astina.hesperid.dao.ObserverDAO;
+import ch.astina.hesperid.model.base.Observer;
+import ch.astina.hesperid.model.base.ObserverParameter;
 import org.apache.tapestry5.annotations.Import;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 
-import ch.astina.hesperid.dao.ObserverDAO;
-import ch.astina.hesperid.model.base.Observer;
-import ch.astina.hesperid.model.base.ObserverParameter;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Date;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

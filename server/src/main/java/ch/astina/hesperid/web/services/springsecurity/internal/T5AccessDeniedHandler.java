@@ -1,37 +1,20 @@
-////////////////////////////////////////////////////////////////////////////////////////////////////
-// Copyright 2011 Astina AG, Zurich
-//
-// Licensed under the Apache License, Version 2.0 (the "License");
-// you may not use this file except in compliance with the License.
-// You may obtain a copy of the License at
-//
-//     http://www.apache.org/licenses/LICENSE-2.0
-//
-// Unless required by applicable law or agreed to in writing, software
-// distributed under the License is distributed on an "AS IS" BASIS,
-// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-// See the License for the specific language governing permissions and
-// limitations under the License.
-////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.springsecurity.internal;
 
-import java.io.IOException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.security.web.PortMapper;
+import org.springframework.security.web.PortMapperImpl;
+import org.springframework.security.web.PortResolver;
+import org.springframework.security.web.PortResolverImpl;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.util.RedirectUrlBuilder;
 
 import javax.servlet.ServletException;
-import javax.servlet.ServletRequest;
-import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.security.AccessDeniedException;
-import org.springframework.security.ui.AccessDeniedHandler;
-import org.springframework.security.util.PortMapper;
-import org.springframework.security.util.PortMapperImpl;
-import org.springframework.security.util.PortResolver;
-import org.springframework.security.util.PortResolverImpl;
-import org.springframework.security.util.RedirectUrlBuilder;
 
 /**
  * Enables Tapestry to handle AccessDenied Exceptions. So you can show some
@@ -42,18 +25,19 @@ import org.springframework.security.util.RedirectUrlBuilder;
  * @author Michael Gerzabek
  * 
  */
-public class T5AccessDeniedHandler implements AccessDeniedHandler
-{
-    private static final Log logger = LogFactory.getLog(T5AccessDeniedHandler.class);
+public class T5AccessDeniedHandler implements AccessDeniedHandler {
+
+    private static final Logger logger = LoggerFactory.getLogger(T5AccessDeniedHandler.class);
+
     private String errorPage = "/";
     private boolean forceHttps = false;
     private PortMapper portMapper = new PortMapperImpl();
     private PortResolver portResolver = new PortResolverImpl();
 
-    public void handle(ServletRequest request, ServletResponse response,
+    public void handle(HttpServletRequest request, HttpServletResponse response,
             AccessDeniedException accessDeniedException) throws IOException,
-            ServletException
-    {
+            ServletException {
+
         HttpServletRequest httpRequest = (HttpServletRequest) request;
         HttpServletResponse httpResponse = (HttpServletResponse) response;
 
@@ -63,8 +47,8 @@ public class T5AccessDeniedHandler implements AccessDeniedHandler
     }
 
     protected String buildRedirectUrlToLoginPage(HttpServletRequest request,
-            HttpServletResponse response, AccessDeniedException authException)
-    {
+            HttpServletResponse response, AccessDeniedException authException) {
+
         String loginForm = errorPage;
         int serverPort = portResolver.getServerPort(request);
         String scheme = request.getScheme();
@@ -86,16 +70,17 @@ public class T5AccessDeniedHandler implements AccessDeniedHandler
                 urlBuilder.setScheme("https");
                 urlBuilder.setPort(httpsPort.intValue());
             } else {
-                logger.warn("Unable to redirect to HTTPS as no port mapping found for HTTP port "
-                        + serverPort);
+                logger
+                        .warn("Unable to redirect to HTTPS as no port mapping found for HTTP port "
+                                + serverPort);
             }
         }
 
         return urlBuilder.getUrl();
     }
 
-    public void setErrorPage(String errorPage)
-    {
+    public void setErrorPage(String errorPage) {
+
         if ((errorPage != null) && !errorPage.startsWith("/")) {
             throw new IllegalArgumentException("errorPage must begin with '/'");
         }
@@ -103,8 +88,8 @@ public class T5AccessDeniedHandler implements AccessDeniedHandler
         this.errorPage = errorPage;
     }
 
-    public void setForceHttps(boolean forceHttps)
-    {
+    public void setForceHttps(boolean forceHttps) {
+
         this.forceHttps = forceHttps;
     }
 }

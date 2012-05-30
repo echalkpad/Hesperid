@@ -17,7 +17,12 @@ package ch.astina.hesperid.dao.hibernate;
 
 import ch.astina.hesperid.dao.AssetDAO;
 import ch.astina.hesperid.dao.ObserverDAO;
-import ch.astina.hesperid.model.base.*;
+import ch.astina.hesperid.model.base.Asset;
+import ch.astina.hesperid.model.base.AssetContact;
+import ch.astina.hesperid.model.base.AssetSoftwareLicense;
+import ch.astina.hesperid.model.base.ClientHierarchy;
+import ch.astina.hesperid.model.base.Location;
+import ch.astina.hesperid.model.base.Observer;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;

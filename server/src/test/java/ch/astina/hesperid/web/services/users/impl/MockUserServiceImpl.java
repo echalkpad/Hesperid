@@ -9,8 +9,8 @@ import ch.astina.hesperid.model.user.User;
 import ch.astina.hesperid.web.services.users.impl.UserServiceImpl;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.annotations.Value;
-import org.springframework.security.providers.dao.SaltSource;
-import org.springframework.security.providers.encoding.PasswordEncoder;
+import org.springframework.security.authentication.dao.SaltSource;
+import org.springframework.security.authentication.encoding.PasswordEncoder;
 
 /**
  *

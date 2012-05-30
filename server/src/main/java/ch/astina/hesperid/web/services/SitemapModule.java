@@ -20,8 +20,9 @@ import ch.astina.hesperid.web.services.sitemap.PageProvider;
 import ch.astina.hesperid.web.services.sitemap.Sitemap;
 import ch.astina.hesperid.web.services.sitemap.StaticPageProvider;
 import ch.astina.hesperid.web.services.sitemap.impl.SitemapImpl;
-import java.util.List;
 import org.apache.tapestry5.ioc.OrderedConfiguration;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

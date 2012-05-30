@@ -17,6 +17,7 @@ package ch.astina.hesperid.web.services.mail;
 
 import ch.astina.hesperid.model.mail.HtmlMailMessage;
 import ch.astina.hesperid.model.mail.TextMailMessage;
+
 import javax.mail.MessagingException;
 
 /**

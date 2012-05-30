@@ -16,11 +16,10 @@
 package ch.astina.hesperid.model.mail;
 
 import ch.astina.hesperid.mails.InputStreamDataSource;
-import java.io.IOException;
+import org.apache.tapestry5.StreamResponse;
 
 import javax.activation.DataSource;
-
-import org.apache.tapestry5.StreamResponse;
+import java.io.IOException;
 
 /**
  * @author $Author: kstarosta $

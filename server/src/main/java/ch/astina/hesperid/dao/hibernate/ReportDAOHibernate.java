@@ -15,12 +15,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao.hibernate;
 
-import java.util.List;
-
-import org.hibernate.Session;
-
 import ch.astina.hesperid.dao.ReportDAO;
 import ch.astina.hesperid.model.internal.ReportType;
+import org.hibernate.Session;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

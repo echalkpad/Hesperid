@@ -15,11 +15,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.model.mail;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-
 import javax.activation.DataSource;
 import javax.mail.internet.MimeUtility;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 
 /**
  * @author $Author: kstarosta $

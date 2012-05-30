@@ -17,9 +17,10 @@ package ch.astina.hesperid.dao.hibernate;
 
 import ch.astina.hesperid.dao.UserDAO;
 import ch.astina.hesperid.model.user.User;
-import java.util.List;
 import org.hibernate.Session;
 import org.hibernate.criterion.Restrictions;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

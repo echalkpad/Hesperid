@@ -15,17 +15,16 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.asset.observer;
 
-import java.util.List;
-
+import ch.astina.hesperid.dao.ObserverDAO;
+import ch.astina.hesperid.model.base.Asset;
+import ch.astina.hesperid.model.base.ObserverStrategy;
 import org.apache.tapestry5.Link;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.PageRenderLinkSource;
-import org.springframework.security.annotation.Secured;
+import org.springframework.security.access.annotation.Secured;
 
-import ch.astina.hesperid.dao.ObserverDAO;
-import ch.astina.hesperid.model.base.Asset;
-import ch.astina.hesperid.model.base.ObserverStrategy;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

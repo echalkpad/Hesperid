@@ -15,12 +15,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.components.security;
 
-import java.security.Principal;
-
 import org.apache.tapestry5.Block;
 import org.apache.tapestry5.annotations.Parameter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.services.RequestGlobals;
+
+import java.security.Principal;
 
 /**
  * @author $Author: kstarosta $

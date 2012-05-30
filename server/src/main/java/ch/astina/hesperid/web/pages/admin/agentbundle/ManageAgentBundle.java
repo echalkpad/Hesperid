@@ -15,21 +15,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.admin.agentbundle;
 
-import java.io.File;
-import java.util.Date;
-
+import ch.astina.hesperid.dao.AgentBundleDAO;
+import ch.astina.hesperid.installer.web.services.InstallationManager;
+import ch.astina.hesperid.model.base.AgentBundle;
+import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.upload.services.UploadedFile;
-import org.springframework.security.annotation.Secured;
+import org.springframework.security.access.annotation.Secured;
 
-import ch.astina.hesperid.dao.AgentBundleDAO;
-import ch.astina.hesperid.installer.web.services.InstallationManager;
-import ch.astina.hesperid.model.base.AgentBundle;
-import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
+import java.io.File;
+import java.util.Date;
 
 /**
  * @author $Author: kstarosta $

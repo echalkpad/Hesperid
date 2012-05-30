@@ -15,16 +15,14 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.asset;
 
-import java.text.SimpleDateFormat;
-import java.util.List;
-
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.springframework.security.annotation.Secured;
-
 import ch.astina.hesperid.dao.AssetDAO;
 import ch.astina.hesperid.model.base.Asset;
+import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.springframework.security.access.annotation.Secured;
+
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $
@@ -42,13 +40,6 @@ public class AssetIndex
     public List<Asset> getAllAssets()
     {
         return assetDAO.getAllAssets();
-    }
-
-    @CommitAfter
-    public void onActionFromDelete(Long assetId)
-    {
-        Asset a = assetDAO.getAssetForId(assetId);
-        assetDAO.deleteAsset(a);
     }
 
     public String getFormattedLastUpdatedObserverDate()

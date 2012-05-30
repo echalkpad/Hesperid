@@ -15,14 +15,6 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.asset;
 
-import org.apache.tapestry5.Link;
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.hibernate.annotations.CommitAfter;
-import org.apache.tapestry5.ioc.annotations.Inject;
-import org.apache.tapestry5.ioc.services.PropertyAccess;
-import org.apache.tapestry5.services.PageRenderLinkSource;
-import org.springframework.security.annotation.Secured;
-
 import ch.astina.hesperid.dao.AssetDAO;
 import ch.astina.hesperid.dao.EscalationDAO;
 import ch.astina.hesperid.dao.LocationDAO;
@@ -32,6 +24,13 @@ import ch.astina.hesperid.model.base.EscalationScheme;
 import ch.astina.hesperid.model.base.Location;
 import ch.astina.hesperid.model.base.System;
 import ch.astina.hesperid.util.GenericSelectModel;
+import org.apache.tapestry5.Link;
+import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.hibernate.annotations.CommitAfter;
+import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.ioc.services.PropertyAccess;
+import org.apache.tapestry5.services.PageRenderLinkSource;
+import org.springframework.security.access.annotation.Secured;
 
 /**
  * @author $Author: kstarosta $

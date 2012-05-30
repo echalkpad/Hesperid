@@ -15,19 +15,18 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.util.jasper;
 
+import net.sf.jasperreports.engine.JasperPrint;
 import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.services.Response;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.InputStream;
-import java.io.ByteArrayOutputStream;
 import java.io.ByteArrayInputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.ByteArrayOutputStream;
+import java.io.InputStream;
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
-
-import net.sf.jasperreports.engine.JasperPrint;
 
 /**
  * @author $Author: kstarosta $

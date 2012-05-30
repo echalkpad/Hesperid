@@ -15,9 +15,9 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.dao;
 
-import java.util.List;
-
 import ch.astina.hesperid.model.base.AgentBundle;
+
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

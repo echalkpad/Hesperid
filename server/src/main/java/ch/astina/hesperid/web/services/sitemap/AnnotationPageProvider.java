@@ -15,11 +15,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.sitemap;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.tapestry5.ioc.annotations.InjectService;
 import org.apache.tapestry5.services.ComponentClassResolver;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @author $Author: kstarosta $

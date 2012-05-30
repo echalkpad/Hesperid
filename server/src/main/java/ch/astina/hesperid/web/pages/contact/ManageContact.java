@@ -15,21 +15,20 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.contact;
 
+import ch.astina.hesperid.dao.ContactDAO;
+import ch.astina.hesperid.dao.LocationDAO;
+import ch.astina.hesperid.dao.MesRoleDAO;
+import ch.astina.hesperid.model.base.BusinessRole;
+import ch.astina.hesperid.model.base.Contact;
+import ch.astina.hesperid.model.base.Location;
+import ch.astina.hesperid.util.GenericSelectModel;
 import org.apache.tapestry5.PersistenceConstants;
 import org.apache.tapestry5.annotations.Persist;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.ioc.services.PropertyAccess;
-import org.springframework.security.annotation.Secured;
-
-import ch.astina.hesperid.dao.ContactDAO;
-import ch.astina.hesperid.dao.LocationDAO;
-import ch.astina.hesperid.dao.MesRoleDAO;
-import ch.astina.hesperid.model.base.Contact;
-import ch.astina.hesperid.model.base.Location;
-import ch.astina.hesperid.model.base.BusinessRole;
-import ch.astina.hesperid.util.GenericSelectModel;
+import org.springframework.security.access.annotation.Secured;
 
 /**
  * @author $Author: kstarosta $

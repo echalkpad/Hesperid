@@ -15,12 +15,11 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.system;
 
-import org.apache.tapestry5.annotations.Property;
-import org.apache.tapestry5.ioc.annotations.Inject;
-
 import ch.astina.hesperid.dao.SystemDAO;
 import ch.astina.hesperid.model.base.System;
 import ch.astina.hesperid.util.DotNotationBuilder;
+import org.apache.tapestry5.annotations.Property;
+import org.apache.tapestry5.ioc.annotations.Inject;
 
 /**
  * @author $Author: kstarosta $

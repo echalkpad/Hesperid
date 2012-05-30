@@ -15,13 +15,12 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.location;
 
+import ch.astina.hesperid.dao.LocationDAO;
+import ch.astina.hesperid.model.base.Location;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
-import org.springframework.security.annotation.Secured;
-
-import ch.astina.hesperid.dao.LocationDAO;
-import ch.astina.hesperid.model.base.Location;
+import org.springframework.security.access.annotation.Secured;
 
 /**
  * @author $Author: kstarosta $

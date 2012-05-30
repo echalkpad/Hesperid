@@ -15,6 +15,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services.jobs;
 
+import ch.astina.hesperid.model.base.Observer;
 import org.apache.tapestry5.ioc.services.PerthreadManager;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
@@ -22,8 +23,6 @@ import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import ch.astina.hesperid.model.base.Observer;
 
 /**
  * @author $Author: kstarosta $

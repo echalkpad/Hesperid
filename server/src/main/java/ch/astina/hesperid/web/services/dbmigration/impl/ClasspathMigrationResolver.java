@@ -20,6 +20,11 @@ import com.carbonfive.db.migration.MigrationFactory;
 import com.carbonfive.db.migration.MigrationResolver;
 import com.carbonfive.db.migration.SimpleVersionExtractor;
 import com.carbonfive.db.migration.VersionExtractor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -29,10 +34,6 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
-import org.springframework.core.io.UrlResource;
 
 /**
  * @author $Author: kstarosta $
