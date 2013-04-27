@@ -197,7 +197,6 @@
             <scope>test</scope>
         </dependency>
     </dependencies>
-    <!--
     <repositories>
         <repository>
             <snapshots>
@@ -220,7 +219,6 @@
             <url>http://nexus.devlab722.net/nexus/content/repositories/releases</url>
         </repository>
     </repositories>
-    -->
     <build>
         <finalName>${project.artifactId}</finalName>
         <resources>

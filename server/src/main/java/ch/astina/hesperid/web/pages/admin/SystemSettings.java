@@ -26,11 +26,13 @@ import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
 import org.apache.tapestry5.util.EnumSelectModel;
+import org.springframework.security.access.annotation.Secured;
 
 /**
  * @author $Author: kstarosta $
  * @version $Revision: 105 $, $Date: 2011-09-21 16:01:05 +0200 (Mi, 21 Sep 2011) $
  */
+@Secured({"ROLE_ADMIN"})
 public class SystemSettings
 {
     @Inject
@@ -69,7 +71,7 @@ public class SystemSettings
     }
 
     public ValueEncoder<MailServerSecureConnectionType> getMailServerSecureConnectionTypeEncoder()
-    {          //
+    {
         return null; //new EnumValueEncoder<MailServerSecureConnectionType>(MailServerSecureConnectionType.class);
     }
 

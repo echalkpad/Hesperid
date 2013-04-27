@@ -16,12 +16,18 @@
 package ch.astina.hesperid.web.pages.admin.agentbundle;
 
 import ch.astina.hesperid.dao.AgentBundleDAO;
+import ch.astina.hesperid.installer.web.services.InstallationManager;
 import ch.astina.hesperid.model.base.AgentBundle;
+import ch.astina.hesperid.web.services.systemenvironment.SystemEnvironment;
+import org.apache.tapestry5.StreamResponse;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.annotations.CommitAfter;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.apache.tapestry5.services.Response;
 import org.springframework.security.access.annotation.Secured;
 
+import java.io.*;
+import java.net.URLEncoder;
 import java.util.List;
 
 /**
@@ -38,15 +44,54 @@ public class AgentBundleIndex
 	@Property
     private AgentBundle agentBundle;
 
+    @Inject
+    private SystemEnvironment systemEnvironment;
+
     public List<AgentBundle> getAllAgentBundles()
     {
         return agentBundleDAO.getAllAgentBundles();
     }
 
-    @CommitAfter
-    public void onActionFromDelete(Long agentBundleId)
+    Object onActionFromDownload(Long agentBundleId)
     {
-        AgentBundle a = agentBundleDAO.getAgentBundleForId(agentBundleId);
-        agentBundleDAO.deleteAgentBundle(a);
+        final AgentBundle a = agentBundleDAO.getAgentBundleForId(agentBundleId);
+
+        String dir = systemEnvironment.getApplicationHomeDirectoryPath() +
+                InstallationManager.FILE_SEPARATOR + "agentbundle" +
+                InstallationManager.FILE_SEPARATOR;
+
+        final File file = new File(dir, a.getFilename());
+
+        return new StreamResponse()
+        {
+            @Override
+            public String getContentType()
+            {
+                return "application/octet-stream";
+            }
+
+            @Override
+            public InputStream getStream() throws IOException
+            {
+                return new FileInputStream(file);
+            }
+
+            @Override
+            public void prepareResponse(Response response)
+            {
+                response.setContentLength((int) file.length());
+                response.setHeader("content-disposition", "attachment; filename=" + encodeStr(a.getFilename()));
+            }
+        };
+    }
+
+    private String encodeStr(String str)
+    {
+        try {
+            return URLEncoder.encode(str, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

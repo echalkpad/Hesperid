@@ -47,7 +47,7 @@
                         <div class="form-item">
                             <t:label for="mailServerSecureConnectionType">Secure connection Type</t:label>
                             <select t:id="mailServerSecureConnectionType" t:type="select" t:validate="required"
-                            t:value="mailServer.mailServerSecureConnectionType" t:model="mailServerSecureConnectionTypeModel" t:encoder="mailServerSecureConnectionTypeEncoder" />
+                            t:value="mailServer.mailServerSecureConnectionType" t:model="mailServerSecureConnectionTypeModel" />
                         </div>
                     </fieldset>
                 </div>
@@ -68,7 +68,7 @@
 	            </div>
 
 	            <div class="box-foot form-foot">
-                    <button type="submit">Filter</button>
+                    <button type="submit">Save</button>
                     <t:pagelink page="admin" class="button button-cancel">Cancel</t:pagelink>
                 </div>
             </t:form>

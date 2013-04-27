@@ -1,6 +1,9 @@
 <t:layout xmlns:t="http://tapestry.apache.org/schema/tapestry_5_1_0.xsd">
     <h1>Agent Software</h1>
     <t:grid source="allagentbundles" row="agentbundle" add="edit">
+        <t:parameter name="filenameCell">
+            <t:actionlink t:id="download" context="agentbundle">${agentbundle.filename}</t:actionlink>
+        </t:parameter>
         <t:parameter name="editCell">
             <t:pagelink page="admin/agentbundle/manageagentbundle" context="agentbundle">edit</t:pagelink>
         </t:parameter>
