@@ -33,7 +33,9 @@ import javax.persistence.OrderBy;
 public class EscalationScheme 
 {
     private Long id;
+
     private String name;
+
     private List<EscalationLevel> escalationLevels;
 
     @Id

@@ -29,6 +29,7 @@ import org.springframework.security.access.annotation.Secured;
  * @author $Author: kstarosta $
  * @version $Revision: 123 $, $Date: 2011-09-23 11:53:17 +0200 (Fr, 23 Sep 2011) $
  */
+@Secured({"ROLE_ADMIN"})
 public class AddObserverStrategy
 {
     @Property

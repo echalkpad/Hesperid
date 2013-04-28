@@ -7,7 +7,7 @@
             <t:form t:id="settingsForm" class="box-holder">
         
                 <div class="box-head">
-                    <h2>Mail server</h2>
+                    <h2>Mail Server</h2>
                 </div>
 
                 <div class="box-content">
@@ -17,7 +17,6 @@
                             <t:label for="name">Name</t:label>
                             <t:textfield t:id="name" validate="required" t:value="mailServer.name" />
                         </div>
-
 
                         <div class="form-item">
                             <t:label for="host">Host</t:label>
@@ -48,6 +47,40 @@
                             <t:label for="mailServerSecureConnectionType">Secure connection Type</t:label>
                             <select t:id="mailServerSecureConnectionType" t:type="select" t:validate="required"
                             t:value="mailServer.mailServerSecureConnectionType" t:model="mailServerSecureConnectionTypeModel" />
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="box-head">
+                    <h2>JIRA Settings</h2>
+                </div>
+
+                <div class="box-content">
+                    <fieldset>
+
+                        <div class="form-item">
+                            <t:label for="url">URL</t:label>
+                            <t:textfield t:id="url" validate="required" t:value="jiraSettings.url" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="jirausername">Username</t:label>
+                            <t:textfield t:id="jirausername" validate="required" t:value="jiraSettings.username" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="jirapassword">Password</t:label>
+                            <t:textfield t:id="jirapassword" validate="required" t:value="jiraSettings.password" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="issueTypeId">Issue Type ID</t:label>
+                            <t:textfield t:id="issueTypeId" validate="required" t:value="jiraSettings.issueTypeId" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="resolutionTransitionName">Resolution Transaction Name</t:label>
+                            <t:textfield t:id="resolutionTransitionName" validate="required" t:value="jiraSettings.resolutionTransitionName" />
                         </div>
                     </fieldset>
                 </div>

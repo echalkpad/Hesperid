@@ -15,11 +15,7 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.model.base;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 /**
  * @author $Author: kstarosta $
@@ -29,9 +25,17 @@ import javax.persistence.ManyToOne;
 public class EscalationLevel 
 {
     private Long id;
+
     private EscalationScheme escalationScheme;
+
     private String username;
+
+    private String projectCode;
+
+    private EscalationChannel channel;
+
     private int level;
+
     private int timeout;
 
     @Id
@@ -65,6 +69,27 @@ public class EscalationLevel
     public void setUsername(String username)
     {
         this.username = username;
+    }
+
+    public String getProjectCode()
+    {
+        return projectCode;
+    }
+
+    public void setProjectCode(String projectCode)
+    {
+        this.projectCode = projectCode;
+    }
+
+    @Enumerated(EnumType.STRING)
+    public EscalationChannel getChannel()
+    {
+        return channel == null ? EscalationChannel.EMAIL : channel;
+    }
+
+    public void setChannel(EscalationChannel channel)
+    {
+        this.channel = channel;
     }
     
     public int getLevel()

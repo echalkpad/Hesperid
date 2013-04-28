@@ -34,6 +34,7 @@ import java.util.List;
  * @author $Author: kstarosta $
  * @version $Revision: 123 $, $Date: 2011-09-23 11:53:17 +0200 (Fr, 23 Sep 2011) $
  */
+@Secured({"ROLE_ADMIN"})
 public class EscalationLevelAdd
 {
     @Property

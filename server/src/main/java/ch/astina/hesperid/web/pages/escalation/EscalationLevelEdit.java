@@ -18,6 +18,7 @@ package ch.astina.hesperid.web.pages.escalation;
 import ch.astina.hesperid.dao.ContactDAO;
 import ch.astina.hesperid.dao.EscalationDAO;
 import ch.astina.hesperid.dao.UserDAO;
+import ch.astina.hesperid.model.base.EscalationChannel;
 import ch.astina.hesperid.model.base.EscalationLevel;
 import ch.astina.hesperid.model.user.User;
 import org.apache.tapestry5.Link;
@@ -33,6 +34,7 @@ import java.util.List;
  * @author $Author: kstarosta $
  * @version $Revision: 123 $, $Date: 2011-09-23 11:53:17 +0200 (Fr, 23 Sep 2011) $
  */
+@Secured({"ROLE_ADMIN"})
 public class EscalationLevelEdit
 {
     @Property

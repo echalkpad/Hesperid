@@ -15,44 +15,21 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.services;
 
-import ch.astina.hesperid.dao.AgentBundleDAO;
-import ch.astina.hesperid.dao.AssetDAO;
-import ch.astina.hesperid.dao.ContactDAO;
-import ch.astina.hesperid.dao.EscalationDAO;
-import ch.astina.hesperid.dao.FailureDAO;
-import ch.astina.hesperid.dao.HqlDAO;
-import ch.astina.hesperid.dao.LocationDAO;
-import ch.astina.hesperid.dao.MailServerDAO;
-import ch.astina.hesperid.dao.MesRoleDAO;
-import ch.astina.hesperid.dao.ObserverDAO;
-import ch.astina.hesperid.dao.ReportDAO;
-import ch.astina.hesperid.dao.SoftwareLicenseDAO;
-import ch.astina.hesperid.dao.SystemDAO;
-import ch.astina.hesperid.dao.SystemHealthDAO;
-import ch.astina.hesperid.dao.SystemSettingsDAO;
-import ch.astina.hesperid.dao.hibernate.AgentBundleDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.AssetDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.ContactDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.EscalationDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.FailureDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.HqlDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.LocationDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.MailServerDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.MesRoleDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.ObserverDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.ReportDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.SoftwareLicenseDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.SystemDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.SystemHealthDAOHibernate;
-import ch.astina.hesperid.dao.hibernate.SystemSettingsDAOHibernate;
+import ch.astina.hesperid.dao.*;
+import ch.astina.hesperid.dao.hibernate.*;
 import ch.astina.hesperid.mails.SmtpCredentials;
+import ch.astina.hesperid.model.internal.JiraSettings;
 import ch.astina.hesperid.model.internal.MailServer;
 import ch.astina.hesperid.util.HibernateFileConfigurer;
 import ch.astina.hesperid.web.services.dbmigration.DbMigration;
 import ch.astina.hesperid.web.services.dbmigration.impl.DbMigrationImpl;
+import ch.astina.hesperid.web.services.failures.FailureReporter;
 import ch.astina.hesperid.web.services.failures.FailureService;
+import ch.astina.hesperid.web.services.failures.impl.FailureReporterImpl;
 import ch.astina.hesperid.web.services.failures.impl.FailureServiceImpl;
 import ch.astina.hesperid.web.services.impl.SystemHealthServiceImpl;
+import ch.astina.hesperid.web.services.jira.JiraIssueService;
+import ch.astina.hesperid.web.services.jira.impl.JiraIssueServiceImpl;
 import ch.astina.hesperid.web.services.jobs.DbCleanupJob;
 import ch.astina.hesperid.web.services.jobs.ExternalObserverJob;
 import ch.astina.hesperid.web.services.jobs.FailureCheckerJob;
@@ -89,6 +66,7 @@ import org.apache.tapestry5.ioc.annotations.SubModule;
 import org.slf4j.Logger;
 import org.springframework.security.authentication.AuthenticationProvider;
 
+import java.net.URISyntaxException;
 import java.util.HashMap;
 
 /**
@@ -129,6 +107,7 @@ public class AppModule
         binder.bind(SystemEnvironment.class, SystemEnvironmentImpl.class);
         binder.bind(Version.class, VersionImpl.class);
         binder.bind(MailServerDAO.class, MailServerDAOHibernate.class);
+        binder.bind(JiraSettingsDAO.class, JiraSettingsDAOHibernate.class);
         binder.bind(HqlDAO.class, HqlDAOHibernate.class);
         binder.bind(LocationDAO.class, LocationDAOHibernate.class);
         binder.bind(SystemDAO.class, SystemDAOHibernate.class);
@@ -144,6 +123,7 @@ public class AppModule
         binder.bind(ObserverDAO.class, ObserverDAOHibernate.class);
         binder.bind(SystemHealthService.class, SystemHealthServiceImpl.class);
         binder.bind(FailureService.class, FailureServiceImpl.class);
+        binder.bind(FailureReporter.class, FailureReporterImpl.class);
         binder.bind(ExternalObserverJob.class, ExternalObserverJobImpl.class);
         binder.bind(ObserverStatusCheckerJob.class, ObserverStatusCheckerJobImpl.class);
         binder.bind(FailureCheckerJob.class, FailureCheckerJobImpl.class);
@@ -179,6 +159,13 @@ public class AppModule
         SmtpCredentials credentials = new SmtpCredentials(mailServer.getHost(),
                 mailServer.getUserName(), mailServer.getPassword());
         return new MailerServiceImpl(credentials, new HashMap<String, String>());
+    }
+
+    public static JiraIssueService buildJiraIssueService(JiraSettingsDAO jiraSettingsDAO) throws URISyntaxException
+    {
+        JiraSettings jiraSettings = jiraSettingsDAO.findOne();
+
+        return new JiraIssueServiceImpl(jiraSettings);
     }
 
     @Marker(SpringSecurityServices.class)

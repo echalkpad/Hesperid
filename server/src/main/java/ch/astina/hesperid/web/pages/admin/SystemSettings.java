@@ -15,8 +15,10 @@
 ////////////////////////////////////////////////////////////////////////////////////////////////////
 package ch.astina.hesperid.web.pages.admin;
 
+import ch.astina.hesperid.dao.JiraSettingsDAO;
 import ch.astina.hesperid.dao.MailServerDAO;
 import ch.astina.hesperid.dao.SystemSettingsDAO;
+import ch.astina.hesperid.model.internal.JiraSettings;
 import ch.astina.hesperid.model.internal.MailServer;
 import ch.astina.hesperid.model.internal.MailServerSecureConnectionType;
 import org.apache.tapestry5.ComponentResources;
@@ -38,6 +40,9 @@ public class SystemSettings
     @Inject
     private MailServerDAO mailServerDAO;
 
+    @Inject
+    private JiraSettingsDAO jiraSettingsDAO;
+
 	@Inject
 	private SystemSettingsDAO systemSettingsDAO;
 
@@ -46,6 +51,9 @@ public class SystemSettings
 
     @Property
     private MailServer mailServer;
+
+    @Property
+    private JiraSettings jiraSettings;
 
 	@Property
 	private ch.astina.hesperid.model.internal.SystemSettings systemSettings;
@@ -57,6 +65,8 @@ public class SystemSettings
         if (mailServer == null) {
             mailServer = new MailServer();
         }
+
+        jiraSettings = jiraSettingsDAO.findOne();
 
 	    systemSettings = systemSettingsDAO.getSystemSettingsForId(1l);
 
@@ -79,6 +89,7 @@ public class SystemSettings
     public void onSuccessFromSettingsForm()
     {
         mailServerDAO.saveOrUpdateMailServer(mailServer);
+        jiraSettingsDAO.save(jiraSettings);
 	    systemSettingsDAO.saveOrUpdateSystemSettings(systemSettings);
     }
 }

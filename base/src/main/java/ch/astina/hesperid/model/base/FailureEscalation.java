@@ -33,9 +33,15 @@ import javax.persistence.TemporalType;
 public class FailureEscalation 
 {
     private Long id;
+
     private Failure failure;
+
     private EscalationLevel escalationLevel;
+
     private Date escalated;
+
+    private String issueKey;
+
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -80,5 +86,15 @@ public class FailureEscalation
     public void setEscalated(Date escalated) 
     {
         this.escalated = escalated;
+    }
+
+    public String getIssueKey()
+    {
+        return issueKey;
+    }
+
+    public void setIssueKey(String issueKey)
+    {
+        this.issueKey = issueKey;
     }
 }

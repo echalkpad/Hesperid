@@ -26,9 +26,20 @@
                         </div>
 	
                         <div class="form-item">
-                            <t:label for="username">User</t:label>
-                            <t:select t:id="username" t:model="users" t:value="user" t:validate="required" />
+                            <t:label for="channel">Channel</t:label>
+                            <t:select t:id="channel" t:value="escalationLevel.channel" t:validate="required" />
                         </div>
+
+                        <div class="form-item">
+                            <t:label for="username">User</t:label>
+                            <t:select t:id="username" t:model="users" t:value="user" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="projectCode">User</t:label>
+                            <t:textfield t:id="projectCode" t:value="escalationLevel.projectCode" />
+                        </div>
+
                     </fieldset>
                 </div>
                 <div class="box-foot form-foot">

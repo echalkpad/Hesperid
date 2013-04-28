@@ -14,28 +14,38 @@
 	
                         <t:errors />
 
-                            <div class="form-item">
-                                <t:label for="level">Level</t:label>
-                                <t:textfield t:id="level" t:value="escalationLevel.level" t:validate="required" />
-                            </div>
+                        <div class="form-item">
+                            <t:label for="level">Level</t:label>
+                            <t:textfield t:id="level" t:value="escalationLevel.level" t:validate="required" />
+                        </div>
 
-                            <div class="form-item">
-                                <t:label for="timeout">Timeout</t:label>
-                                <t:textfield t:id="timeout" t:value="escalationLevel.timeout" t:validate="required" />
-                                <span>Seconds</span>
-                            </div>
+                        <div class="form-item">
+                            <t:label for="timeout">Timeout</t:label>
+                            <t:textfield t:id="timeout" t:value="escalationLevel.timeout" t:validate="required" />
+                            <span>Seconds</span>
+                        </div>
 
-                            <div class="form-item">
-                                <t:label for="username">User</t:label>
-                                <t:select t:id="username" t:model="users" t:value="user" t:validate="required" />
-                            </div>
-                        </fieldset>
-                    </div>
-                    <div class="box-foot form-foot">
-                        <button type="submit">Save</button>
-                        <t:pagelink page="escalation/view" context="escalationScheme" class="button button-cancel">Cancel</t:pagelink>
-                    </div>
-                </t:form>
-            </div>
+                        <div class="form-item">
+                            <t:label for="channel">Channel</t:label>
+                            <t:select t:id="channel" t:value="escalationLevel.channel" t:validate="required" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="username">User</t:label>
+                            <t:select t:id="username" t:model="users" t:value="user" t:validate="required" />
+                        </div>
+
+                        <div class="form-item">
+                            <t:label for="projectCode">User</t:label>
+                            <t:textfield t:id="projectCode" t:value="escalationLevel.projectCode" />
+                        </div>
+                    </fieldset>
+                </div>
+                <div class="box-foot form-foot">
+                    <button type="submit">Save</button>
+                    <t:pagelink page="escalation/view" context="escalationScheme" class="button button-cancel">Cancel</t:pagelink>
+                </div>
+            </t:form>
         </div>
-    </t:layout>
+    </div>
+</t:layout>

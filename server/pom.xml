@@ -196,6 +196,11 @@
             <version>1.8.5</version>
             <scope>test</scope>
         </dependency>
+        <dependency>
+            <groupId>com.atlassian.jira</groupId>
+            <artifactId>jira-rest-java-client</artifactId>
+            <version>1.1-m02</version>
+        </dependency>
     </dependencies>
     <repositories>
         <repository>
@@ -217,6 +222,10 @@
         <repository>
             <id>devlab722-repo</id>
             <url>http://nexus.devlab722.net/nexus/content/repositories/releases</url>
+        </repository>
+        <repository>
+            <id>atlassian-public</id>
+            <url>https://m2proxy.atlassian.com/repository/public</url>
         </repository>
     </repositories>
     <build>

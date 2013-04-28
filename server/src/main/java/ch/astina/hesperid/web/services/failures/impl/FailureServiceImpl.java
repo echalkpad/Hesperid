@@ -24,6 +24,7 @@ import ch.astina.hesperid.model.base.FailureEscalation;
 import ch.astina.hesperid.model.base.FailureStatus;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.web.services.failures.EscalationSpecification;
+import ch.astina.hesperid.web.services.failures.FailureReporter;
 import ch.astina.hesperid.web.services.failures.FailureService;
 import ch.astina.hesperid.web.services.mail.MailerService;
 import org.slf4j.Logger;
@@ -39,14 +40,17 @@ import java.util.Date;
 public class FailureServiceImpl implements FailureService
 {
     private FailureDAO failureDAO;
-    private MailerService mailerService;
+
+    private FailureReporter failureReporter;
+
     private UserDAO userDAO;
+
     private Logger logger = LoggerFactory.getLogger(FailureServiceImpl.class);
 
-    public FailureServiceImpl(FailureDAO failureDAO, MailerService mailerService, UserDAO userDAO)
+    public FailureServiceImpl(FailureDAO failureDAO, FailureReporter failureReporter, UserDAO userDAO)
     {
         this.failureDAO = failureDAO;
-        this.mailerService = mailerService;
+        this.failureReporter = failureReporter;
         this.userDAO = userDAO;
     }
 
@@ -57,9 +61,7 @@ public class FailureServiceImpl implements FailureService
 
 	    // Make sure that no failure for this observer problem already exists.
 	    Failure existingFailure = failureDAO.getFailureByExample(failure);
-	    if (existingFailure != null) {
-		    failure = existingFailure;
-	    } else {
+	    if (existingFailure == null) {
 		    failure.setDetected(new Date());
 		    failure.setFailureStatus(FailureStatus.DETECTED);
 
@@ -85,12 +87,7 @@ public class FailureServiceImpl implements FailureService
         failureDAO.save(failure);
         failureDAO.save(failureEscalation);
 
-        try {
-            notifyContact(failure);
-        } catch (MessagingException e) {
-            e.printStackTrace();
-            throw new RuntimeException(e);
-        }
+        failureReporter.reportFailure(failureEscalation);
     }
 
     @Override
@@ -110,13 +107,7 @@ public class FailureServiceImpl implements FailureService
 
 	    if(failure.getFailureEscalations() != null) {
 	        for (FailureEscalation failureEscalation : failure.getFailureEscalations()) {
-		        logger.info("Sending notification email for escalation: " + failureEscalation.getId());
-	            FailureNotificationMail message = new FailureNotificationMail(failure, userDAO.getUserByName(failureEscalation.getEscalationLevel().getUsername()));
-	            try {
-	                mailerService.sendHtmlMail(message);
-	            } catch (MessagingException e) {
-	                logger.error(e.getMessage());
-	            }
+                failureReporter.reportResolution(failureEscalation);
 	        }
 	    }
     }
@@ -131,15 +122,4 @@ public class FailureServiceImpl implements FailureService
             resolve(failure);
         }
     }
-
-    private void notifyContact(Failure failure) throws MessagingException
-    {
-        logger.info("Notifying contact about failure: " + failure);
-        logger.info("Escalation Level: " + failure.getEscalationLevel());
-        logger.info("Username: " + failure.getEscalationLevel().getUsername());
-
-        FailureNotificationMail message = new FailureNotificationMail(failure, userDAO.getUserByName(failure.getEscalationLevel().getUsername()));
-        mailerService.sendHtmlMail(message);
-    }
-
 }

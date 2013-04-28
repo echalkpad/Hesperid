@@ -14,7 +14,7 @@
         </div>
 	
         <t:grid source="escalationScheme.escalationLevels" row="escalationLevel" exclude="id"
-		add="actions" reorder="level,timeout,username,actions">
+		add="actions" reorder="level,timeout,channel,username,projectCode,actions">
             <p:usernameHeader>User</p:usernameHeader>
             <p:actionsHeader>
             </p:actionsHeader>
