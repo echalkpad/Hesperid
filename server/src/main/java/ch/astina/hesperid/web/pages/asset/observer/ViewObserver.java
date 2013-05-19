@@ -19,10 +19,12 @@ import ch.astina.hesperid.dao.ObserverDAO;
 import ch.astina.hesperid.global.GlobalConstants;
 import ch.astina.hesperid.model.base.Observer;
 import ch.astina.hesperid.model.base.ObserverParameter;
+import ch.astina.hesperid.web.services.scheduler.SchedulerService;
 import org.apache.tapestry5.annotations.PageActivationContext;
 import org.apache.tapestry5.annotations.Property;
 import org.apache.tapestry5.hibernate.HibernateGridDataSource;
 import org.apache.tapestry5.ioc.annotations.Inject;
+import org.quartz.Trigger;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.annotation.Secured;
@@ -37,10 +39,16 @@ public class ViewObserver
     @PageActivationContext
     @Property
     private Observer observer;
+
     @Property
     private ObserverParameter observerParameter;
+
     @Inject
     private ObserverDAO observerDAO;
+
+    @Inject
+    private SchedulerService schedulerService;
+
     private Logger logger = LoggerFactory.getLogger(ViewObserver.class);
 
     public String getObserverParameterDate()
@@ -54,6 +62,16 @@ public class ViewObserver
             return null;
         }
         return GlobalConstants.DATETIME_FORMAT.format(observer.getLastCheck());
+    }
+
+    public String getNextExecution()
+    {
+        Trigger trigger = schedulerService.getObserverTrigger(observer);
+        if (null == trigger) {
+            return null;
+        }
+
+        return GlobalConstants.DATETIME_FORMAT.format(trigger.getNextFireTime());
     }
 
     public HibernateGridDataSource getObserverParameterGridDataSource()

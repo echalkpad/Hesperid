@@ -34,8 +34,6 @@ public class ExternalObserverJobExecutor implements Job
 
     public void execute(JobExecutionContext context) throws JobExecutionException
     {
-        logger.info("External Observer Execution started");
-
         JobDataMap jobDataMap = context.getJobDetail().getJobDataMap();
 
         PerthreadManager perthreadManager = (PerthreadManager) jobDataMap.get("perthreadManager");
@@ -43,6 +41,8 @@ public class ExternalObserverJobExecutor implements Job
         ExternalObserverJob externalObserverJob = (ExternalObserverJob) jobDataMap.get("externalObserverJob");
 
         Observer observer = (Observer) jobDataMap.get("observer");
+
+        logger.info("External observer execution started: " + observer.toString());
 
         externalObserverJob.monitor(observer);
 

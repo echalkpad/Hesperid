@@ -31,15 +31,7 @@ import ch.astina.hesperid.web.services.jobs.ObserverStatusCheckerJob;
 import ch.astina.hesperid.web.services.jobs.ObserverStatusCheckerJobExecutor;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.tapestry5.ioc.services.PerthreadManager;
-import org.quartz.JobBuilder;
-import org.quartz.JobDetail;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.quartz.SchedulerFactory;
-import org.quartz.SimpleScheduleBuilder;
-import org.quartz.Trigger;
-import org.quartz.TriggerBuilder;
+import org.quartz.*;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -64,10 +56,8 @@ public class SchedulerService
 
     private ObserverDAO observerDAO;
     private AssetDAO assetDAO;
-	private SystemSettingsDAO systemSettingsDAO;
 
     private SchedulerFactory schedulerFactory;
-    private DbMigration dbMigration;
     private Scheduler scheduler;
     private final Logger logger = LoggerFactory.getLogger(SchedulerService.class);
 
@@ -77,7 +67,6 @@ public class SchedulerService
             FailureCheckerJob failureCheckerJob,
             DbCleanupJob dbCleanupJob,
             ObserverDAO observerDAO,
-            SystemSettingsDAO systemSettingsDAO,
             AssetDAO assetDAO, DbMigration dbMigration)
     {
             this.perthreadManager = perthreadManager;
@@ -87,16 +76,14 @@ public class SchedulerService
 	        this.dbCleanupJob = dbCleanupJob;
             this.observerDAO = observerDAO;
             this.assetDAO = assetDAO;
-	        this.systemSettingsDAO = systemSettingsDAO;
-            this.dbMigration = dbMigration;
             
             try {
+                logger.error("DB Migration " + dbMigration);
                 dbMigration.updateAllChangelogs();
             } catch (Exception e) {
                 logger.error("Error while db fummel",e);
             }
-            
-            logger.error("DB Migration " + dbMigration);
+
             schedulerFactory = new org.quartz.impl.StdSchedulerFactory();
             try {
                 scheduler = schedulerFactory.getScheduler();
@@ -120,6 +107,24 @@ public class SchedulerService
 		}
 	}
 
+    public JobDetail getObserverJob(Observer observer)
+    {
+        try {
+            return scheduler.getJobDetail(new JobKey(observer.getId().toString(), observer.getAsset().getAssetIdentifier()));
+        } catch (SchedulerException e) {
+            return null;
+        }
+    }
+
+    public Trigger getObserverTrigger(Observer observer)
+    {
+        try {
+            return scheduler.getTrigger(new TriggerKey(observer.getId().toString() + "trigger"));
+        } catch (SchedulerException e) {
+            return null;
+        }
+    }
+
     public void restartExternalObservers(Asset asset)
     {
         try {
@@ -137,14 +142,13 @@ public class SchedulerService
 	            jobDetail.getJobDataMap().put("externalObserverJob", externalObserverJob);
 	            jobDetail.getJobDataMap().put("observer", observer);
 
-
 	            int interval = observer.getCheckInterval() != null ? observer.getCheckInterval().intValue() : DEFAULT_INTERVAL;
                 Trigger trigger = buildTrigger(observer.getId().toString() + "trigger", interval);
 
                 scheduler.scheduleJob(jobDetail, trigger);
             }
         } catch (Exception e) {
-            logger.error("Error while restarting external service checks", e);
+            logger.error("Error while restarting external observers", e);
         }
     }
 
@@ -182,7 +186,7 @@ public class SchedulerService
             jobDetail.getJobDataMap().put("perthreadManager", perthreadManager);
             jobDetail.getJobDataMap().put("failureCheckerJob", failureCheckerJob);
 
-	        // Failure checker is startet in one and a half minute that auto resolving can run first.
+	        // Failure checker is started in one and a half minute that auto resolving can run first.
 	        Trigger trigger = TriggerBuilder.newTrigger()
 			        .withIdentity("failureChecker-trigger")
 			        .withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(DEFAULT_INTERVAL))

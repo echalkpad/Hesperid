@@ -61,7 +61,7 @@ public class ObserverStatusCheckerJobImpl implements ObserverStatusCheckerJob
 
     private void checkObserver(Observer observer)
     {
-        // check new paramaters since last check
+        // check new parameters since last check
         List<ObserverParameter> parameters = observerDAO.getObserverParameters(observer, observer.getLastCheck());
 
 	    for ( Iterator<ObserverParameter> parameterIter = parameters.iterator(); parameterIter.hasNext(); ) {
@@ -86,7 +86,7 @@ public class ObserverStatusCheckerJobImpl implements ObserverStatusCheckerJob
     {
         try {
 	        ObserverParameterValidator validator = new ObserverParameterValidator();
-	        if(validator.isValid(parameter)) {
+	        if (validator.isValid(parameter)) {
 		        failureService.autoresolve(observer);
 	        } else {
 		        Failure failure = generateFailure(observer, parameter, validator.getValidationMessage());

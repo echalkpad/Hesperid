@@ -46,10 +46,14 @@
 		    
 		    	<h2>Settings</h2>
 		    
-			    <t:beandisplay object="observer" exclude="id,name,failed,showOnAssetOverview">
+			    <t:beandisplay object="observer" exclude="id,name,failed,showOnAssetOverview" add="nextExecution"
+                               reorder="parameters,checkInterval,lastCheck,nextExecution,expectedValue,expectedValueMin,expectedValueMax,monitor">
 			    	<p:lastCheck>
 			    		${lastCheck}
 			    	</p:lastCheck>
+			    	<p:nextExecution>
+			    		${nextExecution}
+			    	</p:nextExecution>
 			    </t:beandisplay>
 		    
 		    </div>
