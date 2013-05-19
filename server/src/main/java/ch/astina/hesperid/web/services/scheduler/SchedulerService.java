@@ -32,6 +32,7 @@ import ch.astina.hesperid.web.services.jobs.ObserverStatusCheckerJobExecutor;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.tapestry5.ioc.services.PerthreadManager;
 import org.quartz.*;
+import org.quartz.impl.jdbcjobstore.TriggerPersistenceDelegate;
 import org.quartz.impl.matchers.GroupMatcher;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -143,7 +144,11 @@ public class SchedulerService
 	            jobDetail.getJobDataMap().put("observer", observer);
 
 	            int interval = observer.getCheckInterval() != null ? observer.getCheckInterval().intValue() : DEFAULT_INTERVAL;
-                Trigger trigger = buildTrigger(observer.getId().toString() + "trigger", interval);
+                Trigger trigger = buildTrigger(
+                        observer.getId().toString() + "trigger",
+                        interval,
+                        Trigger.DEFAULT_PRIORITY + 1 // higher priority for observer jobs
+                );
 
                 scheduler.scheduleJob(jobDetail, trigger);
             }
@@ -216,12 +221,18 @@ public class SchedulerService
 		}
 	}
 
-	private Trigger buildTrigger(String triggerName, int interval)
+	private Trigger buildTrigger(String triggerName, int interval, int priority)
 	{
 		return TriggerBuilder.newTrigger()
 				.withIdentity(triggerName)
 				.withSchedule(SimpleScheduleBuilder.repeatSecondlyForever(interval))
+                .withPriority(priority)
 				.startNow()
 				.build();
 	}
+
+    private Trigger buildTrigger(String triggerName, int interval)
+    {
+        return buildTrigger(triggerName, interval, Trigger.DEFAULT_PRIORITY);
+    }
 }
