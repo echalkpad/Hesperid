@@ -36,7 +36,7 @@
                         </div>
 
                         <div class="form-item">
-                            <t:label for="projectCode">User</t:label>
+                            <t:label for="projectCode">Project Code</t:label>
                             <t:textfield t:id="projectCode" t:value="escalationLevel.projectCode" />
                         </div>
                     </fieldset>
